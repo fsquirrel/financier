@@ -3,14 +3,14 @@ package com.fsquirrelsoft.financier.data;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.fsquirrelsoft.financier.context.Contexts;
 import com.fsquirrelsoft.financier.ui.AccountUtil;
-import com.fsquirrelsoft.financier.ui.TagUtil;
 import com.fsquirrelsoft.financier.ui.AccountUtil.IndentNode;
+import com.fsquirrelsoft.financier.ui.TagUtil;
 
 public class BalanceHelper {
 
@@ -180,7 +180,11 @@ public class BalanceHelper {
     public static List<Balance> calculateBalanceListForTag(Date start, Date end) {
         IDataProvider idp = contexts().getDataProvider();
         List<Map<String, Object>> dtData = idp.listDetailTagData(start, end);
-        Map<String, Balance> bMap = new HashMap<String, Balance>();
+        Map<String, Balance> bMap = new TreeMap<String, Balance>();
+        List<Tag> tags = idp.listAllTags();
+        for (Tag tag : tags) {
+            bMap.put(tag.getName(), new Balance(tag.getName(), null, BigDecimal.ZERO, tag));
+        }
         Balance balance = null;
         for (Map<String, Object> dt : dtData) {
             String name = (String) dt.get("name");
@@ -188,7 +192,7 @@ public class BalanceHelper {
             BigDecimal money = new BigDecimal((String) dt.get("money"));
             String tagId = String.valueOf(dt.get("tagId"));
             Tag tag = idp.findTag(Integer.parseInt(tagId));
-            if (bMap.containsKey(name)) {
+            if (bMap.containsKey(name) && bMap.get(name) != null) {
                 balance = bMap.get(name);
                 if ("C".equals(type)) {
                     balance.setMoney(balance.getMoney().add(money));
@@ -245,7 +249,7 @@ public class BalanceHelper {
         // the nested nodes
         for (TagUtil.IndentNode node : inodes) {
             String fullpath = node.getFullPath();
-            Balance b = new Balance(node.getName(), null, BigDecimal.ZERO, null);
+            Balance b = new Balance(node.getName(), null, BigDecimal.ZERO, node.getTag());
             nested.add(b);
             b.setGroup(group);
             b.setIndent(node.getIndent() + 1);
@@ -258,9 +262,8 @@ public class BalanceHelper {
                 } else if (in.startsWith(fullpath + ".")) {
                     sum = sum.add(ib.getMoney());
                     // for search detail
-                    b.setTarget(new Tag(node.getName()));
+                    b.setTarget(new Tag(fullpath));
                 }
-
             }
             b.setMoney(sum);
         }
