@@ -1,18 +1,18 @@
 package com.fsquirrelsoft.financier.ui;
 
-import java.util.Date;
-
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.CalendarHelper;
 import com.fsquirrelsoft.commons.util.GUIs;
 import com.fsquirrelsoft.financier.context.Contexts;
+import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Book;
 import com.fsquirrelsoft.financier.data.DataCreator;
 import com.fsquirrelsoft.financier.data.IDataProvider;
 import com.fsquirrelsoft.financier.data.SymbolPosition;
+
+import java.util.Date;
 
 /**
  * 
@@ -21,9 +21,9 @@ import com.fsquirrelsoft.financier.data.SymbolPosition;
  */
 public class TestsDesktop extends AbstractDesktop {
 
-    public TestsDesktop(Activity activity) {
-        super(activity);
-
+    public TestsDesktop() {
+        label = i18n.string(R.string.dt_tests);
+        icon = R.drawable.tab_tests;
     }
 
     @Override
@@ -32,12 +32,8 @@ public class TestsDesktop extends AbstractDesktop {
     }
 
     @Override
-    protected void init() {
-        label = i18n.string(R.string.dt_tests);
-        icon = R.drawable.tab_tests;
-
-        DesktopItem dt = null;
-        dt = new DesktopItem(new Runnable() {
+    protected void init(final Context context) {
+        DesktopItem dt = new DesktopItem(new Runnable() {
             public void run() {
                 Contexts ctx = Contexts.instance();
                 ctx.getMasterDataProvider().reset();
@@ -48,9 +44,8 @@ public class TestsDesktop extends AbstractDesktop {
 
         dt = new DesktopItem(new Runnable() {
             public void run() {
-                Intent intent = null;
-                intent = new Intent(activity, BookMgntActivity.class);
-                activity.startActivityForResult(intent, 0);
+                Intent intent = new Intent(context, BookMgntActivity.class);
+                TestsDesktop.this.getActivity().startActivityForResult(intent, 0);
             }
         }, "Book Management", R.drawable.dtitem_test);
 
@@ -61,11 +56,10 @@ public class TestsDesktop extends AbstractDesktop {
                 Contexts ctx = Contexts.instance();
                 Book book = ctx.getMasterDataProvider().findBook(ctx.getWorkingBookId());
 
-                Intent intent = null;
-                intent = new Intent(activity, BookEditorActivity.class);
+                Intent intent = new Intent(context, BookEditorActivity.class);
                 intent.putExtra(BookEditorActivity.INTENT_MODE_CREATE, false);
                 intent.putExtra(BookEditorActivity.INTENT_BOOK, book);
-                activity.startActivityForResult(intent, Constants.REQUEST_BOOK_EDITOR_CODE);
+                TestsDesktop.this.getActivity().startActivityForResult(intent, Constants.REQUEST_BOOK_EDITOR_CODE);
             }
         }, "Edit selected book", R.drawable.dtitem_test);
 
@@ -74,11 +68,10 @@ public class TestsDesktop extends AbstractDesktop {
         dt = new DesktopItem(new Runnable() {
             public void run() {
                 Book book = new Book("test", "$", SymbolPosition.AFTER, "");
-                Intent intent = null;
-                intent = new Intent(activity, BookEditorActivity.class);
+                Intent intent = new Intent(context, BookEditorActivity.class);
                 intent.putExtra(BookEditorActivity.INTENT_MODE_CREATE, true);
                 intent.putExtra(BookEditorActivity.INTENT_BOOK, book);
-                activity.startActivityForResult(intent, Constants.REQUEST_BOOK_EDITOR_CODE);
+                TestsDesktop.this.getActivity().startActivityForResult(intent, Constants.REQUEST_BOOK_EDITOR_CODE);
             }
         }, "Add book", R.drawable.dtitem_test);
 
@@ -88,7 +81,7 @@ public class TestsDesktop extends AbstractDesktop {
             @Override
             public void run() {
                 Contexts.instance().getDataProvider().reset();
-                GUIs.shortToast(activity, "reset data provider");
+                GUIs.shortToast(context, "reset data provider");
             }
         }, "rest data provider", R.drawable.dtitem_test));
         addItem(new DesktopItem(new Runnable() {
@@ -126,25 +119,25 @@ public class TestsDesktop extends AbstractDesktop {
         addItem(new DesktopItem(new Runnable() {
             @Override
             public void run() {
-                testCreateTestdata(25);
+                testCreateTestData(25);
             }
         }, "test data25", R.drawable.dtitem_test));
         addItem(new DesktopItem(new Runnable() {
             @Override
             public void run() {
-                testCreateTestdata(50);
+                testCreateTestData(50);
             }
         }, "test data50", R.drawable.dtitem_test));
         addItem(new DesktopItem(new Runnable() {
             @Override
             public void run() {
-                testCreateTestdata(100);
+                testCreateTestData(100);
             }
         }, "test data100", R.drawable.dtitem_test));
         addItem(new DesktopItem(new Runnable() {
             @Override
             public void run() {
-                testCreateTestdata(200);
+                testCreateTestData(200);
             }
         }, "test data200", R.drawable.dtitem_test));
         addItem(new DesktopItem(new Runnable() {
@@ -173,14 +166,14 @@ public class TestsDesktop extends AbstractDesktop {
     }
 
     protected void testBusy(final long i, final String error) {
-        GUIs.doBusy(activity, new GUIs.BusyAdapter() {
+        GUIs.doBusy(this.getContext(), new GUIs.BusyAdapter() {
             @Override
             public void onBusyFinish() {
-                GUIs.shortToast(activity, "task finished");
+                GUIs.shortToast(TestsDesktop.this.getContext(), "task finished");
             }
 
             public void onBusyError(Throwable x) {
-                GUIs.shortToast(activity, "Error " + x.getMessage());
+                GUIs.shortToast(TestsDesktop.this.getContext(), "Error " + x.getMessage());
             }
 
             @Override
@@ -202,11 +195,11 @@ public class TestsDesktop extends AbstractDesktop {
         for (int i = 0; i < 100; i++) {
             Date now = new Date();
             Date start = calHelper.weekStartDate(now);
-            Date end = calHelper.weekEndDate(now);
+            // Date end = calHelper.weekEndDate(now);
             // System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>");
             // System.out.println("1>>>>>>>>>>> "+now);
             System.out.println("2>>>>>>>>>>> " + start);
-            System.out.println("3>>>>>>>>>>> " + end);
+            // System.out.println("3>>>>>>>>>>> "+end);
             // System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>");
             try {
                 Thread.sleep(10);
@@ -217,11 +210,11 @@ public class TestsDesktop extends AbstractDesktop {
         }
     }
 
-    private void testCreateTestdata(final int loop) {
-        GUIs.doBusy(activity, new GUIs.BusyAdapter() {
+    private void testCreateTestData(final int loop) {
+        GUIs.doBusy(this.getContext(), new GUIs.BusyAdapter() {
             @Override
             public void onBusyFinish() {
-                GUIs.shortToast(activity, "create test data");
+                GUIs.shortToast(TestsDesktop.this.getContext(), "create test data");
             }
 
             @Override

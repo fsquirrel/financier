@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">每日记账本</string>
+
+    <string name="app_name">每日记账本</string>
     <string name="defacc_bank1">银行.台湾</string>
     <string name="defacc_bank2">银行.HSBC</string>
     <string name="defacc_cash">现金</string>
@@ -74,110 +75,86 @@
     <string name="title_detlist">明细列表</string>
     <string name="title_detmgnt">明细管理器</string>
     <string name="title_prefs">喜好设定</string>
-    
-    
     <string name="dt_main">主要桌面</string>
     <string name="dt_reports">报表桌面</string>
     <string name="dt_tests">测试桌面</string>
     <string name="label_prefs_testsdekstop">测试桌面</string>
     <string name="label_prefs_testsdekstop_sum">启用测试桌面, 仅供开发者使用</string>
-    
     <string name="label_export_csv">导出 CSV</string>
     <string name="label_import_csv">导入 CSV</string>
     <string name="label_reset">重置资料</string>
     <string name="label_create_default">建立预设的资料(账户)</string>
-
     <string name="msg_csv_exported">资料(%1$s)全部被导出到 %2$s</string>
     <string name="msg_csv_imported">资料从 %2$s (%1$s)被导入</string>
     <string name="msg_rested">资料重置</string>
     <string name="msg_default_created">預设的资料(账户)已建立</string>
     <string name="title_datamain">资料维护</string>
-    
     <string name="qmsg_export_csv">您想要导出资料并覆盖CSV档案吗?</string>
     <string name="qmsg_import_csv">您想要导入CSV档案并覆盖资料吗?</string>
     <string name="qmsg_reset">您想要重置资料吗?</string>
     <string name="qmsg_create_default">您想要建立预设的资料(账户)吗?</string>
-    <string name="dtitem_datamain">资料维护</string>  
-    
-    
+    <string name="dtitem_datamain">资料维护</string>
     <string name="msg_no_csv">沒有CSV档案</string>
     <string name="label_clear_folder">清除工作目录</string>
     <string name="msg_folder_cleared">工作目录 %1$s 已清除</string>
-    
     <string name="label_prefs_backupcsv">备份CSV</string>
     <string name="label_prefs_backupcsv_sum">导出备份CSV</string>
     <string name="qmsg_clear_folder">您想要清除工作目录%1$s吗?所有的CSV档案將被移除</string>
     <string name="defacc_creditcard">信用卡</string>
-    
     <string name="label_account">账户</string>
     <string name="label_detail">明细</string>
     <string name="label_account_only">只有庄户</string>
     <string name="label_detail_only">只有明细</string>
-    
     <string name="label_share_csv">分享CSV</string>
     <string name="msg_share_csv_title">Financier %1$s</string>
     <string name="msg_share_csv_content">Financier CSV 档案</string>
     <string name="qmsg_share_csv">分享那些CSV档案?</string>
-    
     <string name="msg_firsttime_use_hint">欢迎使用每日记账本, 请选择 新增明细 来开始</string>
-    
     <string name="label_balance_tincome">收入总计</string>
     <string name="label_balance_texpense">花费总计</string>
     <string name="label_balance_tasset">资产总计</string>
     <string name="label_balance_tliability">债务总计</string>
     <string name="label_balance_tother">其他总计</string>
-    
     <string name="label_balance_mode_month">%1$s - (%2$s-%3$s)</string>
     <string name="label_balance_mode_year">%1$s - 年结算</string>
-    
     <string name="label_balance_mode_month_total">到 %1$s(%2$s)</string>
     <string name="label_balance_mode_year_total">到 %1$s年底</string>
-    
     <string name="dtitem_report_monthly_balance">月份结算</string>
     <string name="dtitem_report_yearly_balance">年结算</string>
     <string name="dtitem_report_cumulative_balance">累计结算</string>
-    
     <string name="label_count">(%1$s)</string>
-    <string name="label_accdetlist_dateinfo">%1$s 到 %2$s</string> 
-    
+    <string name="label_accdetlist_dateinfo">%1$s 到 %2$s</string>
     <string name="label_prefs_password">密码保护-1</string>
     <string name="label_prefs_password_sum">设定进入软件的密码, 空值表示不用密码保护</string>
     <string name="label_prefs_passwordvd">密码保护-2</string>
     <string name="label_prefs_passwordvd_sum">输入相同的密码來启动密码保护</string>
     <string name="title_pdprotection">密码保护</string>
-    <string name="msg_wrong_password">密码错误!</string>    
-    
-    
+    <string name="msg_wrong_password">密码错误!</string>
     <string name="act_balance_detlist">明细清单</string>
     <string name="act_balance_piechart">结算图饼图</string>
     <string name="act_balance_yearly_timechart">每月结算年度图</string>
     <string name="act_balance_yearly_cumulative_timechart">每月结算累计年度图</string>
     <string name="label_balance_yearly_timechart">%1$s 在 %2$s</string>
     <string name="label_balance_yearly_cumulative_timechart">%1$s 在 %2$s (累计)</string>
-    
     <string name="label_detlayout_type3">金钱-账户</string>
     <string name="label_detlayout_type4">金钱-备注</string>
-    
     <string name="act_balance_yearly_runchart">资产债务趋势图</string>
     <string name="label_balance_yearly_runchart">资产债务趋势 在 %1$s</string>
-    
     <string name="label_prefs_allow_analytics">发送使用情况</string>
     <string name="label_prefs_allow_analytics_sum">[不会发送任何其他资料]发送使用情况将协助改善这个软件</string>
-    
     <string name="dtitem_about">关于我</string>
     <string name="path_about_app">about_zh.html</string>
     <string name="path_what_is_new">whatsnew_zh.html</string>
-    
     <string name="label_weekly_expense">本周支出 : %1$s</string>
     <string name="label_monthly_expense">本月支出 : %1$s</string>
     <string name="label_cumulative_cash">现金 : %1$s</string>
-    <string name="label_cash_account">现金账户</string> 
+    <string name="label_cash_account">现金账户</string>
     <string name="label_prefs_csv_encoding">CSV 编码</string>
     <string name="label_prefs_csv_encoding_sum">勿任意更改,将影响导入导出CSV</string>
     <string name="label_prefcat_csv">CSV</string>
     <string name="label_prefcat_others">其他</string>
     <!-- above are verified -->
-    
+
     <!-- from 20111120 lancelot -->
     <string name="defacc_installments_payable">Installments Payable</string>
     <string name="puitem_year">Y</string>
@@ -193,5 +170,5 @@
     <string name="msg_db_backuped">%1$s files backup to %2$s</string>
     <string name="msg_no_db">There is no file to backup</string>
     <string name="label_prefs_lastbackup">Last Backup Time</string>
-</resources>
 
+</resources>

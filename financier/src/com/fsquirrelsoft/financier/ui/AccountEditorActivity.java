@@ -1,11 +1,5 @@
 package com.fsquirrelsoft.financier.ui;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,15 +13,21 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.Formats;
 import com.fsquirrelsoft.commons.util.GUIs;
 import com.fsquirrelsoft.financier.calculator2.Calculator;
 import com.fsquirrelsoft.financier.context.ContextsActivity;
+import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Account;
 import com.fsquirrelsoft.financier.data.AccountType;
 import com.fsquirrelsoft.financier.data.DuplicateKeyException;
 import com.fsquirrelsoft.financier.data.IDataProvider;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Edit or create a account
@@ -78,8 +78,7 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
     }
 
     /**
-     * need to mapping twice to do different mapping in spitem and spdropdown
-     * item
+     * need to mapping twice to do different mapping in spitem and spdropdown item
      */
     private static String[] spfrom = new String[] { Constants.DISPLAY, Constants.DISPLAY };
     private static int[] spto = new int[] { R.id.simple_spitem_display, R.id.simple_spdditem_display };
@@ -273,8 +272,7 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
 
     private void onTypeChanged(AccountType type) {
         // allow income and expense have initial value, since 1/15
-        // boolean enableInitval = !(type==AccountType.INCOME ||
-        // type==AccountType.EXPENSE);
+        // boolean enableInitval = !(type==AccountType.INCOME || type==AccountType.EXPENSE);
         // initvalEditor.setEnabled(enableInitval);
         // cal2Btn.setEnabled(enableInitval);
         // if(!enableInitval){

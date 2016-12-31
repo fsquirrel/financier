@@ -96,9 +96,7 @@ class EventListener implements View.OnKeyListener, View.OnClickListener, View.On
         }
 
         /*
-         * We should act on KeyEvent.ACTION_DOWN, but strangely sometimes the
-         * DOWN event isn't received, only the UP. So the workaround is to act
-         * on UP... http://b/issue?id=1022478
+         * We should act on KeyEvent.ACTION_DOWN, but strangely sometimes the DOWN event isn't received, only the UP. So the workaround is to act on UP... http://b/issue?id=1022478
          */
 
         if (action == KeyEvent.ACTION_UP) {

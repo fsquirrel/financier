@@ -1,10 +1,9 @@
 package com.fsquirrelsoft.financier.ui;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -13,11 +12,13 @@ import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.GUIs;
 import com.fsquirrelsoft.financier.context.ContextsActivity;
+import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Book;
 import com.fsquirrelsoft.financier.data.IMasterDataProvider;
+
+import java.util.List;
 
 /**
  * 
@@ -32,6 +33,8 @@ public class BookMgntActivity extends ContextsActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bookmgnt);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        this.setSupportActionBar(toolbar);
         initialIntent();
         initialContent();
         GUIs.delayPost(new Runnable() {

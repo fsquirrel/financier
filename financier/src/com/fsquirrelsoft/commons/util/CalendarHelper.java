@@ -213,8 +213,7 @@ public class CalendarHelper {
     public Date weekStartDate(Date d) {
         Calendar cal = calendar(d);
         cal.set(Calendar.DAY_OF_WEEK, firstDayOfWeek);
-        // in android or java?, there is a bug in day of week(or my bug?), this
-        // is a workaround.
+        // in android or java?, there is a bug in day of week(or my bug?), this is a workaround.
         Date fd = toDayStart(cal);
         if (fd.after(d)) {
             return dateBefore(fd, 7);

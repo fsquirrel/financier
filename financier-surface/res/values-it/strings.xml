@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Financier</string>
-	<string name="app_surface">financier-core</string>
+
+    <string name="app_name">Financier</string>
+    <string name="app_surface">financier-core</string>
     <string name="defacc_bank1">Banca.A</string>
     <string name="defacc_bank2">Banca.B</string>
     <string name="defacc_cash">Contanti</string>
@@ -76,112 +77,88 @@
     <string name="title_deteditor_update">Aggiorna Dettagli</string>
     <string name="title_detlist">Lista Dettagli</string>
     <string name="title_detmgnt">Gestione Dettagli</string>
-    <string name="title_prefs">Preferenze</string> 
-    
-        
+    <string name="title_prefs">Preferenze</string>
     <string name="dt_main">Principale</string>
     <string name="dt_reports">Rapporti</string>
     <string name="dt_tests">Prove</string>
     <string name="label_prefs_testsdekstop">Apri scrivania prove</string>
     <string name="label_prefs_testsdekstop_sum">Apre la scrivania delle prove, solo per gli sviluppatori</string>
-    
     <string name="label_export_csv">Esporta CSV</string>
     <string name="label_import_csv">Importa CSV</string>
     <string name="label_reset">Reimposta dati</string>
     <string name="label_create_default">Crea conti di default</string>
-    
-    
     <string name="msg_csv_exported">I dati (%1$s) sono stati esportati a %2$s, </string>
     <string name="msg_csv_imported">I dati (%1$s) sono stati importati da %2$s </string>
     <string name="msg_rested">Dati reimpostati</string>
     <string name="msg_default_created">Dati di default ricreati</string>
     <string name="title_datamain">Gestione dei dati</string>
-    
     <string name="qmsg_export_csv">Vuoi esportate il CSV e sostituire quello esistente?</string>
     <string name="qmsg_import_csv">Vuoi importare il CSV e sostituire i dati esistenti?</string>
     <string name="qmsg_reset">Vuoi reimpostare i dati?</string>
     <string name="qmsg_create_default">Vuoi creare i dati di default?</string>
     <string name="dtitem_datamain">Dati</string>
-    
-    
     <string name="msg_no_csv">File CSV non trovato</string>
     <string name="label_clear_folder">Pulisci cartella di lavoro</string>
     <string name="msg_folder_cleared">Cartella di lavoro %1$s creata</string>
-    
     <string name="label_prefs_backupcsv">Salva CSV</string>
     <string name="label_prefs_backupcsv_sum">Salva il vecchio CSV durante l&#8217;esportazione dei nuovi dati</string>
-    
     <string name="qmsg_clear_folder">Vuoi pulire la cartella di lavoro %1$s? Tutti i CSV saranno rimossi</string>
     <string name="defacc_creditcard">Carta di Credito</string>
-    
     <string name="label_account">Conti</string>
     <string name="label_detail">Dettagli</string>
     <string name="label_account_only">Solo Conti</string>
     <string name="label_detail_only">Solo Dettagli</string>
-    
     <string name="label_share_csv">Condividi CSV</string>
     <string name="msg_share_csv_title">Financier %1$s</string>
     <string name="msg_share_csv_content">Financier CSV Files</string>
     <string name="qmsg_share_csv">Quale CSV vuoi condividere?</string>
-    
     <string name="msg_firsttime_use_hint">Benvenuto in Financier, clicca su Aggiungi Dettaglio per iniziare</string>
-    
     <string name="label_balance_tincome">Bilancio Entrate</string>
     <string name="label_balance_texpense">Bilancio Spese</string>
     <string name="label_balance_tasset">Bilancio Conti</string>
     <string name="label_balance_tliability">Bilancio Debiti</string>
     <string name="label_balance_tother">Bilancio Altro</string>
-    
     <string name="label_balance_mode_month">%1$s (%2$s-%3$s)</string>
     <string name="label_balance_mode_year">Bilancio anno %1$s</string>
-    
     <string name="label_balance_mode_month_total">fino al %1$s (%2$s)</string>
     <string name="label_balance_mode_year_total">Bilancio fino all&#8217;anno %1$s</string>
-    
     <string name="dtitem_report_monthly_balance">Bilancio mensile</string>
     <string name="dtitem_report_yearly_balance">Bilancio annuale</string>
     <string name="dtitem_report_cumulative_balance">Bilancio cumulativo</string>
-    
     <string name="label_count">(%1$s)</string>
-    <string name="label_accdetlist_dateinfo">%1$s a %2$s</string> 
-    
+    <string name="label_accdetlist_dateinfo">%1$s a %2$s</string>
     <string name="label_prefs_password">Password di protezione-1</string>
     <string name="label_prefs_password_sum">Imposta una password di protezione per l&#8217;applicazione, lasciare vuota per non avere protezione</string>
     <string name="label_prefs_passwordvd">Password di protezione-2</string>
     <string name="label_prefs_passwordvd_sum">Reinserisci la stessa password per attivare la protezione</string>
     <string name="title_pdprotection">Inserire Password</string>
     <string name="msg_wrong_password">Password Errata!</string>
-    
-    
     <string name="act_balance_detlist">Lista Dettagli</string>
     <string name="act_balance_piechart">Grafico a torta</string>
     <string name="act_balance_yearly_timechart">Grafico annulae</string>
     <string name="act_balance_yearly_cumulative_timechart">Grafico annuale (cumulativo)</string>
     <string name="label_balance_yearly_timechart">%1$s in %2$s</string>
     <string name="label_balance_yearly_cumulative_timechart">%1$s in %2$s (cumulativo)</string>
-    
     <string name="label_detlayout_type3">Soldi - A</string>
     <string name="label_detlayout_type4">Soldi - Note</string>
     <string name="act_balance_yearly_runchart">Grafico Patrimonio annuale - Debiti</string>
-    <string name="label_balance_yearly_runchart">Patrimonio - Debiti (cumulativo) in %1$s</string>    
-    
+    <string name="label_balance_yearly_runchart">Patrimonio - Debiti (cumulativo) in %1$s</string>
     <string name="label_prefs_allow_analytics">Invia dati a Google Analytics</string>
     <string name="label_prefs_allow_analytics_sum">L&#8217;invio dei dati di utilizzo aiuta a migliorare l&#8217;applicazione [Non verranno inviati altri dati] </string>
-    
     <string name="dtitem_about">Informazioni</string>
-    
     <string name="path_about_app">about.html</string>
     <string name="path_what_is_new">whatsnew.html</string>
     <string name="label_weekly_expense">Settimanali : %1$s</string>
     <string name="label_monthly_expense">Mensili : %1$s</string>
     <string name="label_cumulative_cash">Contanti : %1$s</string>
-    <string name="label_cash_account">Conto in Contanti</string> 
+    <string name="label_cash_account">Conto in Contanti</string>
     <string name="label_prefs_csv_encoding">Codifica del CSV</string>
     <string name="label_prefs_csv_encoding_sum">Da non cambiare se non si ha idea di cosa questo sia</string>
     <string name="label_prefcat_csv">CSV</string>
-    <string name="label_prefcat_others">Altri</string>   
-<!-- above are verified -->    
-   
+    <string name="label_prefcat_others">Altri</string>
+    <!-- above are verified -->
+
+
     <!-- from 20111120 lancelot -->
     <string name="defacc_installments_payable">Installments Payable</string>
     <string name="puitem_year">Y</string>
@@ -197,5 +174,5 @@
     <string name="msg_db_backuped">%1$s files backup to %2$s</string>
     <string name="msg_no_db">There is no file to backup</string>
     <string name="label_prefs_lastbackup">Last Backup Time</string>
-</resources>
 
+</resources>

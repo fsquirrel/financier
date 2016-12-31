@@ -1,19 +1,19 @@
 package com.fsquirrelsoft.financier.ui.report;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.List;
-
-import org.achartengine.ChartFactory;
-import org.achartengine.model.CategorySeries;
-import org.achartengine.renderer.DefaultRenderer;
-
 import android.content.Context;
 import android.content.Intent;
 
 import com.fsquirrelsoft.financier.data.AccountType;
 import com.fsquirrelsoft.financier.data.Balance;
+
+import org.achartengine.ChartFactory;
+import org.achartengine.model.CategorySeries;
+import org.achartengine.renderer.DefaultRenderer;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.List;
 
 public class BalancePieChart extends AbstractChart {
 

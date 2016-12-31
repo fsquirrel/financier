@@ -7,10 +7,10 @@ public class ScheduleJob {
     Long repeat;
 
     public Calendar getInitDate() {
-        if(initDate == null) {
+        if (initDate == null) {
             initDate = Calendar.getInstance();
             int currentHour = initDate.get(Calendar.HOUR_OF_DAY);
-            if(currentHour > 3) {
+            if (currentHour > 3) {
                 initDate.add(Calendar.DATE, 1);
             }
             initDate.set(Calendar.HOUR_OF_DAY, 3);

@@ -1,5 +1,12 @@
 package com.fsquirrelsoft.financier.data;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import com.fsquirrelsoft.commons.util.Logger;
+import com.fsquirrelsoft.financier.context.Contexts;
+
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_CASHACCOUNT;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_ID;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_INITVAL;
@@ -25,12 +32,6 @@ import static com.fsquirrelsoft.financier.data.DataMeta.TB_ACC;
 import static com.fsquirrelsoft.financier.data.DataMeta.TB_DET;
 import static com.fsquirrelsoft.financier.data.DataMeta.TB_DETTAG;
 import static com.fsquirrelsoft.financier.data.DataMeta.TB_TAG;
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-
-import com.fsquirrelsoft.commons.util.Logger;
-import com.fsquirrelsoft.financier.context.Contexts;
 
 /**
  * 
@@ -44,12 +45,13 @@ public class SQLiteDataHelper extends SQLiteOpenHelper {
     // private static final int VERSION = 6;// change double to BigDecimal
     private static final int VERSION = 7;// for tag
 
-    private static final String ACC_CREATE_SQL = "CREATE TABLE " + TB_ACC + " (" + COL_ACC_ID + " TEXT PRIMARY KEY, " + COL_ACC_NAME + " TEXT NOT NULL, " + COL_ACC_TYPE + " TEXT NOT NULL, " + COL_ACC_CASHACCOUNT + " INTEGER NULL, " + COL_ACC_INITVAL
-            + " REAL NOT NULL, " + COL_ACC_INITVAL_BD + " TEXT NOT NULL DEFAULT '' )";
+    private static final String ACC_CREATE_SQL = "CREATE TABLE " + TB_ACC + " (" + COL_ACC_ID + " TEXT PRIMARY KEY, " + COL_ACC_NAME + " TEXT NOT NULL, " + COL_ACC_TYPE + " TEXT NOT NULL, "
+            + COL_ACC_CASHACCOUNT + " INTEGER NULL, " + COL_ACC_INITVAL + " REAL NOT NULL, " + COL_ACC_INITVAL_BD + " TEXT NOT NULL DEFAULT '' )";
     private static final String ACC_DROP_SQL = "DROP TABLE IF EXISTS " + TB_ACC;
 
-    private static final String DET_CREATE_SQL = "CREATE TABLE " + TB_DET + " (" + COL_DET_ID + " INTEGER PRIMARY KEY, " + COL_DET_FROM + " TEXT NOT NULL, " + COL_DET_FROM_TYPE + " TEXT NOT NULL, " + COL_DET_TO + " TEXT NOT NULL, " + COL_DET_TO_TYPE
-            + " TEXT NOT NULL, " + COL_DET_DATE + " INTEGER NOT NULL, " + COL_DET_MONEY + " REAL NOT NULL, " + COL_DET_ARCHIVED + " INTEGER NOT NULL, " + COL_DET_NOTE + " TEXT, " + COL_DET_MONEY_BD + " TEXT NOT NULL DEFAULT '' )";
+    private static final String DET_CREATE_SQL = "CREATE TABLE " + TB_DET + " (" + COL_DET_ID + " INTEGER PRIMARY KEY, " + COL_DET_FROM + " TEXT NOT NULL, " + COL_DET_FROM_TYPE + " TEXT NOT NULL, "
+            + COL_DET_TO + " TEXT NOT NULL, " + COL_DET_TO_TYPE + " TEXT NOT NULL, " + COL_DET_DATE + " INTEGER NOT NULL, " + COL_DET_MONEY + " REAL NOT NULL, " + COL_DET_ARCHIVED
+            + " INTEGER NOT NULL, " + COL_DET_NOTE + " TEXT, " + COL_DET_MONEY_BD + " TEXT NOT NULL DEFAULT '' )";
 
     private static final String DET_DROP_SQL = "DROP TABLE IF EXISTS " + TB_DET;
 
@@ -57,7 +59,8 @@ public class SQLiteDataHelper extends SQLiteOpenHelper {
 
     private static final String TAG_DROP_SQL = "DROP TABLE IF EXISTS " + TB_TAG;
 
-    private static final String DETTAG_CREATE_SQL = "CREATE TABLE " + TB_DETTAG + " (" + COL_DETTAG_ID + " INTEGER PRIMARY KEY, " + COL_DETTAG_DET_ID + " INTEGER NOT NULL, " + COL_DETTAG_TAG_ID + " INTEGER NOT NULL)";
+    private static final String DETTAG_CREATE_SQL = "CREATE TABLE " + TB_DETTAG + " (" + COL_DETTAG_ID + " INTEGER PRIMARY KEY, " + COL_DETTAG_DET_ID + " INTEGER NOT NULL, " + COL_DETTAG_TAG_ID
+            + " INTEGER NOT NULL)";
 
     private static final String DETTAG_DROP_SQL = "DROP TABLE IF EXISTS " + TB_DETTAG;
 

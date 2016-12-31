@@ -1,11 +1,11 @@
 package com.fsquirrelsoft.financier.ui;
 
+import com.fsquirrelsoft.financier.data.Tag;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.fsquirrelsoft.financier.data.Tag;
 
 public class TagUtil {
 

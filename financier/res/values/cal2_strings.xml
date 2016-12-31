@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2007 The Android Open Source Project
+<!--
+     Copyright (C) 2007 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -11,50 +12,43 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
-<!-- 
- the source is come from andorid - 2.1 calculator2
--->
+<!--  the source is come from andorid - 2.1 calculator2 -->
 <resources>
-
 
     <color name="cal2_magic_flame">#00ffffff</color>
     <color name="cal2_button_text">#ffffffff</color>
-    
+
     <style name="cal2_button_style">
-       <item name="android:textSize">40dp</item>
-       <item name="android:layout_width">fill_parent</item>
-       <item name="android:layout_height">fill_parent</item>
-       <item name="android:layout_weight">1</item>
-       <item name="android:focusable">true</item>
-       <item name="android:background">@drawable/cal2_button</item>
-       <item name="android:layout_marginLeft">1dp</item>
+        <item name="android:textSize">40dp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">@drawable/cal2_button</item>
+        <item name="android:layout_marginLeft">1dp</item>
     </style>
 
     <style name="cal2_digit_button_style" parent="cal2_button_style">
-       <item name="android:background">@drawable/cal2_blue_button</item>
+        <item name="android:background">@drawable/cal2_blue_button</item>
     </style>
 
     <style name="cal2_button_small_style" parent="cal2_button_style">
-       <item name="android:textSize">30dp</item>
+        <item name="android:textSize">30dp</item>
     </style>
 
     <style name="cal2_display_style">
-       <item name="android:textSize">30dp</item>
-       <item name="android:gravity">right|center_vertical</item>
-       <item name="android:textColor">#ffffff</item>
-       <item name="android:maxLines">1</item>
-       <item name="android:scrollbars">none</item>
-       <item name="android:scrollHorizontally">true</item>
-       <item name="android:layout_width">fill_parent</item>
-       <item name="android:layout_height">fill_parent</item>
-       <item name="android:padding">6dp</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:scrollbars">none</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:padding">6dp</item>
     </style>
-
-
-
-
 
     <string name="cal2_app_name">Calculator</string>
     <!-- If there is a syntax error in the user entered calculation, an error dialog will appear.  This is the title. -->
@@ -103,7 +97,7 @@
     <string name="cal2_cos">cos</string>
     <!-- Displayed on buttons on screen for the tan function. -->
     <string name="cal2_tan">tan</string>
-       
+
     <!-- Do not translate. Unicode pi sign; don't translate. Displayed as button on screen. -->
     <string name="cal2_pi">\u03c0</string>
     <!-- Displayed on buttons on screen for the e function. -->
@@ -128,7 +122,7 @@
     <string name="cal2_advanced">Advanced panel</string>
     <!-- Menu item text to clear the calculation history. -->
     <string name="cal2_clear_history">Clear history</string>
-    
     <string name="cal2_ok">OK</string>
     <string name="cal2_close">CLOSE</string>
+
 </resources>

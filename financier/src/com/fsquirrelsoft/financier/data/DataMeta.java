@@ -27,7 +27,8 @@ public class DataMeta {
     public static final String COL_DET_MONEY_BD = "mnb_";
     public static final String COL_DET_NOTE = "nt_";
     public static final String COL_DET_ARCHIVED = "ar_";
-    public static final String[] COL_DET_ALL = new String[] { COL_DET_ID, COL_DET_FROM, COL_DET_FROM_TYPE, COL_DET_TO, COL_DET_TO_TYPE, COL_DET_DATE, COL_DET_MONEY, COL_DET_NOTE, COL_DET_ARCHIVED, COL_DET_MONEY_BD };
+    public static final String[] COL_DET_ALL = new String[] { COL_DET_ID, COL_DET_FROM, COL_DET_FROM_TYPE, COL_DET_TO, COL_DET_TO_TYPE, COL_DET_DATE, COL_DET_MONEY, COL_DET_NOTE, COL_DET_ARCHIVED,
+            COL_DET_MONEY_BD };
 
     public static final String TB_TAG = "fsf_tag";
     public static final String COL_TAG_ID = "id_";

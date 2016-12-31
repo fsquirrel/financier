@@ -3,8 +3,8 @@
  */
 package com.fsquirrelsoft.financier.data;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.I18N;
+import com.fsquirrelsoft.financier.core.R;
 
 /**
  * @author dennis
@@ -12,7 +12,9 @@ import com.fsquirrelsoft.commons.util.I18N;
  */
 public enum SymbolPosition {
 
-    NONE(0), FRONT(1), AFTER(2);
+    NONE(0),
+    FRONT(1),
+    AFTER(2);
 
     int type;
 

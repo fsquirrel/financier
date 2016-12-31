@@ -2,3 +2,8 @@
 */.settings/*
 */bin/*
 */gen/*
+build
+.idea
+.gradle
+*.iml
+local.properties

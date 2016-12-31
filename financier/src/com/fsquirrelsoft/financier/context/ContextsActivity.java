@@ -2,6 +2,7 @@ package com.fsquirrelsoft.financier.context;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.fsquirrelsoft.commons.util.CalendarHelper;
 import com.fsquirrelsoft.commons.util.I18N;
@@ -13,12 +14,12 @@ import com.fsquirrelsoft.commons.util.Logger;
  * @author dennis
  * 
  */
-public class ContextsActivity extends Activity {
-
-    protected I18N i18n;
-    protected CalendarHelper calHelper;
+public class ContextsActivity extends AppCompatActivity {
 
     private static Activity firstActivity;
+    protected I18N i18n;
+    protected CalendarHelper calHelper;
+    Bundle fakeExtra;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -76,8 +77,6 @@ public class ContextsActivity extends Activity {
         super.onPause();
         Contexts.instance().cleanActivity(this);
     }
-
-    Bundle fakeExtra;
 
     protected Bundle getIntentExtras() {
         if (getIntent() != null && getIntent().getExtras() != null) {

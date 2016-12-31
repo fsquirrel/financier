@@ -1,12 +1,12 @@
 package com.fsquirrelsoft.financier.ui;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.text.format.DateFormat;
 import android.widget.DatePicker;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class CustomizeDatePickerDialog extends DatePickerDialog {
 
@@ -19,13 +19,13 @@ public class CustomizeDatePickerDialog extends DatePickerDialog {
         StringBuffer formatString = new StringBuffer();
         for (char ch : order) {
             switch (ch) {
-            case DateFormat.DATE:
+            case 'd':
                 formatString.append("-dd");
                 break;
-            case DateFormat.MONTH:
+            case 'M':
                 formatString.append("-MM");
                 break;
-            case DateFormat.YEAR:
+            case 'y':
                 formatString.append("-yyyy");
                 break;
             }

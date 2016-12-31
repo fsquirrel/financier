@@ -1,12 +1,12 @@
 package com.fsquirrelsoft.financier.ui;
 
+import com.fsquirrelsoft.financier.data.Account;
+import com.fsquirrelsoft.financier.data.AccountType;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.fsquirrelsoft.financier.data.Account;
-import com.fsquirrelsoft.financier.data.AccountType;
 
 public class AccountUtil {
 

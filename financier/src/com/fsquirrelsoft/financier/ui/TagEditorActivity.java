@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.GUIs;
 import com.fsquirrelsoft.financier.context.ContextsActivity;
+import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.DuplicateKeyException;
 import com.fsquirrelsoft.financier.data.IDataProvider;
 import com.fsquirrelsoft.financier.data.Tag;

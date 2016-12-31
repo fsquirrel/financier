@@ -7,8 +7,8 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.context.Contexts;
+import com.fsquirrelsoft.financier.core.R;
 
 /**
  * 

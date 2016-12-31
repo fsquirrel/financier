@@ -1,10 +1,5 @@
 package com.fsquirrelsoft.financier.ui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
@@ -14,12 +9,17 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.GUIs;
 import com.fsquirrelsoft.commons.util.I18N;
 import com.fsquirrelsoft.financier.context.Contexts;
+import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Book;
 import com.fsquirrelsoft.financier.data.SymbolPosition;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 

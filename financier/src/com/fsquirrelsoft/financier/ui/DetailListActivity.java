@@ -1,14 +1,9 @@
 package com.fsquirrelsoft.financier.ui;
 
-import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -21,13 +16,19 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.CalendarHelper;
 import com.fsquirrelsoft.commons.util.GUIs;
 import com.fsquirrelsoft.financier.context.ContextsActivity;
+import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.AccountType;
 import com.fsquirrelsoft.financier.data.Detail;
 import com.fsquirrelsoft.financier.data.IDataProvider;
+
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 
@@ -43,6 +44,8 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     public static final int MODE_ALL = 4;
 
     public static final String INTENT_MODE = "mode";
+    public static final String INTENT_MODE_TITLE = "mode_title";
+
     public static final String INTENT_TARGET_DATE = "target";
     public static final String INTENT_ALLOW_SWITCH_YEAR = "switchyear";
 
@@ -57,17 +60,14 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     TextView sumUnknowView;
 
     View toolbarView;
-
     private Date targetDate;
     private Date currentDate;
     private int mode = MODE_WEEK;
     private boolean allowYearSwitch = true;
-
     private DateFormat dayDateFormat;
     private DateFormat weekDateFormat;
     private DateFormat monthDateFormat;
     private DateFormat yearDateFormat;
-
     ImageButton modeBtn;
 
     @Override
@@ -75,6 +75,8 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detlist);
         initialIntent();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        this.setSupportActionBar(toolbar);
         initialContent();
         GUIs.delayPost(new Runnable() {
             @Override
@@ -87,6 +89,12 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     private void initialIntent() {
         Bundle b = getIntentExtras();
         mode = b.getInt(INTENT_MODE, MODE_WEEK);
+        String title = b.getString(INTENT_MODE_TITLE);
+        if (null == title) {
+            title = "Detail List";
+        }
+        this.setTitle(title);
+
         Object o = b.get(INTENT_TARGET_DATE);
         if (o instanceof Date) {
             targetDate = (Date) o;
@@ -317,7 +325,8 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
                     infoView.setText(i18n.string(R.string.label_year_details, yearDateFormat.format(currentDate), Integer.toString(count)));
                     break;
                 default:
-                    infoView.setText(i18n.string(R.string.label_week_details, weekDateFormat.format(start), weekDateFormat.format(end), cal.weekOfMonth(currentDate), cal.weekOfYear(currentDate), yearDateFormat.format(start), Integer.toString(count)));
+                    infoView.setText(i18n.string(R.string.label_week_details, weekDateFormat.format(start), weekDateFormat.format(end), cal.weekOfMonth(currentDate), cal.weekOfYear(currentDate),
+                            yearDateFormat.format(start), Integer.toString(count)));
                     break;
                 }
 

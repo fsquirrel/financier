@@ -1,14 +1,5 @@
 package com.fsquirrelsoft.financier.ui;
 
-import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -22,14 +13,23 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.CalendarHelper;
 import com.fsquirrelsoft.commons.util.I18N;
 import com.fsquirrelsoft.financier.context.Contexts;
+import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Account;
 import com.fsquirrelsoft.financier.data.AccountType;
 import com.fsquirrelsoft.financier.data.Detail;
 import com.fsquirrelsoft.financier.data.IDataProvider;
+
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -40,7 +40,8 @@ public class DetailListHelper implements OnItemClickListener {
 
     private static String[] bindingFrom = new String[] { "layout", "layout_inner", "from", "to", "money", "note", "date" };
 
-    private static int[] bindingTo = new int[] { R.id.detlist_item_layout, R.id.detlist_item_layout_inner, R.id.detlist_item_from, R.id.detlist_item_to, R.id.detlist_item_money, R.id.detlist_item_note, R.id.detlist_item_date };
+    private static int[] bindingTo = new int[] { R.id.detlist_item_layout, R.id.detlist_item_layout_inner, R.id.detlist_item_from, R.id.detlist_item_to, R.id.detlist_item_money,
+            R.id.detlist_item_note, R.id.detlist_item_date };
 
     private List<Detail> listViewData = new ArrayList<Detail>();
 
@@ -113,8 +114,7 @@ public class DetailListHelper implements OnItemClickListener {
         listViewData = data;
         ;
         listViewMapList.clear();
-        DateFormat dateFormat = Contexts.instance().getDateFormat();// for
-                                                                    // 2010/01/01
+        DateFormat dateFormat = Contexts.instance().getDateFormat();// for 2010/01/01
         for (Detail det : listViewData) {
             Map<String, Object> row = toDetailMap(det, dateFormat);
             listViewMapList.add(row);

@@ -3,12 +3,14 @@
 
     <!--
 	<CheckBoxPreference android:key="use_improvider" android:title="@string/label_prefs_improvider"
-		android:summary="@string/label_prefs_improvider_sum" android:defaultValue="false" />    -->
+		android:summary="@string/label_prefs_improvider_sum" android:defaultValue="false" />
+    -->
     <Preference
         android:defaultValue="Unknown"
         android:key="last_backup"
         android:summary="Unknown"
         android:title="@string/label_prefs_lastbackup" />
+
     <EditTextPreference
         android:inputType="textPassword"
         android:key="password"

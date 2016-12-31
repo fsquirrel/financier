@@ -1,5 +1,7 @@
 package com.fsquirrelsoft.commons.util;
 
+import android.os.Environment;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -17,8 +19,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-
-import android.os.Environment;
 
 /**
  * @author Dennis.Chen
@@ -222,17 +222,14 @@ public class Files {
     }
 
     /**
-     * Copy database files which include fsf_master.db, fsf.db and
-     * fsf_<i>bookid<i>.db
+     * Copy database files which include fsf_master.db, fsf.db and fsf_<i>bookid<i>.db
      * 
      * @param sourceFolder
      *            source folder
      * @param targetFolder
      *            target folder
      * @param date
-     *            Copy date. If date is not null, it will make another copy
-     *            named with '.yyyyMMdd_HHmmss' as suffix. It is also used to
-     *            identify copy from SD to DB when date is null
+     *            Copy date. If date is not null, it will make another copy named with '.yyyyMMdd_HHmmss' as suffix. It is also used to identify copy from SD to DB when date is null
      * @return Number of files copied.
      * @throws IOException
      */
@@ -276,9 +273,7 @@ public class Files {
      * @param targetFolder
      *            target folder
      * @param date
-     *            Copy date. If date is not null, it will make another copy
-     *            named with '.yyyyMMdd_HHmmss' as suffix. It is also used to
-     *            identify copy from SD to DB when date is null
+     *            Copy date. If date is not null, it will make another copy named with '.yyyyMMdd_HHmmss' as suffix. It is also used to identify copy from SD to DB when date is null
      * @return Number of files copied.
      * @throws IOException
      */

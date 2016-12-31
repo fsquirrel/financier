@@ -1,17 +1,9 @@
 package com.fsquirrelsoft.financier.ui.report;
 
-import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -28,10 +20,10 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.CalendarHelper;
 import com.fsquirrelsoft.commons.util.GUIs;
 import com.fsquirrelsoft.financier.context.ContextsActivity;
+import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Account;
 import com.fsquirrelsoft.financier.data.AccountType;
 import com.fsquirrelsoft.financier.data.Balance;
@@ -39,6 +31,15 @@ import com.fsquirrelsoft.financier.data.BalanceHelper;
 import com.fsquirrelsoft.financier.ui.AccountDetailListActivity;
 import com.fsquirrelsoft.financier.ui.Constants;
 import com.fsquirrelsoft.financier.ui.NamedItem;
+
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -91,6 +92,8 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report_balance);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        this.setSupportActionBar(toolbar);
         initialIntent();
         initialContent();
         GUIs.delayPost(new Runnable() {
@@ -298,8 +301,10 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                 if (hierarchical) {
                     asset = BalanceHelper.adjustNestedTotalBalance(AccountType.ASSET, totalMode ? i18n.string(R.string.label_balance_tasset) : i18n.string(R.string.label_asset), asset, hideZero);
                     income = BalanceHelper.adjustNestedTotalBalance(AccountType.INCOME, totalMode ? i18n.string(R.string.label_balance_tincome) : i18n.string(R.string.label_income), income, hideZero);
-                    expense = BalanceHelper.adjustNestedTotalBalance(AccountType.EXPENSE, totalMode ? i18n.string(R.string.label_balance_texpense) : i18n.string(R.string.label_expense), expense, hideZero);
-                    liability = BalanceHelper.adjustNestedTotalBalance(AccountType.LIABILITY, totalMode ? i18n.string(R.string.label_balance_tliability) : i18n.string(R.string.label_liability), liability, hideZero);
+                    expense = BalanceHelper.adjustNestedTotalBalance(AccountType.EXPENSE, totalMode ? i18n.string(R.string.label_balance_texpense) : i18n.string(R.string.label_expense), expense,
+                            hideZero);
+                    liability = BalanceHelper.adjustNestedTotalBalance(AccountType.LIABILITY, totalMode ? i18n.string(R.string.label_balance_tliability) : i18n.string(R.string.label_liability),
+                            liability, hideZero);
                     other = BalanceHelper.adjustNestedTotalBalance(AccountType.OTHER, totalMode ? i18n.string(R.string.label_balance_tother) : i18n.string(R.string.label_other), other, hideZero);
 
                 } else {
@@ -355,18 +360,20 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                     break;
                 case MODE_MONTH:
                     if (totalMode) {
-                        infoView.setText(i18n.string(R.string.label_balance_mode_month_total, monthDateFormat.format(cal.monthStartDate(currentDate)), monthDayDateFormat.format(cal.monthEndDate(currentDate))));
-                    } else {
-                        infoView.setText(i18n.string(R.string.label_balance_mode_month, monthDateFormat.format(cal.monthStartDate(currentDate)), monthDayDateFormat.format(cal.monthStartDate(currentDate)),
+                        infoView.setText(i18n.string(R.string.label_balance_mode_month_total, monthDateFormat.format(cal.monthStartDate(currentDate)),
                                 monthDayDateFormat.format(cal.monthEndDate(currentDate))));
+                    } else {
+                        infoView.setText(i18n.string(R.string.label_balance_mode_month, monthDateFormat.format(cal.monthStartDate(currentDate)),
+                                monthDayDateFormat.format(cal.monthStartDate(currentDate)), monthDayDateFormat.format(cal.monthEndDate(currentDate))));
                     }
                     break;
                 case MODE_WEEK:
                     if (totalMode) {
-                        infoView.setText(i18n.string(R.string.label_balance_mode_week_total, yearDateFormat.format(currentDate), cal.weekOfYear(currentDate), monthDayDateFormat.format(cal.weekEndDate(currentDate))));
+                        infoView.setText(i18n.string(R.string.label_balance_mode_week_total, yearDateFormat.format(currentDate), cal.weekOfYear(currentDate),
+                                monthDayDateFormat.format(cal.weekEndDate(currentDate))));
                     } else {
-                        infoView.setText(i18n.string(R.string.label_balance_mode_week, yearDateFormat.format(currentDate), cal.weekOfYear(currentDate), monthDayDateFormat.format(cal.weekEndDate(currentDate)),
-                                monthDayDateFormat.format(cal.weekStartDate(currentDate))));
+                        infoView.setText(i18n.string(R.string.label_balance_mode_week, yearDateFormat.format(currentDate), cal.weekOfYear(currentDate),
+                                monthDayDateFormat.format(cal.weekEndDate(currentDate)), monthDayDateFormat.format(cal.weekStartDate(currentDate))));
                     }
                     break;
                 case MODE_DAY:
@@ -627,8 +634,8 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                     }
                 }
 
-                Intent intent = new BalanceTimeChart(BalanceActivity.this, GUIs.getOrientation(BalanceActivity.this), GUIs.getDPRatio(BalanceActivity.this)).createIntent(
-                        i18n.string(R.string.label_balance_yearly_timechart, at.getDisplay(i18n), yearDateFormat.format(currentDate)), balances);
+                Intent intent = new BalanceTimeChart(BalanceActivity.this, GUIs.getOrientation(BalanceActivity.this), GUIs.getDPRatio(BalanceActivity.this))
+                        .createIntent(i18n.string(R.string.label_balance_yearly_timechart, at.getDisplay(i18n), yearDateFormat.format(currentDate)), balances);
                 startActivity(intent);
             }
         });
@@ -671,8 +678,8 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                     }
                 }
 
-                Intent intent = new BalanceTimeChart(BalanceActivity.this, GUIs.getOrientation(BalanceActivity.this), GUIs.getDPRatio(BalanceActivity.this)).createIntent(
-                        i18n.string(R.string.label_balance_yearly_cumulative_timechart, at.getDisplay(i18n), yearDateFormat.format(currentDate)), balances);
+                Intent intent = new BalanceTimeChart(BalanceActivity.this, GUIs.getOrientation(BalanceActivity.this), GUIs.getDPRatio(BalanceActivity.this))
+                        .createIntent(i18n.string(R.string.label_balance_yearly_cumulative_timechart, at.getDisplay(i18n), yearDateFormat.format(currentDate)), balances);
                 startActivity(intent);
             }
         });
@@ -709,8 +716,8 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                     }
                 }
 
-                Intent intent = new BalanceTimeChart(BalanceActivity.this, GUIs.getOrientation(BalanceActivity.this), GUIs.getDPRatio(BalanceActivity.this)).createIntent(
-                        i18n.string(R.string.label_balance_yearly_runchart, yearDateFormat.format(currentDate)), balances);
+                Intent intent = new BalanceTimeChart(BalanceActivity.this, GUIs.getOrientation(BalanceActivity.this), GUIs.getDPRatio(BalanceActivity.this))
+                        .createIntent(i18n.string(R.string.label_balance_yearly_runchart, yearDateFormat.format(currentDate)), balances);
                 startActivity(intent);
             }
         });

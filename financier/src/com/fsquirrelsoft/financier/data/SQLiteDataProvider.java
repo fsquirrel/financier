@@ -1,5 +1,21 @@
 package com.fsquirrelsoft.financier.data;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.fsquirrelsoft.commons.util.CalendarHelper;
+import com.fsquirrelsoft.commons.util.Formats;
+import com.fsquirrelsoft.commons.util.Logger;
+import com.fsquirrelsoft.financier.context.Contexts;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_ALL;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_CASHACCOUNT;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_ID;
@@ -29,22 +45,6 @@ import static com.fsquirrelsoft.financier.data.DataMeta.TB_ACC;
 import static com.fsquirrelsoft.financier.data.DataMeta.TB_DET;
 import static com.fsquirrelsoft.financier.data.DataMeta.TB_DETTAG;
 import static com.fsquirrelsoft.financier.data.DataMeta.TB_TAG;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-import com.fsquirrelsoft.commons.util.CalendarHelper;
-import com.fsquirrelsoft.commons.util.Formats;
-import com.fsquirrelsoft.commons.util.Logger;
-import com.fsquirrelsoft.financier.context.Contexts;
 
 /**
  * 
@@ -431,25 +431,25 @@ public class SQLiteDataProvider implements IDataProvider {
         Cursor c = null;
         StringBuilder where = new StringBuilder();
         where.append(" 1=1 ");
-        if(start!=null){
+        if (start != null) {
             where.append(" AND ");
             where.append(COL_DET_DATE + ">=" + start.getTime());
         }
-        if(end!=null){
+        if (end != null) {
             where.append(" AND ");
-            where.append(COL_DET_DATE + "<=" +end.getTime());
+            where.append(COL_DET_DATE + "<=" + end.getTime());
         }
         if (note != null && !"".equals(note.trim())) {
             where.append(" AND ");
             where.append(COL_DET_NOTE + " like '%" + note + "%'");
         }
-        
-        c = db.query(TB_DET,COL_DET_ALL,where.length()==0?null:where.toString(),null, null, null, DET_ORDERBY,max>0?Integer.toString(max):null);
+
+        c = db.query(TB_DET, COL_DET_ALL, where.length() == 0 ? null : where.toString(), null, null, null, DET_ORDERBY, max > 0 ? Integer.toString(max) : null);
         List<Detail> result = new ArrayList<Detail>();
         Detail det;
-        while(c.moveToNext()){
+        while (c.moveToNext()) {
             det = new Detail();
-            applyCursor(det,c);
+            applyCursor(det, c);
             result.add(det);
         }
         c.close();
@@ -577,7 +577,8 @@ public class SQLiteDataProvider implements IDataProvider {
         }
 
         Cursor c = null;
-        c = db.rawQuery("select d.* from fsf_dettag dt inner join fsf_det d on d.id_ = dt.detid_ inner join fsf_tag t on t.id_ = dt.tagid_ where " + where.toString() + " order by d.dt_ desc, d.id_", null);
+        c = db.rawQuery("select d.* from fsf_dettag dt inner join fsf_det d on d.id_ = dt.detid_ inner join fsf_tag t on t.id_ = dt.tagid_ where " + where.toString() + " order by d.dt_ desc, d.id_",
+                null);
         List<Detail> result = new ArrayList<Detail>();
         Detail det;
         while (c.moveToNext()) {
@@ -1206,7 +1207,9 @@ public class SQLiteDataProvider implements IDataProvider {
             where.append(COL_DET_DATE + "<=" + end.getTime());
         }
         Cursor c = null;
-        c = db.rawQuery("select t.nm_, d.mnb_, d.tot_, dt.tagid_ from fsf_dettag dt inner join fsf_det d on d.id_ = dt.detid_ inner join fsf_tag t on t.id_ = dt.tagid_" + where.toString() + " order by t.nm_", null);
+        c = db.rawQuery(
+                "select t.nm_, d.mnb_, d.tot_, dt.tagid_ from fsf_dettag dt inner join fsf_det d on d.id_ = dt.detid_ inner join fsf_tag t on t.id_ = dt.tagid_" + where.toString() + " order by t.nm_",
+                null);
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         Map<String, Object> rowData;
         while (c.moveToNext()) {

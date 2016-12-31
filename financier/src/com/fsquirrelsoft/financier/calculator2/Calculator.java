@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Config;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
@@ -41,7 +42,16 @@ public class Calculator extends Activity implements OnClickListener {
     public static final String INTENT_START_VALUE = "cal2_startValue";
     public static final String INTENT_NEED_RESULT = "cal2_needResult";
     public static final String INTENT_RESULT_VALUE = "cal2_resultValue";
-
+    static final int BASIC_PANEL = 0;
+    static final int ADVANCED_PANEL = 1;
+    private static final int CMD_CLEAR_HISTORY = 1;
+    private static final int CMD_BASIC_PANEL = 2;
+    private static final int CMD_ADVANCED_PANEL = 3;
+    private static final int HVGA_HEIGHT_PIXELS = 480;
+    private static final int HVGA_WIDTH_PIXELS = 320;
+    private static final String LOG_TAG = "Calculator";
+    private static final boolean DEBUG = false;
+    private static final boolean LOG_ENABLED = DEBUG ? Config.LOGD : Config.LOGV;
     EventListener mListener = new EventListener();
     private CalculatorDisplay mDisplay;
     private Persist mPersist;
@@ -49,19 +59,11 @@ public class Calculator extends Activity implements OnClickListener {
     private Logic mLogic;
     private PanelSwitcher mPanelSwitcher;
 
-    private static final int CMD_CLEAR_HISTORY = 1;
-    private static final int CMD_BASIC_PANEL = 2;
-    private static final int CMD_ADVANCED_PANEL = 3;
-
-    private static final int HVGA_HEIGHT_PIXELS = 480;
-    private static final int HVGA_WIDTH_PIXELS = 320;
-
-    static final int BASIC_PANEL = 0;
-    static final int ADVANCED_PANEL = 1;
-
-    private static final String LOG_TAG = "Calculator";
-    private static final boolean DEBUG = false;
-    private static final boolean LOG_ENABLED = DEBUG ? Config.LOGD : Config.LOGV;
+    static void log(String message) {
+        if (LOG_ENABLED) {
+            Log.v(LOG_TAG, message);
+        }
+    }
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -178,26 +180,20 @@ public class Calculator extends Activity implements OnClickListener {
         }
     }
 
-    static void log(String message) {
-        if (LOG_ENABLED) {
-            Log.v(LOG_TAG, message);
-        }
-    }
-
     /**
-     * The font sizes in the layout files are specified for a HVGA display.
-     * Adjust the font sizes accordingly if we are running on a different
-     * display.
+     * The font sizes in the layout files are specified for a HVGA display. Adjust the font sizes accordingly if we are running on a different display.
      */
     public void adjustFontSize(TextView view) {
         float fontPixelSize = view.getTextSize();
         Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        display.getMetrics(metrics);
         int h = Math.min(display.getWidth(), display.getHeight());
-        float ratio = 0;
+        float ratio;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            ratio = (float) h / HVGA_WIDTH_PIXELS;
+            ratio = (float) h / HVGA_WIDTH_PIXELS / metrics.density;
         } else {
-            ratio = (float) h / HVGA_HEIGHT_PIXELS;
+            ratio = (float) h / HVGA_HEIGHT_PIXELS / metrics.density;
         }
         view.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontPixelSize * ratio);
     }

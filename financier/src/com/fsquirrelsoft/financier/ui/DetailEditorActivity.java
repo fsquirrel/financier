@@ -1,16 +1,5 @@
 package com.fsquirrelsoft.financier.ui;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -27,13 +16,13 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.CalendarHelper;
 import com.fsquirrelsoft.commons.util.Formats;
 import com.fsquirrelsoft.commons.util.GUIs;
 import com.fsquirrelsoft.commons.util.Logger;
 import com.fsquirrelsoft.financier.calculator2.Calculator;
 import com.fsquirrelsoft.financier.context.ContextsActivity;
+import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Account;
 import com.fsquirrelsoft.financier.data.AccountType;
 import com.fsquirrelsoft.financier.data.Detail;
@@ -43,6 +32,17 @@ import com.fsquirrelsoft.financier.data.IDataProvider;
 import com.fsquirrelsoft.financier.data.Tag;
 import com.fsquirrelsoft.financier.ui.AccountUtil.IndentNode;
 import com.fsquirrelsoft.financier.ui.MultiSpinner.MultiSpinnerListener;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Edit or create a detail
@@ -234,7 +234,8 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         toEditor.setAdapter(toAccountAdapter);
 
         periodUnitSpinner = (Spinner) findViewById(R.id.deteditor_periodUnit);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[] { i18n.string(R.string.puitem_year), i18n.string(R.string.puitem_month), i18n.string(R.string.puitem_day) });
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+                new String[] { i18n.string(R.string.puitem_year), i18n.string(R.string.puitem_month), i18n.string(R.string.puitem_day) });
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         periodUnitSpinner.setAdapter(adapter);
 

@@ -1,16 +1,16 @@
 package com.fsquirrelsoft.financier.data;
 
+import com.fsquirrelsoft.financier.context.Contexts;
+import com.fsquirrelsoft.financier.ui.AccountUtil;
+import com.fsquirrelsoft.financier.ui.AccountUtil.IndentNode;
+import com.fsquirrelsoft.financier.ui.TagUtil;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
-import com.fsquirrelsoft.financier.context.Contexts;
-import com.fsquirrelsoft.financier.ui.AccountUtil;
-import com.fsquirrelsoft.financier.ui.AccountUtil.IndentNode;
-import com.fsquirrelsoft.financier.ui.TagUtil;
 
 public class BalanceHelper {
 
@@ -101,8 +101,7 @@ public class BalanceHelper {
             calInit = false;
         } else {
             Detail first = idp.getFirstDetail();
-            // don't calculate init val if the first record date in after end
-            // data
+            // don't calculate init val if the first record date in after end data
             if (first != null && first.getDate().after(end)) {
                 calInit = false;
             }
@@ -133,8 +132,7 @@ public class BalanceHelper {
             calInit = false;
         } else {
             Detail first = idp.getFirstDetail();
-            // don't calculate init val if the first record date in after end
-            // data
+            // don't calculate init val if the first record date in after end data
             if (first != null && first.getDate().after(end)) {
                 calInit = false;
             }
@@ -161,8 +159,7 @@ public class BalanceHelper {
             calInit = false;
         } else {
             Detail first = idp.getFirstDetail();
-            // don't calculate init val if the first record date in after end
-            // data
+            // don't calculate init val if the first record date in after end data
             if (first != null && first.getDate().after(end)) {
                 calInit = false;
             }

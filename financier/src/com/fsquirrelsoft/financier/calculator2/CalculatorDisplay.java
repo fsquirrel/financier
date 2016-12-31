@@ -40,16 +40,10 @@ class CalculatorDisplay extends ViewSwitcher {
     private static final char[] ACCEPTED_CHARS = "0123456789.+-*/\u2212\u00d7\u00f7()!%^".toCharArray();
 
     private static final int ANIM_DURATION = 500;
-
-    enum Scroll {
-        UP, DOWN, NONE
-    }
-
     TranslateAnimation inAnimUp;
     TranslateAnimation outAnimUp;
     TranslateAnimation inAnimDown;
     TranslateAnimation outAnimDown;
-
     private Logic mLogic;
     private boolean mComputedLineLength = false;
 
@@ -60,9 +54,12 @@ class CalculatorDisplay extends ViewSwitcher {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        Calculator calc = (Calculator) getContext();
-        calc.adjustFontSize((TextView) getChildAt(0));
-        calc.adjustFontSize((TextView) getChildAt(1));
+        Context context = getContext();
+        if (context instanceof Calculator) {
+            Calculator calc = (Calculator) context;
+            calc.adjustFontSize((TextView) getChildAt(0));
+            calc.adjustFontSize((TextView) getChildAt(1));
+        }
     }
 
     @Override
@@ -97,8 +94,7 @@ class CalculatorDisplay extends ViewSwitcher {
 
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
                 /*
-                 * the EditText should still accept letters (eg. 'sin') coming
-                 * from the on-screen touch buttons, so don't filter anything.
+                 * the EditText should still accept letters (eg. 'sin') coming from the on-screen touch buttons, so don't filter anything.
                  */
                 return null;
             }
@@ -182,9 +178,16 @@ class CalculatorDisplay extends ViewSwitcher {
 
     @Override
     protected void onFocusChanged(boolean gain, int direction, Rect prev) {
+        super.onFocusChanged(gain, direction, prev);
         // Calculator.log("focus " + gain + "; " + direction + "; " + prev);
         if (!gain) {
             requestFocus();
         }
+    }
+
+    enum Scroll {
+        UP,
+        DOWN,
+        NONE
     }
 }

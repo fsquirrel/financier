@@ -19,6 +19,8 @@
  */
 package com.fsquirrelsoft.financier.calculator2;
 
+import android.content.Context;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
@@ -27,8 +29,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import android.content.Context;
 
 class Persist {
     private static final int LAST_VERSION = 1;

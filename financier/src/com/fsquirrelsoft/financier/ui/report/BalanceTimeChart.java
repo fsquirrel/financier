@@ -1,6 +1,12 @@
 package com.fsquirrelsoft.financier.ui.report;
 
-import java.util.List;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint.Align;
+
+import com.fsquirrelsoft.financier.core.R;
+import com.fsquirrelsoft.financier.data.Balance;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.PointStyle;
@@ -10,13 +16,7 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer.Orientation;
 import org.achartengine.renderer.XYSeriesRenderer;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint.Align;
-
-import com.fsquirrelsoft.financier.core.R;
-import com.fsquirrelsoft.financier.data.Balance;
+import java.util.List;
 
 /**
  * 
@@ -77,9 +77,10 @@ public class BalanceTimeChart extends AbstractChart {
         renderer.setXLabels(Math.min(12, seriesLength));
         renderer.setYLabels(16);
         renderer.setShowGrid(true);
-        renderer.setXLabelsAngle(120);
+        renderer.setXLabelsAngle(60);
 
-        setChartSettings(renderer, title, "", i18n.string(R.string.label_money), balances.get(0).get(0).getDate().getTime(), balances.get(0).get(seriesLength - 1).getDate().getTime(), min - (min / 20), max + (max / 20), Color.GRAY, Color.LTGRAY);
+        setChartSettings(renderer, title, "", i18n.string(R.string.label_money), balances.get(0).get(0).getDate().getTime(), balances.get(0).get(seriesLength - 1).getDate().getTime(),
+                min - (min / 20), max + (max / 20), Color.GRAY, Color.LTGRAY);
         renderer.setYLabels(10);
         return ChartFactory.getTimeChartIntent(context, dataset, renderer, "yyyy MMM");
     }

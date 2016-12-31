@@ -1,10 +1,5 @@
 package com.fsquirrelsoft.financier.ui.report;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.Date;
-import java.util.List;
-
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -15,14 +10,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.CalendarHelper;
 import com.fsquirrelsoft.commons.util.GUIs;
 import com.fsquirrelsoft.commons.util.Logger;
 import com.fsquirrelsoft.financier.context.ContextsActivity;
+import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Detail;
 import com.fsquirrelsoft.financier.data.IDataProvider;
 import com.fsquirrelsoft.financier.ui.DetailListHelper;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Edit or create a detail

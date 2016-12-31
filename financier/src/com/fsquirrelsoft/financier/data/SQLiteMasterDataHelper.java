@@ -1,17 +1,18 @@
 package com.fsquirrelsoft.financier.data;
 
-import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_ID;
-import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_NAME;
-import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_NOTE;
-import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_SYMBOL;
-import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_SYMBOL_POSITION;
-import static com.fsquirrelsoft.financier.data.MasterDataMeta.TB_BOOK;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.fsquirrelsoft.commons.util.Logger;
 import com.fsquirrelsoft.financier.context.Contexts;
+
+import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_ID;
+import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_NAME;
+import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_NOTE;
+import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_SYMBOL;
+import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_SYMBOL_POSITION;
+import static com.fsquirrelsoft.financier.data.MasterDataMeta.TB_BOOK;
 
 /**
  * 
@@ -22,8 +23,8 @@ public class SQLiteMasterDataHelper extends SQLiteOpenHelper {
     /** maintain this field carefully */
     private static final int VERSION = 1;// 0.9.6-
 
-    private static final String BOOK_CREATE_SQL = "CREATE TABLE " + TB_BOOK + " (" + COL_BOOK_ID + " TEXT PRIMARY KEY, " + COL_BOOK_NAME + " TEXT NOT NULL, " + COL_BOOK_SYMBOL + " TEXT NULL, " + COL_BOOK_SYMBOL_POSITION + " INTEGER NOT NULL, "
-            + COL_BOOK_NOTE + " TEXT)";
+    private static final String BOOK_CREATE_SQL = "CREATE TABLE " + TB_BOOK + " (" + COL_BOOK_ID + " TEXT PRIMARY KEY, " + COL_BOOK_NAME + " TEXT NOT NULL, " + COL_BOOK_SYMBOL + " TEXT NULL, "
+            + COL_BOOK_SYMBOL_POSITION + " INTEGER NOT NULL, " + COL_BOOK_NOTE + " TEXT)";
     private static final String BOOK_DROP_SQL = "DROP TABLE IF EXISTS " + TB_BOOK;
 
     public SQLiteMasterDataHelper(Context context, String dbname) {

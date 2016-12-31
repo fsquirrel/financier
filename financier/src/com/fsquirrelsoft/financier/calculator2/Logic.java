@@ -19,17 +19,17 @@
  */
 package com.fsquirrelsoft.financier.calculator2;
 
-import org.javia.arity.Symbols;
-import org.javia.arity.SyntaxException;
-import org.javia.arity.Util;
-
 import android.content.Context;
 import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.calculator2.CalculatorDisplay.Scroll;
+import com.fsquirrelsoft.financier.core.R;
+
+import org.javia.arity.Symbols;
+import org.javia.arity.SyntaxException;
+import org.javia.arity.Util;
 
 class Logic {
     private CalculatorDisplay mDisplay;

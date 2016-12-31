@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- 
-    refer to /core/res/res/values/ themes.xml
-     -->
-	<style name="Theme.Password" parent="@android:style/Theme.Dialog">
-	</style>
+<!--     refer to /core/res/res/values/ themes.xml
+ -->
+    <style name="Theme.Password" parent="@android:style/Theme.Dialog"></style>
+
+    <style name="DailyMoneyTheme" parent="DailyMoneyTheme.Base"></style>
+
+    <style name="DailyMoneyTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
 </resources>

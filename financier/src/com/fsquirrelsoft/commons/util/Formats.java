@@ -1,5 +1,7 @@
 package com.fsquirrelsoft.commons.util;
 
+import com.fsquirrelsoft.financier.data.SymbolPosition;
+
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -7,8 +9,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import com.fsquirrelsoft.financier.data.SymbolPosition;
 
 /**
  * 

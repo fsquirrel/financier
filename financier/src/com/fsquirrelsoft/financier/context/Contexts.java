@@ -1,16 +1,5 @@
 package com.fsquirrelsoft.financier.context;
 
-import java.io.File;
-import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -26,11 +15,11 @@ import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.text.Html;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.CalendarHelper;
 import com.fsquirrelsoft.commons.util.Formats;
 import com.fsquirrelsoft.commons.util.I18N;
 import com.fsquirrelsoft.commons.util.Logger;
+import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Book;
 import com.fsquirrelsoft.financier.data.IDataProvider;
 import com.fsquirrelsoft.financier.data.IMasterDataProvider;
@@ -42,6 +31,17 @@ import com.fsquirrelsoft.financier.data.SymbolPosition;
 import com.fsquirrelsoft.financier.ui.Constants;
 import com.fsquirrelsoft.financier.ui.DesktopActivity;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+
+import java.io.File;
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Helps me to do some quick access in context/ui thread
@@ -84,8 +84,7 @@ public class Contexts {
 
     // analytics code
     private static final String ANALYTICS_CDOE = "UA-50631497-1";
-    private static final int ANALYTICS_DISPATH_DELAY = 60;// dispatch queue at
-                                                          // least 60s
+    private static final int ANALYTICS_DISPATH_DELAY = 60;// dispatch queue at least 60s
 
     private GoogleAnalyticsTracker tracker;
 
@@ -202,8 +201,7 @@ public class Contexts {
         // Stop the tracker when it is no longer needed.
         try {
             if (tracker != null) {
-                // don't dispatch, let the queue do it next time to reduce
-                // network
+                // don't dispatch, let the queue do it next time to reduce network
                 tracker.dispatch();
                 tracker.stop();
                 tracker = null;
@@ -318,9 +316,7 @@ public class Contexts {
     }
 
     /**
-     * return true is this is first time you call this api in this application.
-     * note that, when calling this twice, it returns false. see
-     * {@link DesktopActivity#initialApplicationInfo}
+     * return true is this is first time you call this api in this application. note that, when calling this twice, it returns false. see {@link DesktopActivity#initialApplicationInfo}
      */
     public boolean isFirstTime() {
         try {
@@ -337,8 +333,7 @@ public class Contexts {
     }
 
     /**
-     * return true is this is first time you call this api in this application
-     * and current version
+     * return true is this is first time you call this api in this application and current version
      */
     public boolean isFirstVersionTime() {
         int curr = getApplicationVersionCode();

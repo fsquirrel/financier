@@ -3,47 +3,42 @@
  */
 package com.fsquirrelsoft.financier.data;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.I18N;
+import com.fsquirrelsoft.financier.core.R;
+
+import java.io.Serializable;
 
 /**
  * @author dennis
  * 
  */
-public enum AccountType {
+public enum AccountType implements Serializable {
 
-    UNKONW("Z", R.drawable.na), INCOME("A", R.drawable.tab_income), EXPENSE("B", R.drawable.tab_expense), ASSET("C", R.drawable.tab_asset), LIABILITY("D", R.drawable.tab_liability), OTHER("E", R.drawable.tab_other);
-
-    String type;
-    int drawable;
-
-    AccountType(String type, int drawable) {
-        this.type = type;
-        this.drawable = drawable;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getDisplay(I18N i18n) {
-        return getDisplay(i18n, type);
-    }
-
-    public int getDrawable() {
-        return drawable;
-    }
+    UNKONW("Z", R.drawable.na, R.color.unknow_fgl),
+    INCOME("A", R.drawable.tab_income, R.color.income_fgl),
+    EXPENSE("B", R.drawable.tab_expense, R.color.expense_fgl),
+    ASSET("C", R.drawable.tab_asset, R.color.asset_fgl),
+    LIABILITY("D", R.drawable.tab_liability, R.color.liability_fgl),
+    OTHER("E", R.drawable.tab_other, R.color.other_fgl);
 
     static final AccountType[] supported = new AccountType[] { INCOME, EXPENSE, ASSET, LIABILITY, OTHER };
-
     static final AccountType[] from = new AccountType[] { ASSET, INCOME, LIABILITY, OTHER };
-
     static final AccountType[] fromIncome = new AccountType[] { ASSET, EXPENSE, LIABILITY, OTHER };
     static final AccountType[] fromAsset = new AccountType[] { EXPENSE, ASSET, LIABILITY, OTHER };
     static final AccountType[] fromUnknow = new AccountType[] {};
     static final AccountType[] fromExpense = new AccountType[] {};
     static final AccountType[] fromLiability = new AccountType[] { EXPENSE, ASSET, LIABILITY, OTHER };
     static final AccountType[] fromOther = new AccountType[] { EXPENSE, ASSET, LIABILITY, OTHER };
+
+    String type;
+    int drawable;
+    int color;
+
+    AccountType(String type, int drawable, int color) {
+        this.type = type;
+        this.drawable = drawable;
+        this.color = color;
+    }
 
     static public AccountType[] getSupportedType() {
         return supported;
@@ -102,6 +97,22 @@ public enum AccountType {
         default:
             return fromUnknow;
         }
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getDisplay(I18N i18n) {
+        return getDisplay(i18n, type);
+    }
+
+    public int getDrawable() {
+        return drawable;
+    }
+
+    public int getColor() {
+        return this.color;
     }
 
 }

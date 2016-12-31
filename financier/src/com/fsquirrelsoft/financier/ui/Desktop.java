@@ -1,42 +1,25 @@
 package com.fsquirrelsoft.financier.ui;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 
  * @author dennis
  * 
  */
-public class Desktop {
+public class Desktop extends Fragment {
 
     protected String label;
     protected int icon;
-    protected Activity activity;
 
     List<DesktopItem> items = new ArrayList<DesktopItem>();
-
-    public Desktop(Activity activity) {
-        this(activity, "", 0);
-    }
-
-    public Desktop(Activity activity, String label, int icon) {
-        this(activity, label, icon, null);
-    }
-
-    public Desktop(Activity activity, String label, int icon, List<DesktopItem> items) {
-        this.activity = activity;
-        this.label = label;
-        this.icon = icon;
-        if (items != null) {
-            this.items.addAll(items);
-        }
-    }
 
     public void addItem(DesktopItem item) {
         items.add(item);
@@ -62,6 +45,10 @@ public class Desktop {
             }
         }
         return list;
+    }
+
+    public boolean isAvailable() {
+        return true;
     }
 
     public static class IntentRun implements Runnable {
@@ -90,13 +77,6 @@ public class Desktop {
         public void run() {
             context.startActivity(new Intent(context, activity));
         }
-    }
-
-    public void refresh() {
-    }
-
-    public boolean isAvailable() {
-        return true;
     }
 
 }

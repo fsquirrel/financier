@@ -1,12 +1,5 @@
 package com.fsquirrelsoft.commons.util;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -24,6 +17,13 @@ import android.widget.Toast;
 
 import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.ui.CustomizeDatePickerDialog;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 
@@ -131,7 +131,7 @@ public class GUIs {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         return inflater.inflate(resourceid, parent);
     }
-    
+
     private static ScheduledExecutorService delayPostExecutor = Executors.newSingleThreadScheduledExecutor();
     private static ExecutorService singleExecutor = Executors.newSingleThreadExecutor();
     private static Handler guiHandler = new Handler();
@@ -139,8 +139,9 @@ public class GUIs {
     static public void delayPost(final Runnable r) {
         delayPost(r, 50);
     }
-    static public void delayPost(final Runnable r,final long delay){
-        delayPostExecutor.schedule(new Runnable(){
+
+    static public void delayPost(final Runnable r, final long delay) {
+        delayPostExecutor.schedule(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -148,7 +149,8 @@ public class GUIs {
                 } catch (InterruptedException e) {
                 }
                 post(r);
-            }},delay,TimeUnit.MILLISECONDS);
+            }
+        }, delay, TimeUnit.MILLISECONDS);
     }
 
     static public void post(Runnable r) {
@@ -167,8 +169,7 @@ public class GUIs {
         doBusy(context, context.getString(R.string.cmsg_busy), r);
     }
 
-    // lock & release rotation!! not work in sdk(2.1,2.2) but work fine in my
-    // i9000
+    // lock & release rotation!! not work in sdk(2.1,2.2) but work fine in my i9000
     static public void lockOrientation(Activity activity) {
         switch (activity.getResources().getConfiguration().orientation) {
         case Configuration.ORIENTATION_PORTRAIT:
@@ -183,37 +184,39 @@ public class GUIs {
     static public void releaseOrientation(Activity activity) {
         activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
-    static public void doBusy(Context context,String msg,Runnable r){
-        doBusy(context,msg,r,500);
+
+    static public void doBusy(Context context, String msg, Runnable r) {
+        doBusy(context, msg, r, 500);
     }
-    static public void doBusy(Context context,String msg,Runnable r,final long dealy){
-        final ProgressDialog dlg = new ProgressDialog(context);//ProgressDialog.show(context,null,msg,true,false);
+
+    static public void doBusy(Context context, String msg, Runnable r, final long dealy) {
+        final ProgressDialog dlg = new ProgressDialog(context);// ProgressDialog.show(context,null,msg,true,false);
         dlg.setMessage(msg);
         dlg.setTitle(null);
         dlg.setIndeterminate(true);
         dlg.setCancelable(false);
-        
+
         if (context instanceof Activity) {
             lockOrientation((Activity) context);
         }
 
         final BusyRunnable br = new BusyRunnable(context, dlg, r);
         singleExecutor.submit(br);
-        
-        delayPost(new Runnable(){
+
+        delayPost(new Runnable() {
             @Override
             public void run() {
-                synchronized(br){
-                    if(!br.finish){
+                synchronized (br) {
+                    if (!br.finish) {
                         dlg.show();
                         br.showing = true;
                     }
                 }
             }
-        },dealy); 
+        }, dealy);
     }
-    
-    static private class NothrowRunnable implements Runnable{
+
+    static private class NothrowRunnable implements Runnable {
         Runnable r;
 
         public NothrowRunnable(Runnable r) {
@@ -229,15 +232,15 @@ public class GUIs {
             }
         }
     }
-    
-    static private class BusyRunnable implements Runnable{
+
+    static private class BusyRunnable implements Runnable {
         ProgressDialog dlg;
         Context context;
         Runnable run;
         volatile boolean showing = false;
         volatile boolean finish = false;
-        
-        public BusyRunnable(Context context,ProgressDialog dlg,Runnable run){
+
+        public BusyRunnable(Context context, ProgressDialog dlg, Runnable run) {
             this.context = context;
             this.dlg = dlg;
             this.run = run;
@@ -246,14 +249,14 @@ public class GUIs {
         @Override
         public void run() {
             final FinalVar<Throwable> x = new FinalVar<Throwable>();
-            try{
+            try {
                 run.run();
-            }catch(final Throwable x0){
+            } catch (final Throwable x0) {
                 x.value = x0;
-                Logger.e(x0.getMessage(),x0);
+                Logger.e(x0.getMessage(), x0);
             }
-            
-            //close dlg if it is showing
+
+            // close dlg if it is showing
             synchronized (this) {
                 finish = true;
                 if (showing) {
@@ -268,8 +271,8 @@ public class GUIs {
                     });
                 }
             }
-            
-            //notify success of error
+
+            // notify success of error
             if (run instanceof IBusyRunnable) {
                 if (x.value == null) {
                     post(new Runnable() {
@@ -289,7 +292,7 @@ public class GUIs {
                     }
                 }
             }
-            //release orientation lock
+            // release orientation lock
             post(new Runnable() {
                 @Override
                 public void run() {

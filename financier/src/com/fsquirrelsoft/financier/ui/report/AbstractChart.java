@@ -1,14 +1,14 @@
 package com.fsquirrelsoft.financier.ui.report;
 
+import android.content.Context;
+
+import com.fsquirrelsoft.commons.util.I18N;
+
 import org.achartengine.chart.PointStyle;
 import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
-
-import android.content.Context;
-
-import com.fsquirrelsoft.commons.util.I18N;
 
 /**
  * 

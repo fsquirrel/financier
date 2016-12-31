@@ -17,12 +17,10 @@ public class DesktopItem {
     protected String label;
     Runnable run;
 
-    // a important item(>=0), will show to menu (the larger number will put to
-    // front of menu)
+    // a important item(>=0), will show to menu (the larger number will put to front of menu)
     int important;
 
-    // a hidden item, show not show to desktop, but still show to menu if it is
-    // important
+    // a hidden item, show not show to desktop, but still show to menu if it is important
     boolean hidden;
 
     public DesktopItem(Runnable run, String label) {

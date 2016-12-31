@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="cact_cancel">Отмена</string>
+
+    <string name="cact_cancel">Отмена</string>
     <string name="cact_close">Закрыть</string>
     <string name="cact_copy">Копировать</string>
     <string name="cact_create">Создать</string>
@@ -21,9 +22,9 @@
     <string name="clabel_warn">Предупреждение</string>
     <string name="cmsg_busy">Приложение работает, пожалуйста подождите...</string>
     <string name="cmsg_error">Ошибка : %1$s</string>
-    <string name="cmsg_field_empty">%1$s пуста</string>  
-    <string name="cmsg_field_zero">%1$s нулевой длинны</string> 
-     <string name="clabel_all">Все</string>
-    <!-- above are verified --> 
+    <string name="cmsg_field_empty">%1$s пуста</string>
+    <string name="cmsg_field_zero">%1$s нулевой длинны</string>
+    <string name="clabel_all">Все</string>
+    <!-- above are verified -->
 
 </resources>

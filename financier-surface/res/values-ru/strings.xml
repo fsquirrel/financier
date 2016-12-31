@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Financier</string>
-	<string name="app_surface">financier-core</string>
+
+    <string name="app_name">Financier</string>
+    <string name="app_surface">financier-core</string>
     <string name="defacc_bank1">Банк.A</string>
     <string name="defacc_bank2">Банк.B</string>
     <string name="defacc_cash">Наличные</string>
@@ -76,100 +77,75 @@
     <string name="title_deteditor_update">Обновить описание</string>
     <string name="title_detlist">Список описаний</string>
     <string name="title_detmgnt">Менеджер описаний</string>
-    <string name="title_prefs">Настройки</string> 
-    
-        
+    <string name="title_prefs">Настройки</string>
     <string name="dt_main">Главная</string>
     <string name="dt_reports">Отчеты</string>
     <string name="dt_tests">Тесты</string>
     <string name="label_prefs_testsdekstop">Открыть экран тестирования</string>
     <string name="label_prefs_testsdekstop_sum">открытые испытания рабочего стола, только для разработчиков</string>
-    
     <string name="label_export_csv">Экспорт в CSV</string>
     <string name="label_import_csv">Импорт из CSV</string>
     <string name="label_reset">Сброс данных</string>
     <string name="label_create_default">Создать данные по умолчанию (счета)</string>
-    
-    
     <string name="msg_csv_exported">Данные (%1$s) были экспортированы в %2$s, </string>
     <string name="msg_csv_imported">Данные были импортированы из %2$s (%1$s)</string>
     <string name="msg_rested">Дата была сброшена</string>
     <string name="msg_default_created">Данные по умолчанию созданы</string>
     <string name="title_datamain">О ведении данных</string>
-    
     <string name="qmsg_export_csv">Вы хотите экспортировать CSV и заменить его?</string>
     <string name="qmsg_import_csv">Вы хотите импортировать CSV и заменить данные?</string>
     <string name="qmsg_reset">Вы действительно хотите сбросить все данные?</string>
     <string name="qmsg_create_default">Вы хотите создать данные по умолчанию?</string>
     <string name="dtitem_datamain">Данные</string>
-    
-    
     <string name="msg_no_csv">Нет CSV-файлов</string>
     <string name="label_clear_folder">Очистить рабочий каталог</string>
     <string name="msg_folder_cleared">Рабочий каталог %1$s был очищен</string>
-    
     <string name="label_prefs_backupcsv">Резервная копия CSV</string>
     <string name="label_prefs_backupcsv_sum">Резервная копия старых CSV при экспорте</string>
-    
     <string name="qmsg_clear_folder">Вы действительно хотите очистить каталог %1$s? все CSV будут удалены</string>
     <string name="defacc_creditcard">Кредитная карта</string>
-    
     <string name="label_account">Счет</string>
     <string name="label_detail">Описание</string>
     <string name="label_account_only">Только счета</string>
     <string name="label_detail_only">Только подробности</string>
-    
     <string name="label_share_csv">Доступ к CSV</string>
     <string name="msg_share_csv_title">Financier %1$s</string>
     <string name="msg_share_csv_content">Financier CSV Файлы</string>
     <string name="qmsg_share_csv">Каким файлам CSV дать доступ?</string>
-    
     <string name="msg_firsttime_use_hint">Добро пожаловать в программу Financier, нажмите Добавить Описание чтобы продолжить</string>
-    
     <string name="label_balance_tincome">Баланс доходов</string>
     <string name="label_balance_texpense">Расходы баланса</string>
     <string name="label_balance_tАктивы">Активы баланса</string>
     <string name="label_balance_tliability">Обязательство баланса</string>
     <string name="label_balance_tother">Другое в балансе</string>
-    
     <string name="label_balance_mode_month">за %1$s (%2$s-%3$s)</string>
     <string name="label_balance_mode_year">Баланс за год %1$s</string>
-    
     <string name="label_balance_mode_month_total">до %1$s (%2$s)</string>
     <string name="label_balance_mode_year_total">Баланс до %1$s года</string>
-    
     <string name="dtitem_report_monthly_balance">Ежемесячный баланс</string>
     <string name="dtitem_report_yearly_balance">Ежегодный баланс</string>
     <string name="dtitem_report_cumulative_balance">Совокупный баланс</string>
-    
     <string name="label_count">(%1$s)</string>
-    <string name="label_accdetlist_dateinfo">%1$s к %2$s</string> 
-    
+    <string name="label_accdetlist_dateinfo">%1$s к %2$s</string>
     <string name="label_prefs_password">Защита паролем-1</string>
     <string name="label_prefs_password_sum">Установите пароль приложения, пусто - защита выключена</string>
     <string name="label_prefs_passwordvd">Защита паролем-2</string>
     <string name="label_prefs_passwordvd_sum">Установите тот же пароль еще раз, чтобы включить защиту</string>
     <string name="title_pdprotection">Защита паролем</string>
     <string name="msg_wrong_password">Пароль неверный!</string>
-    
-    
     <string name="act_balance_detlist">Список описаний</string>
     <string name="act_balance_piechart">Круговая диаграмма</string>
     <string name="act_balance_yearly_timechart">Годовая диаграмма</string>
     <string name="act_balance_yearly_cumulative_timechart">Годовая диаграмма(совокупно)</string>
     <string name="label_balance_yearly_timechart">%1$s в %2$s</string>
     <string name="label_balance_yearly_cumulative_timechart">%1$s в %2$s (совокупно)</string>
-    
     <string name="label_detlayout_type3">Деньги - К</string>
     <string name="label_detlayout_type4">Деньги - Примечание</string>
     <string name="act_balance_yearly_runchart">Годовые Активы-Обязательство запустить диаграмму</string>
-    <string name="label_balance_yearly_runchart">Активы-Обязательство(совокупн) в %1$s</string>    
-    
+    <string name="label_balance_yearly_runchart">Активы-Обязательство(совокупн) в %1$s</string>
     <string name="label_prefs_allow_analytics">Отправлять google analytics</string>
     <string name="label_prefs_allow_analytics_sum">[не посылать любые другие данные] Отправка использования, чтобы помочь мне улучшить применение</string>
-    
     <string name="dtitem_about">О программе</string>
-    
     <string name="path_about_app">about.html</string>
     <string name="path_what_is_new">whatsnew.html</string>
     <string name="label_weekly_expense">Еженедельно : %1$s</string>
@@ -179,9 +155,9 @@
     <string name="label_prefs_csv_encoding">CSV Кодировка</string>
     <string name="label_prefs_csv_encoding_sum">Не изменяйте это, если вы не знаете что это такое</string>
     <string name="label_prefcat_csv">CSV</string>
-    <string name="label_prefcat_others">Другие</string>   
-<!-- above are verified -->    
-   
+    <string name="label_prefcat_others">Другие</string>
+    <!-- above are verified -->
+
     <!-- from 20111120 lancelot -->
     <string name="defacc_installments_payable">Installments Payable</string>
     <string name="puitem_year">Y</string>
@@ -197,5 +173,5 @@
     <string name="msg_db_backuped">%1$s files backup to %2$s</string>
     <string name="msg_no_db">There is no file to backup</string>
     <string name="label_prefs_lastbackup">Last Backup Time</string>
-</resources>
 
+</resources>

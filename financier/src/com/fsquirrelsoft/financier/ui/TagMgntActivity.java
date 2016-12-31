@@ -1,7 +1,5 @@
 package com.fsquirrelsoft.financier.ui;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,11 +11,13 @@ import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.GUIs;
 import com.fsquirrelsoft.financier.context.ContextsActivity;
+import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.IDataProvider;
 import com.fsquirrelsoft.financier.data.Tag;
+
+import java.util.List;
 
 /**
  * 

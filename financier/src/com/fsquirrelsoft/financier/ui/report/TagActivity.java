@@ -1,13 +1,5 @@
 package com.fsquirrelsoft.financier.ui.report;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+
 import com.fsquirrelsoft.commons.util.CalendarHelper;
 import com.fsquirrelsoft.commons.util.GUIs;
 import com.fsquirrelsoft.financier.context.ContextsActivity;
@@ -32,6 +25,14 @@ import com.fsquirrelsoft.financier.data.BalanceHelper;
 import com.fsquirrelsoft.financier.ui.AccountDetailListActivity;
 import com.fsquirrelsoft.financier.ui.Constants;
 import com.fsquirrelsoft.financier.ui.NamedItem;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -104,7 +105,6 @@ public class TagActivity extends ContextsActivity implements OnClickListener, On
         currentDate = targetDate;
     }
 
-    @SuppressLint("SimpleDateFormat")
     private void initialContent() {
         monthDayDateFormat = new SimpleDateFormat("MM/dd");
         monthDateFormat = new SimpleDateFormat("yyyy/MM");
@@ -261,8 +261,8 @@ public class TagActivity extends ContextsActivity implements OnClickListener, On
                             monthDayDateFormat.format(cal.monthEndDate(currentDate))));
                     break;
                 case MODE_WEEK:
-                    infoView.setText(i18n.string(R.string.label_balance_mode_week, yearDateFormat.format(currentDate), cal.weekOfYear(currentDate), monthDayDateFormat.format(cal.weekEndDate(currentDate)),
-                            monthDayDateFormat.format(cal.weekStartDate(currentDate))));
+                    infoView.setText(i18n.string(R.string.label_balance_mode_week, yearDateFormat.format(currentDate), cal.weekOfYear(currentDate),
+                            monthDayDateFormat.format(cal.weekEndDate(currentDate)), monthDayDateFormat.format(cal.weekStartDate(currentDate))));
                     break;
                 case MODE_DAY:
                     infoView.setText(i18n.string(R.string.label_balance_mode_day, dateFormat.format(currentDate)));
@@ -410,148 +410,148 @@ public class TagActivity extends ContextsActivity implements OnClickListener, On
         }
     }
 
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//        if (v.getId() == R.id.report_tag_list) {
-//            // AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-//            getMenuInflater().inflate(R.menu.tag_ctxmenu, menu);
-//        }
-//
-//    }
+    // @Override
+    // public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+    // super.onCreateContextMenu(menu, v, menuInfo);
+    // if (v.getId() == R.id.report_tag_list) {
+    // // AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+    // getMenuInflater().inflate(R.menu.tag_ctxmenu, menu);
+    // }
+    //
+    // }
 
-//    @Override
-//    public boolean onContextItemSelected(MenuItem item) {
-//        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-//        if (item.getItemId() == R.id.balance_menu_piechart) {
-//            doPieChart(info.position);
-//            return true;
-//        } else if (item.getItemId() == R.id.balance_menu_yearly_timechart) {
-//            doYearlyTimeChart(info.position);
-//            return true;
-//        } else if (item.getItemId() == R.id.balance_menu_yearly_cumulative_timechart) {
-//            doYearlyCumulativeTimeChart(info.position);
-//            return true;
-//        } else if (item.getItemId() == R.id.balance_menu_detlist) {
-//            doDetailList(info.position);
-//            return true;
-//        }
-//        return super.onContextItemSelected(item);
-//    }
+    // @Override
+    // public boolean onContextItemSelected(MenuItem item) {
+    // AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+    // if (item.getItemId() == R.id.balance_menu_piechart) {
+    // doPieChart(info.position);
+    // return true;
+    // } else if (item.getItemId() == R.id.balance_menu_yearly_timechart) {
+    // doYearlyTimeChart(info.position);
+    // return true;
+    // } else if (item.getItemId() == R.id.balance_menu_yearly_cumulative_timechart) {
+    // doYearlyCumulativeTimeChart(info.position);
+    // return true;
+    // } else if (item.getItemId() == R.id.balance_menu_detlist) {
+    // doDetailList(info.position);
+    // return true;
+    // }
+    // return super.onContextItemSelected(item);
+    // }
 
-//    private void doPieChart(final int pos) {
-//
-//        GUIs.doBusy(this, new GUIs.BusyAdapter() {
-//            @Override
-//            public void run() {
-//                Balance b = listViewData.get(pos);
-//                AccountType at;
-//                List<Balance> group = b.getGroup();
-//                if (b.getTarget() instanceof Account) {
-//                    group = new ArrayList<Balance>(group);
-//                    group.remove(b);
-//                    group.add(0, b);
-//                    at = AccountType.find(((Account) b.getTarget()).getType());
-//                } else {
-//                    at = AccountType.find(b.getType());
-//                }
-//                List<Balance> list = new ArrayList<Balance>();
-//                for (Balance g : group) {
-//                    if (!(g.getTarget() instanceof Account)) {
-//                        continue;
-//                    }
-//                    Account acc = (Account) g.getTarget();
-//                    Balance tag = BalanceHelper.calculateBalance(acc, currentStartDate, currentEndDate);
-//                    list.add(tag);
-//                }
-//                Intent intent = new BalancePieChart(TagActivity.this, GUIs.getOrientation(TagActivity.this), GUIs.getDPRatio(TagActivity.this)).createIntent(at, list);
-//                startActivity(intent);
-//            }
-//        });
-//    }
+    // private void doPieChart(final int pos) {
+    //
+    // GUIs.doBusy(this, new GUIs.BusyAdapter() {
+    // @Override
+    // public void run() {
+    // Balance b = listViewData.get(pos);
+    // AccountType at;
+    // List<Balance> group = b.getGroup();
+    // if (b.getTarget() instanceof Account) {
+    // group = new ArrayList<Balance>(group);
+    // group.remove(b);
+    // group.add(0, b);
+    // at = AccountType.find(((Account) b.getTarget()).getType());
+    // } else {
+    // at = AccountType.find(b.getType());
+    // }
+    // List<Balance> list = new ArrayList<Balance>();
+    // for (Balance g : group) {
+    // if (!(g.getTarget() instanceof Account)) {
+    // continue;
+    // }
+    // Account acc = (Account) g.getTarget();
+    // Balance tag = BalanceHelper.calculateBalance(acc, currentStartDate, currentEndDate);
+    // list.add(tag);
+    // }
+    // Intent intent = new BalancePieChart(TagActivity.this, GUIs.getOrientation(TagActivity.this), GUIs.getDPRatio(TagActivity.this)).createIntent(at, list);
+    // startActivity(intent);
+    // }
+    // });
+    // }
 
-//    private void doYearlyTimeChart(final int pos) {
-//        GUIs.doBusy(this, new GUIs.BusyAdapter() {
-//            @Override
-//            public void run() {
-//                Balance b = listViewData.get(pos);
-//                AccountType at;
-//                List<Balance> group = b.getGroup();
-//                if (b.getTarget() instanceof Account) {
-//                    group = new ArrayList<Balance>(group);
-//                    group.remove(b);
-//                    group.add(0, b);
-//                    at = AccountType.find(((Account) b.getTarget()).getType());
-//                } else {
-//                    at = AccountType.find(b.getType());
-//                }
-//
-//                List<List<Balance>> tags = new ArrayList<List<Balance>>();
-//
-//                for (Balance g : group) {
-//                    if (!(g.getTarget() instanceof Account)) {
-//                        continue;
-//                    }
-//                    Account acc = (Account) g.getTarget();
-//                    List<Balance> blist = new ArrayList<Balance>();
-//                    tags.add(blist);
-//                    Date d = calHelper.yearStartDate(g.getDate());
-//                    for (int i = 0; i < 12; i++) {
-//                        Balance tag = BalanceHelper.calculateBalance(acc, calHelper.monthStartDate(d), calHelper.monthEndDate(d));
-//                        blist.add(tag);
-//                        d = calHelper.monthAfter(d, 1);
-//                    }
-//                }
-//
-//                Intent intent = new BalanceTimeChart(TagActivity.this, GUIs.getOrientation(TagActivity.this), GUIs.getDPRatio(TagActivity.this)).createIntent(
-//                        i18n.string(R.string.label_balance_yearly_timechart, at.getDisplay(i18n), yearDateFormat.format(currentDate)), tags);
-//                startActivity(intent);
-//            }
-//        });
-//    }
+    // private void doYearlyTimeChart(final int pos) {
+    // GUIs.doBusy(this, new GUIs.BusyAdapter() {
+    // @Override
+    // public void run() {
+    // Balance b = listViewData.get(pos);
+    // AccountType at;
+    // List<Balance> group = b.getGroup();
+    // if (b.getTarget() instanceof Account) {
+    // group = new ArrayList<Balance>(group);
+    // group.remove(b);
+    // group.add(0, b);
+    // at = AccountType.find(((Account) b.getTarget()).getType());
+    // } else {
+    // at = AccountType.find(b.getType());
+    // }
+    //
+    // List<List<Balance>> tags = new ArrayList<List<Balance>>();
+    //
+    // for (Balance g : group) {
+    // if (!(g.getTarget() instanceof Account)) {
+    // continue;
+    // }
+    // Account acc = (Account) g.getTarget();
+    // List<Balance> blist = new ArrayList<Balance>();
+    // tags.add(blist);
+    // Date d = calHelper.yearStartDate(g.getDate());
+    // for (int i = 0; i < 12; i++) {
+    // Balance tag = BalanceHelper.calculateBalance(acc, calHelper.monthStartDate(d), calHelper.monthEndDate(d));
+    // blist.add(tag);
+    // d = calHelper.monthAfter(d, 1);
+    // }
+    // }
+    //
+    // Intent intent = new BalanceTimeChart(TagActivity.this, GUIs.getOrientation(TagActivity.this), GUIs.getDPRatio(TagActivity.this)).createIntent(
+    // i18n.string(R.string.label_balance_yearly_timechart, at.getDisplay(i18n), yearDateFormat.format(currentDate)), tags);
+    // startActivity(intent);
+    // }
+    // });
+    // }
 
-//    private void doYearlyCumulativeTimeChart(final int pos) {
-//        GUIs.doBusy(this, new GUIs.BusyAdapter() {
-//            @Override
-//            public void run() {
-//
-//                Balance b = listViewData.get(pos);
-//                AccountType at;
-//                List<Balance> group = b.getGroup();
-//                if (b.getTarget() instanceof Account) {
-//                    group = new ArrayList<Balance>(group);
-//                    group.remove(b);
-//                    group.add(0, b);
-//                    at = AccountType.find(((Account) b.getTarget()).getType());
-//                } else {
-//                    at = AccountType.find(b.getType());
-//                }
-//
-//                List<List<Balance>> tags = new ArrayList<List<Balance>>();
-//
-//                for (Balance g : group) {
-//                    if (!(g.getTarget() instanceof Account)) {
-//                        continue;
-//                    }
-//                    Account acc = (Account) g.getTarget();
-//                    List<Balance> blist = new ArrayList<Balance>();
-//                    tags.add(blist);
-//                    Date d = calHelper.yearStartDate(g.getDate());
-//                    BigDecimal total = BigDecimal.ZERO;
-//                    for (int i = 0; i < 12; i++) {
-//                        Balance tag = BalanceHelper.calculateBalance(acc, i == 0 ? null : calHelper.monthStartDate(d), calHelper.monthEndDate(d));
-//                        total = total.add(tag.getMoney());
-//                        tag.setMoney(total);
-//                        blist.add(tag);
-//                        d = calHelper.monthAfter(d, 1);
-//                    }
-//                }
-//
-//                Intent intent = new BalanceTimeChart(TagActivity.this, GUIs.getOrientation(TagActivity.this), GUIs.getDPRatio(TagActivity.this)).createIntent(
-//                        i18n.string(R.string.label_balance_yearly_cumulative_timechart, at.getDisplay(i18n), yearDateFormat.format(currentDate)), tags);
-//                startActivity(intent);
-//            }
-//        });
-//    }
+    // private void doYearlyCumulativeTimeChart(final int pos) {
+    // GUIs.doBusy(this, new GUIs.BusyAdapter() {
+    // @Override
+    // public void run() {
+    //
+    // Balance b = listViewData.get(pos);
+    // AccountType at;
+    // List<Balance> group = b.getGroup();
+    // if (b.getTarget() instanceof Account) {
+    // group = new ArrayList<Balance>(group);
+    // group.remove(b);
+    // group.add(0, b);
+    // at = AccountType.find(((Account) b.getTarget()).getType());
+    // } else {
+    // at = AccountType.find(b.getType());
+    // }
+    //
+    // List<List<Balance>> tags = new ArrayList<List<Balance>>();
+    //
+    // for (Balance g : group) {
+    // if (!(g.getTarget() instanceof Account)) {
+    // continue;
+    // }
+    // Account acc = (Account) g.getTarget();
+    // List<Balance> blist = new ArrayList<Balance>();
+    // tags.add(blist);
+    // Date d = calHelper.yearStartDate(g.getDate());
+    // BigDecimal total = BigDecimal.ZERO;
+    // for (int i = 0; i < 12; i++) {
+    // Balance tag = BalanceHelper.calculateBalance(acc, i == 0 ? null : calHelper.monthStartDate(d), calHelper.monthEndDate(d));
+    // total = total.add(tag.getMoney());
+    // tag.setMoney(total);
+    // blist.add(tag);
+    // d = calHelper.monthAfter(d, 1);
+    // }
+    // }
+    //
+    // Intent intent = new BalanceTimeChart(TagActivity.this, GUIs.getOrientation(TagActivity.this), GUIs.getDPRatio(TagActivity.this)).createIntent(
+    // i18n.string(R.string.label_balance_yearly_cumulative_timechart, at.getDisplay(i18n), yearDateFormat.format(currentDate)), tags);
+    // startActivity(intent);
+    // }
+    // });
+    // }
 
 }

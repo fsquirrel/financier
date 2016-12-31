@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="cact_cancel">Cancel</string>
+
+    <string name="cact_cancel">Cancel</string>
     <string name="cact_close">Close</string>
     <string name="cact_copy">Copy</string>
     <string name="cact_create">Create</string>
@@ -21,13 +22,13 @@
     <string name="clabel_warn">Warn</string>
     <string name="cmsg_busy">Application is busy, please wait for a second...</string>
     <string name="cmsg_error">Error : %1$s</string>
-    <string name="cmsg_field_empty">%1$s is empty</string>  
-    <string name="cmsg_field_zero">%1$s is zero</string> 
-     <string name="clabel_all">All</string>
-    <!-- above are verified --> 
-    
+    <string name="cmsg_field_empty">%1$s is empty</string>
+    <string name="cmsg_field_zero">%1$s is zero</string>
+    <string name="clabel_all">All</string>
+    <!-- above are verified -->
+
+
     <!-- start from 20110530 -->
     <string name="clabel_default">Default</string>
-    
-    
+
 </resources>

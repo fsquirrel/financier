@@ -1,5 +1,28 @@
 package com.fsquirrelsoft.financier.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
+import android.view.View.OnClickListener;
+
+import com.csvreader.CsvReader;
+import com.csvreader.CsvWriter;
+import com.fsquirrelsoft.commons.util.Files;
+import com.fsquirrelsoft.commons.util.Formats;
+import com.fsquirrelsoft.commons.util.GUIs;
+import com.fsquirrelsoft.commons.util.Logger;
+import com.fsquirrelsoft.financier.context.Contexts;
+import com.fsquirrelsoft.financier.context.ContextsActivity;
+import com.fsquirrelsoft.financier.core.R;
+import com.fsquirrelsoft.financier.data.Account;
+import com.fsquirrelsoft.financier.data.DataCreator;
+import com.fsquirrelsoft.financier.data.Detail;
+import com.fsquirrelsoft.financier.data.DetailTag;
+import com.fsquirrelsoft.financier.data.IDataProvider;
+import com.fsquirrelsoft.financier.data.Tag;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,29 +35,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.os.Environment;
-import android.view.View;
-import android.view.View.OnClickListener;
-
-import com.fsquirrelsoft.financier.core.R;
-import com.csvreader.CsvReader;
-import com.csvreader.CsvWriter;
-import com.fsquirrelsoft.commons.util.Files;
-import com.fsquirrelsoft.commons.util.Formats;
-import com.fsquirrelsoft.commons.util.GUIs;
-import com.fsquirrelsoft.commons.util.Logger;
-import com.fsquirrelsoft.financier.context.Contexts;
-import com.fsquirrelsoft.financier.context.ContextsActivity;
-import com.fsquirrelsoft.financier.data.Account;
-import com.fsquirrelsoft.financier.data.DataCreator;
-import com.fsquirrelsoft.financier.data.Detail;
-import com.fsquirrelsoft.financier.data.DetailTag;
-import com.fsquirrelsoft.financier.data.IDataProvider;
-import com.fsquirrelsoft.financier.data.Tag;
 
 /**
  * 
@@ -398,7 +398,8 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             csvw.writeRecord(new String[] { "id", "from", "to", "date", "value", "note", "archived", APPVER + vercode });
             for (Detail d : idp.listAllDetail()) {
                 count++;
-                csvw.writeRecord(new String[] { Integer.toString(d.getId()), d.getFrom(), d.getTo(), Formats.normalizeDate2String(d.getDate()), Formats.normalizeBigDecimal2String(d.getMoneyBD()), d.getNote(), d.isArchived() ? "1" : "0" });
+                csvw.writeRecord(new String[] { Integer.toString(d.getId()), d.getFrom(), d.getTo(), Formats.normalizeDate2String(d.getDate()), Formats.normalizeBigDecimal2String(d.getMoneyBD()),
+                        d.getNote(), d.isArchived() ? "1" : "0" });
             }
             csvw.close();
             String csv = sw.toString();
@@ -533,7 +534,8 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         File tags = getWorkingFile(shared ? "tags.csv" : "tags-" + workingBookId + ".csv");
         File detailTags = getWorkingFile(shared ? "dettags.csv" : "dettags-" + workingBookId + ".csv");
 
-        if ((detail && (!details.exists() || !details.canRead())) || (account && (!accounts.exists() || !accounts.canRead())) || (tag && (!tags.exists() || !tags.canRead())) || (detailTag && (!detailTags.exists() || !detailTags.canRead()))) {
+        if ((detail && (!details.exists() || !details.canRead())) || (account && (!accounts.exists() || !accounts.canRead())) || (tag && (!tags.exists() || !tags.canRead()))
+                || (detailTag && (!detailTags.exists() || !detailTags.canRead()))) {
             return -1;
         }
 
@@ -581,7 +583,8 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
 
                 idp.deleteAllDetail();
                 while (detailReader.readRecord()) {
-                    Detail det = new Detail(detailReader.get("from"), detailReader.get("to"), Formats.normalizeString2Date(detailReader.get("date")), new BigDecimal(detailReader.get("value")), detailReader.get("note"));
+                    Detail det = new Detail(detailReader.get("from"), detailReader.get("to"), Formats.normalizeString2Date(detailReader.get("date")), new BigDecimal(detailReader.get("value")),
+                            detailReader.get("note"));
                     String archived = detailReader.get("archived");
                     if ("1".equals(archived)) {
                         det.setArchived(true);
@@ -702,7 +705,8 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         File detailTags = getWorkingFile("dettags.csv");
         File tags = getWorkingFile("tags.csv");
 
-        if ((detail && (!details.exists() || !details.canRead())) || (account && (!accounts.exists() || !accounts.canRead())) || (tag && (!tags.exists() || !tags.canRead())) || (detailTag && (!detailTags.exists() || !detailTags.canRead()))) {
+        if ((detail && (!details.exists() || !details.canRead())) || (account && (!accounts.exists() || !accounts.canRead())) || (tag && (!tags.exists() || !tags.canRead()))
+                || (detailTag && (!detailTags.exists() || !detailTags.canRead()))) {
             return -1;
         }
 

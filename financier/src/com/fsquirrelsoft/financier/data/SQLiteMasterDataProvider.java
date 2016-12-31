@@ -1,16 +1,5 @@
 package com.fsquirrelsoft.financier.data;
 
-import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_ALL;
-import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_ID;
-import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_NAME;
-import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_NOTE;
-import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_SYMBOL;
-import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_SYMBOL_POSITION;
-import static com.fsquirrelsoft.financier.data.MasterDataMeta.TB_BOOK;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,6 +7,17 @@ import android.database.sqlite.SQLiteDatabase;
 import com.fsquirrelsoft.commons.util.CalendarHelper;
 import com.fsquirrelsoft.commons.util.Logger;
 import com.fsquirrelsoft.financier.context.Contexts;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_ALL;
+import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_ID;
+import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_NAME;
+import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_NOTE;
+import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_SYMBOL;
+import static com.fsquirrelsoft.financier.data.MasterDataMeta.COL_BOOK_SYMBOL_POSITION;
+import static com.fsquirrelsoft.financier.data.MasterDataMeta.TB_BOOK;
 
 /**
  * 

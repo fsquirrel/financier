@@ -1,10 +1,5 @@
 package com.fsquirrelsoft.financier.ui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,12 +10,17 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.GUIs;
 import com.fsquirrelsoft.financier.context.ContextsActivity;
+import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Book;
 import com.fsquirrelsoft.financier.data.IMasterDataProvider;
 import com.fsquirrelsoft.financier.data.SymbolPosition;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Edit or create a book
@@ -67,8 +67,7 @@ public class BookEditorActivity extends ContextsActivity implements android.view
     }
 
     /**
-     * need to mapping twice to do different mapping in spitem and spdropdown
-     * item
+     * need to mapping twice to do different mapping in spitem and spdropdown item
      */
     private static String[] spfrom = new String[] { Constants.DISPLAY, Constants.DISPLAY };
     private static int[] spto = new int[] { R.id.simple_spitem_display, R.id.simple_spdditem_display };

@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.GUIs;
 import com.fsquirrelsoft.financier.context.ContextsActivity;
+import com.fsquirrelsoft.financier.core.R;
 
 /**
  * 

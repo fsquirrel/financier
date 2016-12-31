@@ -1,10 +1,5 @@
 package com.fsquirrelsoft.financier.ui;
 
-import java.text.DateFormat;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,14 +12,19 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.commons.util.GUIs;
 import com.fsquirrelsoft.financier.context.ContextsActivity;
+import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Account;
 import com.fsquirrelsoft.financier.data.AccountType;
 import com.fsquirrelsoft.financier.data.Detail;
 import com.fsquirrelsoft.financier.data.IDataProvider;
 import com.fsquirrelsoft.financier.data.Tag;
+
+import java.text.DateFormat;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 
