@@ -3,7 +3,9 @@ package com.fsquirrelsoft.financier.ui;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -37,15 +39,14 @@ import com.fsquirrelsoft.financier.data.ScheduleJob;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class DesktopActivity extends ContextsActivity {
 
@@ -134,15 +135,60 @@ public class DesktopActivity extends ContextsActivity {
     }
 
     private void doTheFisrtTime() {
-        if (Contexts.instance().hasSDBackup()) {
-            restoreFromSD();
-        } else {
-            IDataProvider idp = getContexts().getDataProvider();
-            if (idp.listAccount(null).size() == 0) {
-                // cause of this function is not ready in previous version, so i check the size for old user
-                new DataCreator(idp, i18n).createDefaultAccount();
+        Contexts.instance().requestWriteExternalStoragePermissions(this);
+//        if (hasSDBackup()) {
+//            restoreFromSD();
+//        } else {
+//            IDataProvider idp = getContexts().getDataProvider();
+//            if (idp.listAccount(null).size() == 0) {
+//                // cause of this function is not ready in previous version, so i check the size for old user
+//                new DataCreator(idp, i18n).createDefaultAccount();
+//            }
+//            GUIs.longToast(this, R.string.msg_firsttime_use_hint);
+//        }
+    }
+
+    public boolean hasSDBackup() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) && Contexts.instance().getSdFolder().exists()) {
+            List<String> dbs = Arrays.asList(Contexts.instance().getSdFolder().list());
+            return dbs.contains("fsf_master.db") && dbs.contains("fsf.db");
+        }
+        return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PackageManager.PERMISSION_GRANTED: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    String state = Environment.getExternalStorageState();
+                    if (Environment.MEDIA_MOUNTED.equals(state) && Contexts.instance().getSdFolder().exists()) {
+                        List<String> dbs = Arrays.asList(Contexts.instance().getSdFolder().list());
+                        if (dbs.contains("fsf_master.db") && dbs.contains("fsf.db")) {
+                            restoreFromSD();
+                        } else {
+                            IDataProvider idp = getContexts().getDataProvider();
+                            if (idp.listAccount(null).size() == 0) {
+                                // cause of this function is not ready in previous version, so i check the size for old user
+                                new DataCreator(idp, i18n).createDefaultAccount();
+                            }
+                            GUIs.longToast(this, R.string.msg_firsttime_use_hint);
+                        }
+                    }
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
             }
-            GUIs.longToast(this, R.string.msg_firsttime_use_hint);
+
+            // other 'case' lines to check for other
+            // permissions this app might request
         }
     }
 
@@ -190,7 +236,7 @@ public class DesktopActivity extends ContextsActivity {
 
     private void initialDesktopItem() {
 
-        AbstractDesktop[] dts = new AbstractDesktop[] { new MainDesktop(), new ReportsDesktop(), new TestsDesktop() };
+        AbstractDesktop[] dts = new AbstractDesktop[]{new MainDesktop(), new ReportsDesktop(), new TestsDesktop()};
 
         for (AbstractDesktop dt : dts) {
             if (dt.isAvailable()) {

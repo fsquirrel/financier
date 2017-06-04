@@ -1,11 +1,13 @@
 package com.fsquirrelsoft.financier.context;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
@@ -13,6 +15,8 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 
 import com.fsquirrelsoft.commons.util.CalendarHelper;
@@ -42,6 +46,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 /**
  * Helps me to do some quick access in context/ui thread
@@ -734,6 +740,15 @@ public class Contexts {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(Constants.PREFS_LAST_BACKUP, pref_lastbackup);
         editor.commit();
+    }
+
+    public void requestWriteExternalStoragePermissions(Activity activity) {
+        int WRITE_EXTERNAL_STORAGE = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (PackageManager.PERMISSION_DENIED == WRITE_EXTERNAL_STORAGE) {
+            ActivityCompat.requestPermissions(activity,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSION_GRANTED);
+        }
     }
 
 }

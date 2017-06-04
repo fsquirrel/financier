@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:2.3.2'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
@@ -16,9 +16,9 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:support-v4:24.0.0'
-    compile 'com.android.support:design:24.0.0'
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:support-v4:23.0.0'
+    compile 'com.android.support:design:23.0.0'
     compile project(':financier')
 }
 
@@ -42,8 +42,8 @@ android {
         }
     }
 
-    compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    compileSdkVersion 23
+    buildToolsVersion '25.0.0'
 
     compileOptions {
         encoding "UTF-8"
@@ -52,8 +52,8 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 7
-        targetSdkVersion 24
+        minSdkVersion 9
+        targetSdkVersion 23
     }
 
     signingConfigs {
