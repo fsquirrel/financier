@@ -55,4 +55,6 @@
     <color name="accdetlist_info_bg">#FF303030</color>
     <color name="accdetlist_info_fg">#FFF5B800</color>
 
+    <!-- https://github.com/lemberg/directory-selector-dialog-preference -->
+    <color name="android_bright_blue">#33B5E5</color>
 </resources>

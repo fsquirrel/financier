@@ -31,4 +31,5 @@ public class Constants {
     public static final String LOCAL_URL_PREFIX = "file:///android_asset/";
     public static final String PREFS_LAST_BACKUP = "last_backup";
     public static final String BACKUP_JOB = "backup_job";
+    public static final String BACKUP_DIR = "store_path";
 }

@@ -11,9 +11,9 @@ import com.fsquirrelsoft.financier.context.Contexts;
 import com.fsquirrelsoft.financier.core.R;
 
 /**
- * 
+ *
  * @author dennis
- * 
+ *
  */
 public class PrefsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
     boolean dirty = false;
@@ -23,12 +23,14 @@ public class PrefsActivity extends PreferenceActivity implements OnSharedPrefere
         super.onCreate(bundle);
         addPreferencesFromResource(R.xml.prefs);
         setPrefSummary(Constants.PREFS_LAST_BACKUP);
+        setPrefSummary(Constants.BACKUP_DIR);
     }
 
     protected void onResume() {
         super.onResume();
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
         setPrefSummary(Constants.PREFS_LAST_BACKUP);
+        setPrefSummary(Constants.BACKUP_DIR);
     }
 
     protected void onPause() {
@@ -49,7 +51,7 @@ public class PrefsActivity extends PreferenceActivity implements OnSharedPrefere
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         Preference p = findPreference(prefKey);
         if (p != null) {
-            p.setSummary(sharedPreferences.getString(prefKey, "Unknown"));
+            p.setSummary(sharedPreferences.getString(prefKey, getResources().getString(R.string.unknown)));
         }
     }
 }

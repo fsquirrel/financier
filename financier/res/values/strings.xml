@@ -241,4 +241,17 @@
     <!-- from 20140105 by Lancelot -->
     <string name="act_hide_zero_accounts">Show/Hide Zero Balance Account</string>
 
+    <!-- https://github.com/lemberg/directory-selector-dialog-preference -->
+    <string name="selected_folder">Selected folder:</string>
+    <string name="create_folder">Create folder</string>
+    <string name="create_folder_msg">Enter folder name</string>
+    <string name="no_write_access">Cannot write to this folder</string>
+    <string name="error_already_exists">Folder already exists</string>
+    <string name="create_folder_error">Could not create folder</string>
+    <string name="up">Up</string>
+    <string name="empty_list">Empty</string>
+    <string name="no_dir_selected">No directory selected</string>
+    <string name="dir_location">Backup Directory</string>
+
+    <string name="unknown">Unknown</string>
 </resources>

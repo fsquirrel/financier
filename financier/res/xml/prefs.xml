@@ -6,10 +6,17 @@
 		android:summary="@string/label_prefs_improvider_sum" android:defaultValue="false" />
     -->
     <Preference
-        android:defaultValue="Unknown"
+        android:defaultValue="@string/unknown"
         android:key="last_backup"
         android:summary="Unknown"
         android:title="@string/label_prefs_lastbackup" />
+
+    <com.fsquirrelsoft.financier.directoryselector.DirectoryPreference
+        android:key="store_path"
+        android:title="@string/dir_location"
+        android:summary="Path"
+        android:positiveButtonText="@android:string/ok"
+        android:negativeButtonText="@android:string/cancel" />
 
     <EditTextPreference
         android:inputType="textPassword"

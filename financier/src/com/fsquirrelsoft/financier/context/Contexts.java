@@ -51,9 +51,8 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 /**
  * Helps me to do some quick access in context/ui thread
- * 
+ *
  * @author dennis
- * 
  */
 public class Contexts {
 
@@ -110,14 +109,16 @@ public class Contexts {
         dbFolder = new File(Environment.getDataDirectory(), "/data/com.fsquirrelsoft.financier/databases");
         prefFolder = new File(Environment.getDataDirectory(), "/data/com.fsquirrelsoft.financier/shared_prefs");
         if (!prefFolder.exists()) {// this folder is not existed in my
-                                   // current i9000 (it is was last year)
+            // current i9000 (it is was last year)
             // try another one
             // File fdir = context.getFilesDir();
             // prefFolder = new File(fdir,"../shared_prefs");
         }
     }
 
-    /** get a Contexts instance for activity use **/
+    /**
+     * get a Contexts instance for activity use
+     **/
     static public Contexts instance() {
         if (instance == null) {
             synchronized (Contexts.class) {
@@ -312,15 +313,6 @@ public class Contexts {
         return true;
     }
 
-    public boolean hasSDBackup() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) && sdFolder.exists()) {
-            List<String> dbs = Arrays.asList(sdFolder.list());
-            return dbs.contains("fsf_master.db") && dbs.contains("fsf.db");
-        }
-        return false;
-    }
-
     /**
      * return true is this is first time you call this api in this application. note that, when calling this twice, it returns false. see {@link DesktopActivity#initialApplicationInfo}
      */
@@ -359,7 +351,7 @@ public class Contexts {
 
     /**
      * for ui context only
-     * 
+     *
      * @return
      */
     public String getApplicationVersionName() {
@@ -378,7 +370,7 @@ public class Contexts {
 
     /**
      * for ui context only
-     * 
+     *
      * @return
      */
     public int getApplicationVersionCode() {
@@ -594,7 +586,9 @@ public class Contexts {
         }
     }
 
-    /** to reset a deat provider for a book **/
+    /**
+     * to reset a deat provider for a book
+     **/
     public boolean deleteData(Book book) {
         if (book.getId() == 0 || book.getId() == pref_workingBookId) {
             return false;
@@ -695,7 +689,7 @@ public class Contexts {
 
     /**
      * get sd card folder
-     * 
+     *
      * @return
      */
     public File getSdFolder() {
@@ -704,7 +698,7 @@ public class Contexts {
 
     /**
      * get database folder
-     * 
+     *
      * @return
      */
     public File getDbFolder() {
@@ -713,7 +707,7 @@ public class Contexts {
 
     /**
      * get preference folder
-     * 
+     *
      * @return
      */
     public File getPrefFolder() {
@@ -722,7 +716,7 @@ public class Contexts {
 
     /**
      * set last backup date
-     * 
+     *
      * @param date
      */
     public void setLastBackup(Date date) {
@@ -731,7 +725,7 @@ public class Contexts {
 
     /**
      * set last backup date
-     * 
+     *
      * @param date
      */
     public void setLastBackup(Context context, Date date) {
