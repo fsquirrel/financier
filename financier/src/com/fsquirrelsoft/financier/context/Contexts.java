@@ -33,7 +33,6 @@ import com.fsquirrelsoft.financier.data.SQLiteMasterDataHelper;
 import com.fsquirrelsoft.financier.data.SQLiteMasterDataProvider;
 import com.fsquirrelsoft.financier.data.SymbolPosition;
 import com.fsquirrelsoft.financier.ui.Constants;
-import com.fsquirrelsoft.financier.ui.DesktopActivity;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
 import java.io.File;
@@ -41,7 +40,6 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -82,6 +80,7 @@ public class Contexts {
     boolean pref_hierarachicalReport = true;
     private boolean pref_hideZeroAccounts = true;
     String pref_lastbackup = "Unknown";
+    String pref_backupdir = "";
     SimpleDateFormat lastBakFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private CalendarHelper calendarHelper = new CalendarHelper();
 
@@ -105,15 +104,6 @@ public class Contexts {
         if (!sdFolder.exists()) {
             sdFolder.mkdirs();
         }
-
-        dbFolder = new File(Environment.getDataDirectory(), "/data/com.fsquirrelsoft.financier/databases");
-        prefFolder = new File(Environment.getDataDirectory(), "/data/com.fsquirrelsoft.financier/shared_prefs");
-        if (!prefFolder.exists()) {// this folder is not existed in my
-            // current i9000 (it is was last year)
-            // try another one
-            // File fdir = context.getFilesDir();
-            // prefFolder = new File(fdir,"../shared_prefs");
-        }
     }
 
     /**
@@ -134,6 +124,8 @@ public class Contexts {
         if (appContext == null) {
             initApplication(activity, activity);
         }
+        dbFolder = appContext.getDatabasePath("fsf.db").getParentFile();
+        prefFolder = new File(appContext.getFilesDir().getParent(), "shared_prefs");
         if (this.uiActivity != activity) {
             Logger.d(">>>initial activity " + activity);
             this.uiActivity = activity;
@@ -314,7 +306,9 @@ public class Contexts {
     }
 
     /**
-     * return true is this is first time you call this api in this application. note that, when calling this twice, it returns false. see {@link DesktopActivity#initialApplicationInfo}
+     * return true is this is first time you call this api in this application. note that, when calling this twice, it returns false.
+     *
+     * @return
      */
     public boolean isFirstTime() {
         try {
@@ -387,7 +381,7 @@ public class Contexts {
         return 0;
     }
 
-    private void reloadPreference() {
+    public void reloadPreference() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
 
         try {
@@ -470,6 +464,13 @@ public class Contexts {
         } catch (Exception x) {
             Logger.e(x.getMessage());
         }
+
+        try {
+            pref_backupdir = prefs.getString(Constants.BACKUP_DIR, sdFolder.getAbsolutePath());
+        } catch (Exception x) {
+            Logger.e(x.getMessage());
+        }
+
         if (DEBUG) {
             Logger.d("preference : working book " + pref_workingBookId);
             Logger.d("preference : detail layout " + pref_detailListLayout);
@@ -480,6 +481,7 @@ public class Contexts {
             Logger.d("preference : backup csv " + pref_backupCSV);
             Logger.d("preference : csv encoding " + pref_csvEncoding);
             Logger.d("preference : last backup " + pref_lastbackup);
+            Logger.d("preference : backup dir " + pref_backupdir);
 
             Logger.d("working_folder " + workingFolder);
         }
@@ -688,15 +690,6 @@ public class Contexts {
     }
 
     /**
-     * get sd card folder
-     *
-     * @return
-     */
-    public File getSdFolder() {
-        return sdFolder;
-    }
-
-    /**
      * get database folder
      *
      * @return
@@ -734,6 +727,18 @@ public class Contexts {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(Constants.PREFS_LAST_BACKUP, pref_lastbackup);
         editor.commit();
+    }
+
+    public String getBackupDir() {
+        return pref_backupdir;
+    }
+
+    public File getBackupFolder() {
+        return new File(pref_backupdir);
+    }
+
+    public void setBackupDir(String backupDir) {
+        this.pref_backupdir = backupDir;
     }
 
     public void requestWriteExternalStoragePermissions(Activity activity) {

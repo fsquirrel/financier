@@ -12,17 +12,16 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.fsquirrelsoft.financier.context.Contexts;
 import com.fsquirrelsoft.financier.core.R;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * from https://github.com/lemberg/directory-selector-dialog-preference
@@ -50,7 +49,9 @@ public class DirectoryPreference extends DialogPreference {
                 File file = new File(value);
                 if (file.exists() && file.isDirectory()) ret = file;
             }
-            if (ret == null) ret = Environment.getExternalStorageDirectory();
+            if (ret == null) {
+                ret = new File(Environment.getExternalStorageDirectory(), Contexts.instance().getWorkingFolder());
+            }
             return ret;
         }
     };
@@ -82,6 +83,7 @@ public class DirectoryPreference extends DialogPreference {
                 persistString(value);
                 callChangeListener(value);
                 setSummary(value);
+                Contexts.instance().setBackupDir(value);
             } else {
                 Toast.makeText(getContext(), R.string.no_write_access, Toast.LENGTH_LONG).show();
             }

@@ -19,12 +19,12 @@ public class ScheduleReceiver extends BroadcastReceiver {
             Contexts ctxs = Contexts.instance();
             try {
                 int count = 0;
-                count += Files.copyDatabases(ctxs.getDbFolder(), ctxs.getSdFolder(), now.getTime());
-                count += Files.copyPrefFile(ctxs.getPrefFolder(), ctxs.getSdFolder(), now.getTime());
+                count += Files.copyDatabases(ctxs.getDbFolder(), ctxs.getBackupFolder(), now.getTime());
+                count += Files.copyPrefFile(ctxs.getPrefFolder(), ctxs.getBackupFolder(), now.getTime());
                 if (count > 0) {
                     ctxs.setLastBackup(context, now.getTime());
                 }
-                Files.removeOldBackups(ctxs.getSdFolder(), now);
+                Files.removeOldBackups(ctxs.getBackupFolder(), now);
             } catch (IOException e) {
                 throw new RuntimeException(e.getMessage(), e);
             }

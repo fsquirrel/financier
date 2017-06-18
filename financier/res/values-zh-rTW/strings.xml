@@ -196,7 +196,7 @@
     <string name="label_periods">期數</string>
 
     <!-- from 20120427 by Lancelot Liu -->
-    <string name="label_backup_db2sd">備份資料到 SD 卡</string>
+    <string name="label_backup_db">備份資料</string>
     <string name="msg_db_backuped">%1$s 個檔案備份至 %2$s</string>
     <string name="msg_no_db">沒有資料可供備份</string>
     <string name="label_prefs_lastbackup">最後資料備份時間</string>
@@ -253,4 +253,6 @@
     <string name="dir_location">備份目錄</string>
 
     <string name="unknown">未知</string>
+    <string name="label_restore_db">還原資料</string>
+
 </resources>

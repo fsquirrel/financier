@@ -2,6 +2,7 @@ package com.fsquirrelsoft.financier.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -37,9 +38,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class DataMaintenanceActivity extends ContextsActivity implements OnClickListener {
 
@@ -75,7 +74,8 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         findViewById(R.id.datamain_reset).setOnClickListener(this);
         findViewById(R.id.datamain_create_default).setOnClickListener(this);
         findViewById(R.id.datamain_clear_folder).setOnClickListener(this);
-        findViewById(R.id.datamain_backup_db2sd).setOnClickListener(this);
+        findViewById(R.id.datamain_backup_db).setOnClickListener(this);
+        findViewById(R.id.datamain_restore_db).setOnClickListener(this);
     }
 
     @Override
@@ -92,12 +92,56 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             doCreateDefault();
         } else if (v.getId() == R.id.datamain_clear_folder) {
             doClearFolder();
-        } else if (v.getId() == R.id.datamain_backup_db2sd) {
-            doBackupDbToSD();
+        } else if (v.getId() == R.id.datamain_backup_db) {
+            doBackupDb();
+        } else if (v.getId() == R.id.datamain_restore_db) {
+            doRestoreDb();
         }
     }
 
-    private void doBackupDbToSD() {
+    private void doRestoreDb() {
+        // restore db & pref
+        final Contexts ctxs = Contexts.instance();
+        final GUIs.IBusyRunnable restoreJob = new GUIs.BusyAdapter() {
+            @Override
+            public void onBusyFinish() {
+                GUIs.longToast(DataMaintenanceActivity.this, i18n.string(R.string.msg_db_retored));
+
+                // push a dummy to trigger resume/reload
+                Intent intent = new Intent(DataMaintenanceActivity.this, DummyActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void run() {
+                try {
+                    Files.copyDatabases(ctxs.getBackupFolder(), ctxs.getDbFolder(), null);
+                    Files.copyPrefFile(ctxs.getBackupFolder(), ctxs.getPrefFolder(), null);
+                    Contexts.instance().reloadPreference();
+                } catch (IOException e) {
+                    Logger.e(e.getMessage(), e);
+                }
+            }
+        };
+        GUIs.confirm(this, i18n.string(R.string.qmsg_retore_db), new GUIs.OnFinishListener() {
+            @Override
+            public boolean onFinish(Object data) {
+                if ((Integer) data == GUIs.OK_BUTTON) {
+                    GUIs.doBusy(DataMaintenanceActivity.this, restoreJob);
+                } else {
+                    IDataProvider idp = getContexts().getDataProvider();
+                    if (idp.listAccount(null).size() == 0) {
+                        // cause of this function is not ready in previous version, so i check the size for old user
+                        new DataCreator(idp, i18n).createDefaultAccount();
+                    }
+                    GUIs.longToast(DataMaintenanceActivity.this, R.string.msg_firsttime_use_hint);
+                }
+                return true;
+            }
+        });
+    }
+
+    private void doBackupDb() {
         final Calendar now = Calendar.getInstance();
         final GUIs.IBusyRunnable job = new GUIs.BusyAdapter() {
             int count = -1;
@@ -120,8 +164,8 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             public void run() {
                 try {
                     Contexts ctxs = getContexts();
-                    count = Files.copyDatabases(ctxs.getDbFolder(), ctxs.getSdFolder(), now.getTime());
-                    count += Files.copyPrefFile(ctxs.getPrefFolder(), ctxs.getSdFolder(), now.getTime());
+                    count = Files.copyDatabases(ctxs.getDbFolder(), ctxs.getBackupFolder(), now.getTime());
+                    count += Files.copyPrefFile(ctxs.getPrefFolder(), ctxs.getBackupFolder(), now.getTime());
                 } catch (Exception e) {
                     throw new RuntimeException(e.getMessage(), e);
                 }
@@ -335,18 +379,18 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         boolean tag = false;
         boolean detailTag = false;
         switch (mode) {
-        case 0:
-            account = detail = tag = detailTag = true;
-            break;
-        case 1:
-            account = true;
-            break;
-        case 2:
-            detail = detailTag = true;
-            break;
-        case 3:
-            tag = true;
-            break;
+            case 0:
+                account = detail = tag = detailTag = true;
+                break;
+            case 1:
+                account = true;
+                break;
+            case 2:
+                detail = detailTag = true;
+                break;
+            case 3:
+                tag = true;
+                break;
         }
         IDataProvider idp = getContexts().getDataProvider();
         if (account && detail && tag && detailTag) {
@@ -362,7 +406,9 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
 
     }
 
-    /** running in thread **/
+    /**
+     * running in thread
+     **/
     private int _exportToCSV(int mode, int workingBookId) throws IOException {
         if (Contexts.DEBUG) {
             Logger.d("export to csv " + mode);
@@ -372,20 +418,20 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         boolean detailTag = false;
         boolean tag = false;
         switch (mode) {
-        case 0:
-            account = detail = detailTag = tag = true;
-            break;
-        case 1:
-            account = true;
-            break;
-        case 2:
-            detail = detailTag = true;
-            break;
-        case 3:
-            tag = true;
-            break;
-        default:
-            return -1;
+            case 0:
+                account = detail = detailTag = tag = true;
+                break;
+            case 1:
+                account = true;
+                break;
+            case 2:
+                detail = detailTag = true;
+                break;
+            case 3:
+                tag = true;
+                break;
+            default:
+                return -1;
         }
         IDataProvider idp = getContexts().getDataProvider();
         StringWriter sw;
@@ -395,11 +441,11 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         if (detail) {
             sw = new StringWriter();
             csvw = new CsvWriter(sw, ',');
-            csvw.writeRecord(new String[] { "id", "from", "to", "date", "value", "note", "archived", APPVER + vercode });
+            csvw.writeRecord(new String[]{"id", "from", "to", "date", "value", "note", "archived", APPVER + vercode});
             for (Detail d : idp.listAllDetail()) {
                 count++;
-                csvw.writeRecord(new String[] { Integer.toString(d.getId()), d.getFrom(), d.getTo(), Formats.normalizeDate2String(d.getDate()), Formats.normalizeBigDecimal2String(d.getMoneyBD()),
-                        d.getNote(), d.isArchived() ? "1" : "0" });
+                csvw.writeRecord(new String[]{Integer.toString(d.getId()), d.getFrom(), d.getTo(), Formats.normalizeDate2String(d.getDate()), Formats.normalizeBigDecimal2String(d.getMoneyBD()),
+                        d.getNote(), d.isArchived() ? "1" : "0"});
             }
             csvw.close();
             String csv = sw.toString();
@@ -413,10 +459,10 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         if (account) {
             sw = new StringWriter();
             csvw = new CsvWriter(sw, ',');
-            csvw.writeRecord(new String[] { "id", "type", "name", "init", "cash", APPVER + vercode });
+            csvw.writeRecord(new String[]{"id", "type", "name", "init", "cash", APPVER + vercode});
             for (Account a : idp.listAccount(null)) {
                 count++;
-                csvw.writeRecord(new String[] { a.getId(), a.getType(), a.getName(), Formats.normalizeBigDecimal2String(a.getInitialValueBD()), a.isCashAccount() ? "1" : "0" });
+                csvw.writeRecord(new String[]{a.getId(), a.getType(), a.getName(), Formats.normalizeBigDecimal2String(a.getInitialValueBD()), a.isCashAccount() ? "1" : "0"});
             }
             csvw.close();
             String csv = sw.toString();
@@ -430,10 +476,10 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         if (detailTag) {
             sw = new StringWriter();
             csvw = new CsvWriter(sw, ',');
-            csvw.writeRecord(new String[] { "id", "detailId", "tagId", APPVER + vercode });
+            csvw.writeRecord(new String[]{"id", "detailId", "tagId", APPVER + vercode});
             for (DetailTag a : idp.listAllDetailTags()) {
                 count++;
-                csvw.writeRecord(new String[] { String.valueOf(a.getId()), String.valueOf(a.getDetailId()), String.valueOf(a.getTagId()) });
+                csvw.writeRecord(new String[]{String.valueOf(a.getId()), String.valueOf(a.getDetailId()), String.valueOf(a.getTagId())});
             }
             csvw.close();
             String csv = sw.toString();
@@ -447,10 +493,10 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         if (tag) {
             sw = new StringWriter();
             csvw = new CsvWriter(sw, ',');
-            csvw.writeRecord(new String[] { "id", "name", APPVER + vercode });
+            csvw.writeRecord(new String[]{"id", "name", APPVER + vercode});
             for (Tag a : idp.listAllTags()) {
                 count++;
-                csvw.writeRecord(new String[] { String.valueOf(a.getId()), a.getName() });
+                csvw.writeRecord(new String[]{String.valueOf(a.getId()), a.getName()});
             }
             csvw.close();
             String csv = sw.toString();
@@ -497,7 +543,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
 
     /**
      * running in thread
-     * 
+     *
      * @param workingBookId
      **/
     private int _importFromCSV(int mode, int workingBookId) throws Exception {
@@ -512,20 +558,20 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         if (shared)
             mode = mode - 4;
         switch (mode) {
-        case 0:
-            account = detail = detailTag = tag = true;
-            break;
-        case 1:
-            account = true;
-            break;
-        case 2:
-            detail = detailTag = true;
-            break;
-        case 3:
-            tag = true;
-            break;
-        default:
-            return -1;
+            case 0:
+                account = detail = detailTag = tag = true;
+                break;
+            case 1:
+                account = true;
+                break;
+            case 2:
+                detail = detailTag = true;
+                break;
+            case 3:
+                tag = true;
+                break;
+            default:
+                return -1;
         }
 
         IDataProvider idp = getContexts().getDataProvider();
@@ -674,7 +720,9 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         }
     }
 
-    /** running in thread **/
+    /**
+     * running in thread
+     **/
     private int _shareCSV(int mode) throws Exception {
         if (Contexts.DEBUG) {
             Logger.d("share csv " + mode);
@@ -684,20 +732,20 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         boolean detailTag = false;
         boolean tag = false;
         switch (mode) {
-        case 0:
-            account = detail = detailTag = tag = true;
-            break;
-        case 1:
-            account = true;
-            break;
-        case 2:
-            detail = detailTag = true;
-            break;
-        case 3:
-            tag = true;
-            break;
-        default:
-            return -1;
+            case 0:
+                account = detail = detailTag = tag = true;
+                break;
+            case 1:
+                account = true;
+                break;
+            case 2:
+                detail = detailTag = true;
+                break;
+            case 3:
+                tag = true;
+                break;
+            default:
+                return -1;
         }
 
         File details = getWorkingFile("details.csv");

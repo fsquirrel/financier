@@ -151,21 +151,4 @@
     <string name="label_prefcat_others">Altri</string>
     <!-- above are verified -->
 
-
-    <!-- from 20111120 lancelot -->
-    <string name="defacc_installments_payable">Installments Payable</string>
-    <string name="puitem_year">Y</string>
-    <string name="puitem_month">M</string>
-    <string name="puitem_day">D</string>
-    <string name="label_installments">Installments</string>
-    <string name="label_repeat">Repeat</string>
-    <string name="label_period">Period</string>
-    <string name="label_periods">Number of periods</string>
-
-    <!-- from 20120427 lancelot -->
-    <string name="label_backup_db2sd">Backup to SD card</string>
-    <string name="msg_db_backuped">%1$s files backup to %2$s</string>
-    <string name="msg_no_db">There is no file to backup</string>
-    <string name="label_prefs_lastbackup">Last Backup Time</string>
-
 </resources>

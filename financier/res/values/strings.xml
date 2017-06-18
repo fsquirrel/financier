@@ -197,7 +197,7 @@
     <string name="label_periods">Number of periods</string>
 
     <!-- from 20120427 by Lancelot Liu -->
-    <string name="label_backup_db2sd">Backup data to SD card</string>
+    <string name="label_backup_db">Backup data</string>
     <string name="msg_db_backuped">%1$s files backup to %2$s</string>
     <string name="msg_no_db">There is no data to backup</string>
     <string name="label_prefs_lastbackup">Last Data Backup Time</string>
@@ -254,4 +254,6 @@
     <string name="dir_location">Backup Directory</string>
 
     <string name="unknown">Unknown</string>
+    <string name="label_restore_db">Restore data</string>
+
 </resources>

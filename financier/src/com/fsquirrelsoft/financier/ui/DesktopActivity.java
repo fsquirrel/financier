@@ -148,15 +148,6 @@ public class DesktopActivity extends ContextsActivity {
 //        }
     }
 
-    public boolean hasSDBackup() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) && Contexts.instance().getSdFolder().exists()) {
-            List<String> dbs = Arrays.asList(Contexts.instance().getSdFolder().list());
-            return dbs.contains("fsf_master.db") && dbs.contains("fsf.db");
-        }
-        return false;
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -166,10 +157,10 @@ public class DesktopActivity extends ContextsActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     String state = Environment.getExternalStorageState();
-                    if (Environment.MEDIA_MOUNTED.equals(state) && Contexts.instance().getSdFolder().exists()) {
-                        List<String> dbs = Arrays.asList(Contexts.instance().getSdFolder().list());
+                    if (Environment.MEDIA_MOUNTED.equals(state) && Contexts.instance().getBackupFolder().exists()) {
+                        List<String> dbs = Arrays.asList(Contexts.instance().getBackupFolder().list());
                         if (dbs.contains("fsf_master.db") && dbs.contains("fsf.db")) {
-                            restoreFromSD();
+                            restoreData();
                         } else {
                             IDataProvider idp = getContexts().getDataProvider();
                             if (idp.listAccount(null).size() == 0) {
@@ -192,7 +183,7 @@ public class DesktopActivity extends ContextsActivity {
         }
     }
 
-    private void restoreFromSD() {
+    private void restoreData() {
         // restore db & pref
         final Contexts ctxs = Contexts.instance();
         final GUIs.IBusyRunnable restorejob = new GUIs.BusyAdapter() {
@@ -208,8 +199,8 @@ public class DesktopActivity extends ContextsActivity {
             @Override
             public void run() {
                 try {
-                    Files.copyDatabases(ctxs.getSdFolder(), ctxs.getDbFolder(), null);
-                    Files.copyPrefFile(ctxs.getSdFolder(), ctxs.getPrefFolder(), null);
+                    Files.copyDatabases(ctxs.getBackupFolder(), ctxs.getDbFolder(), null);
+                    Files.copyPrefFile(ctxs.getBackupFolder(), ctxs.getPrefFolder(), null);
                     Contexts.instance().setPreferenceDirty();// since we reload it.
                 } catch (IOException e) {
                     Logger.e(e.getMessage(), e);

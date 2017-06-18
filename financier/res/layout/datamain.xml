@@ -19,18 +19,27 @@
             android:paddingRight="30dp" >
 
             <Button
-                android:id="@+id/datamain_backup_db2sd"
+                android:id="@+id/datamain_backup_db"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:drawableLeft="@drawable/btn_update"
                 android:gravity="center"
-                android:text="@string/label_backup_db2sd" />
+                android:text="@string/label_backup_db" />
+
+            <Button
+                android:id="@+id/datamain_restore_db"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/btn_back"
+                android:gravity="center"
+                android:text="@string/label_restore_db" />
 
             <Button
                 android:id="@+id/datamain_export_csv"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:drawableLeft="@drawable/btn_export"
                 android:gravity="center"
                 android:text="@string/label_export_csv" />
