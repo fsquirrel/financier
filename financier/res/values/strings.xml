@@ -16,10 +16,6 @@
     <string name="dtitem_accmgnt">Accounts</string>
     <string name="dtitem_adddetail">Add Detail</string>
     <string name="dtitem_detlist">Details</string>
-    <string name="dtitem_detlist_month">Monthly list</string>
-    <string name="dtitem_detlist_day">Daily list</string>
-    <string name="dtitem_detlist_week">Weekly list</string>
-    <string name="dtitem_detlist_year">Yearly list</string>
     <string name="dtitem_prefs">Preferences</string>
     <string name="label_all_details">All details (%1$s records)</string>
     <string name="label_asset">Asset</string>

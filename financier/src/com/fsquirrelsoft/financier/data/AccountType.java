@@ -14,12 +14,12 @@ import java.io.Serializable;
  */
 public enum AccountType implements Serializable {
 
-    UNKONW("Z", R.drawable.na, R.color.unknow_fgl),
-    INCOME("A", R.drawable.tab_income, R.color.income_fgl),
-    EXPENSE("B", R.drawable.tab_expense, R.color.expense_fgl),
-    ASSET("C", R.drawable.tab_asset, R.color.asset_fgl),
-    LIABILITY("D", R.drawable.tab_liability, R.color.liability_fgl),
-    OTHER("E", R.drawable.tab_other, R.color.other_fgl);
+    UNKONW("Z", -1, R.color.unknow_fgl),
+    INCOME("A", -1, R.color.income_fgl),
+    EXPENSE("B", -1, R.color.expense_fgl),
+    ASSET("C", -1, R.color.asset_fgl),
+    LIABILITY("D", -1, R.color.liability_fgl),
+    OTHER("E", -1, R.color.other_fgl);
 
     static final AccountType[] supported = new AccountType[] { INCOME, EXPENSE, ASSET, LIABILITY, OTHER };
     static final AccountType[] from = new AccountType[] { ASSET, INCOME, LIABILITY, OTHER };

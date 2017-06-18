@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">每日记账本</string>
+    <string name="app_name">Financier</string>
     <string name="defacc_bank1">银行.台湾</string>
     <string name="defacc_bank2">银行.HSBC</string>
     <string name="defacc_cash">现金</string>
@@ -14,9 +14,6 @@
     <string name="defacc_salary">薪水</string>
     <string name="dtitem_accmgnt">账户管理</string>
     <string name="dtitem_adddetail">新增明細</string>
-    <string name="dtitem_detlist_month">月明细列表</string>
-    <string name="dtitem_detlist_week">周明细列表</string>
-    <string name="dtitem_detlist_year">年明细列表</string>
     <string name="dtitem_detlist">明细列表</string>
     <string name="dtitem_prefs">喜好设定</string>
     <string name="label_all_details">全部明细(%1$s笔)</string>
@@ -119,9 +116,6 @@
     <string name="label_balance_mode_year">%1$s - 年结算</string>
     <string name="label_balance_mode_month_total">到 %1$s(%2$s)</string>
     <string name="label_balance_mode_year_total">到 %1$s年底</string>
-    <string name="dtitem_report_monthly_balance">月份结算</string>
-    <string name="dtitem_report_yearly_balance">年结算</string>
-    <string name="dtitem_report_cumulative_balance">累计结算</string>
     <string name="label_count">(%1$s)</string>
     <string name="label_accdetlist_dateinfo">%1$s 到 %2$s</string>
     <string name="label_prefs_password">密码保护-1</string>
@@ -166,7 +160,7 @@
     <string name="label_periods">Number of periods</string>
 
     <!-- from 20120427 lancelot -->
-    <string name="label_backup_db_to_sd">Backup to SD card</string>
+    <string name="label_backup_db2sd">Backup to SD card</string>
     <string name="msg_db_backuped">%1$s files backup to %2$s</string>
     <string name="msg_no_db">There is no file to backup</string>
     <string name="label_prefs_lastbackup">Last Backup Time</string>

@@ -23,7 +23,7 @@ public class TestsDesktop extends AbstractDesktop {
 
     public TestsDesktop() {
         label = i18n.string(R.string.dt_tests);
-        icon = R.drawable.tab_tests;
+        icon = -1;
     }
 
     @Override

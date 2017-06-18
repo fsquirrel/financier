@@ -16,13 +16,9 @@
     <string name="dtitem_accmgnt">Счета</string>
     <string name="dtitem_adddetail">Добавить детали</string>
     <string name="dtitem_detlist">Детали</string>
-    <string name="dtitem_detlist_month">Месяц</string>
-    <string name="dtitem_detlist_day">День</string>
-    <string name="dtitem_detlist_week">Неделя</string>
-    <string name="dtitem_detlist_year">Год</string>
     <string name="dtitem_prefs">Настройки</string>
     <string name="label_all_details">Все подробности (%1$s записей)</string>
-    <string name="label_Активы">Активы</string>
+    <string name="label_asset">Активы</string>
     <string name="label_date">Дата</string>
     <string name="label_liability">Обязательство</string>
     <string name="label_detlayout_type1">К - деньги</string>
@@ -30,7 +26,7 @@
     <string name="label_detlist_from">&lt; %1$s</string>
     <string name="label_detlist_sum_income">Доход %1$s</string>
     <string name="label_detlist_sum_expense">Счет %1$s</string>
-    <string name="label_detlist_sum_Активы">Активы %1$s </string>
+    <string name="label_detlist_sum_asset">Активы %1$s </string>
     <string name="label_detlist_sum_liability">Обязательство %1$s</string>
     <string name="label_detlist_sum_other">Другие %1$s</string>
     <string name="label_detlist_to">%1$s</string>
@@ -115,16 +111,13 @@
     <string name="msg_firsttime_use_hint">Добро пожаловать в программу Financier, нажмите Добавить Описание чтобы продолжить</string>
     <string name="label_balance_tincome">Баланс доходов</string>
     <string name="label_balance_texpense">Расходы баланса</string>
-    <string name="label_balance_tАктивы">Активы баланса</string>
+    <string name="label_balance_tasset">Активы баланса</string>
     <string name="label_balance_tliability">Обязательство баланса</string>
     <string name="label_balance_tother">Другое в балансе</string>
     <string name="label_balance_mode_month">за %1$s (%2$s-%3$s)</string>
     <string name="label_balance_mode_year">Баланс за год %1$s</string>
     <string name="label_balance_mode_month_total">до %1$s (%2$s)</string>
     <string name="label_balance_mode_year_total">Баланс до %1$s года</string>
-    <string name="dtitem_report_monthly_balance">Ежемесячный баланс</string>
-    <string name="dtitem_report_yearly_balance">Ежегодный баланс</string>
-    <string name="dtitem_report_cumulative_balance">Совокупный баланс</string>
     <string name="label_count">(%1$s)</string>
     <string name="label_accdetlist_dateinfo">%1$s к %2$s</string>
     <string name="label_prefs_password">Защита паролем-1</string>
@@ -169,7 +162,7 @@
     <string name="label_periods">Number of periods</string>
 
     <!-- from 20120427 lancelot -->
-    <string name="label_backup_db_to_sd">Backup to SD card</string>
+    <string name="label_backup_db2sd">Backup to SD card</string>
     <string name="msg_db_backuped">%1$s files backup to %2$s</string>
     <string name="msg_no_db">There is no file to backup</string>
     <string name="label_prefs_lastbackup">Last Backup Time</string>

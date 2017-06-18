@@ -16,10 +16,6 @@
     <string name="dtitem_accmgnt">Conti</string>
     <string name="dtitem_adddetail">Aggiungi dettagli</string>
     <string name="dtitem_detlist">Dettagli</string>
-    <string name="dtitem_detlist_month">Lista mensile</string>
-    <string name="dtitem_detlist_day">Lista giornaliera</string>
-    <string name="dtitem_detlist_week">Lista settimanale</string>
-    <string name="dtitem_detlist_year">Lista annuale</string>
     <string name="dtitem_prefs">Preferenze</string>
     <string name="label_all_details">Tutti i dettagli (%1$s records)</string>
     <string name="label_asset">Conto</string>
@@ -122,9 +118,6 @@
     <string name="label_balance_mode_year">Bilancio anno %1$s</string>
     <string name="label_balance_mode_month_total">fino al %1$s (%2$s)</string>
     <string name="label_balance_mode_year_total">Bilancio fino all&#8217;anno %1$s</string>
-    <string name="dtitem_report_monthly_balance">Bilancio mensile</string>
-    <string name="dtitem_report_yearly_balance">Bilancio annuale</string>
-    <string name="dtitem_report_cumulative_balance">Bilancio cumulativo</string>
     <string name="label_count">(%1$s)</string>
     <string name="label_accdetlist_dateinfo">%1$s a %2$s</string>
     <string name="label_prefs_password">Password di protezione-1</string>
@@ -170,7 +163,7 @@
     <string name="label_periods">Number of periods</string>
 
     <!-- from 20120427 lancelot -->
-    <string name="label_backup_db_to_sd">Backup to SD card</string>
+    <string name="label_backup_db2sd">Backup to SD card</string>
     <string name="msg_db_backuped">%1$s files backup to %2$s</string>
     <string name="msg_no_db">There is no file to backup</string>
     <string name="label_prefs_lastbackup">Last Backup Time</string>

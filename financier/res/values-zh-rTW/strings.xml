@@ -14,10 +14,6 @@
     <string name="defacc_salary">薪水</string>
     <string name="dtitem_accmgnt">帳戶管理</string>
     <string name="dtitem_adddetail">新增明細</string>
-    <string name="dtitem_detlist_month">月明細列表</string>
-    <string name="dtitem_detlist_day">日明細列表</string>
-    <string name="dtitem_detlist_week">周明細列表</string>
-    <string name="dtitem_detlist_year">年明細列表</string>
     <string name="dtitem_detlist">明細列表</string>
     <string name="dtitem_prefs">喜好設定</string>
     <string name="label_all_details">全部明細(%1$s筆)</string>

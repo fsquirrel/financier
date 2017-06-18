@@ -18,7 +18,7 @@ public class MainDesktop extends AbstractDesktop {
 
     public MainDesktop() {
         label = i18n.string(R.string.dt_main);
-        icon = R.drawable.tab_main;
+        icon = -1;
     }
 
     @Override
@@ -36,27 +36,9 @@ public class MainDesktop extends AbstractDesktop {
 
         Intent intent = new Intent(context, DetailListActivity.class);
         intent.putExtra(DetailListActivity.INTENT_MODE, DetailListActivity.MODE_DAY);
-        String title = i18n.string(R.string.dtitem_detlist_day);
+        String title = i18n.string(R.string.dtitem_detlist);
         intent.putExtra(DetailListActivity.INTENT_MODE_TITLE, title);
         DesktopItem daylist = new DesktopItem(new IntentRun(context, intent), title, R.drawable.dtitem_detail_day);
-
-        intent = new Intent(context, DetailListActivity.class);
-        intent.putExtra(DetailListActivity.INTENT_MODE, DetailListActivity.MODE_WEEK);
-        title = i18n.string(R.string.dtitem_detlist_week);
-        intent.putExtra(DetailListActivity.INTENT_MODE_TITLE, title);
-        DesktopItem weeklist = new DesktopItem(new IntentRun(context, intent), title, R.drawable.dtitem_detail_week);
-
-        intent = new Intent(context, DetailListActivity.class);
-        intent.putExtra(DetailListActivity.INTENT_MODE, DetailListActivity.MODE_MONTH);
-        title = i18n.string(R.string.dtitem_detlist_month);
-        intent.putExtra(DetailListActivity.INTENT_MODE_TITLE, title);
-        DesktopItem monthlist = new DesktopItem(new IntentRun(context, intent), title, R.drawable.dtitem_detail_month);
-
-        intent = new Intent(context, DetailListActivity.class);
-        intent.putExtra(DetailListActivity.INTENT_MODE, DetailListActivity.MODE_YEAR);
-        title = i18n.string(R.string.dtitem_detlist_year);
-        intent.putExtra(DetailListActivity.INTENT_MODE_TITLE, title);
-        DesktopItem yearlist = new DesktopItem(new IntentRun(context, intent), title, R.drawable.dtitem_detail_year);
 
         DesktopItem accmgntdt = new DesktopItem(new ActivityRun(context, AccountMgntActivity.class), i18n.string(R.string.dtitem_accmgnt), R.drawable.dtitem_account);
 
@@ -73,14 +55,11 @@ public class MainDesktop extends AbstractDesktop {
         DesktopItem how2use = new DesktopItem(new IntentRun(context, intent), i18n.string(R.string.dtitem_how2use), -1, 0);
         how2use.setHidden(true);
 
-        DesktopItem aboutdt = new DesktopItem(new ActivityRun(context, AboutActivity.class), i18n.string(R.string.dtitem_about), R.drawable.dtitem_about, 0);
+        DesktopItem aboutdt = new DesktopItem(new ActivityRun(context, AboutActivity.class), i18n.string(R.string.dtitem_about), -1, 0);
         aboutdt.setHidden(true);
 
         addItem(adddetdt);
         addItem(daylist);
-        addItem(weeklist);
-        addItem(monthlist);
-        addItem(yearlist);
         addItem(accmgntdt);
         addItem(datamaindt);
         addItem(prefdt);

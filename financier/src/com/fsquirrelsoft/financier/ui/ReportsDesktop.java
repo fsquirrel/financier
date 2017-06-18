@@ -17,7 +17,7 @@ public class ReportsDesktop extends AbstractDesktop {
 
     public ReportsDesktop() {
         label = i18n.string(R.string.dt_reports);
-        icon = R.drawable.tab_reports;
+        icon = -1;
     }
 
     @Override
@@ -38,11 +38,11 @@ public class ReportsDesktop extends AbstractDesktop {
 
         intent = new Intent(context, TagActivity.class);
         intent.putExtra(TagActivity.INTENT_MODE, TagActivity.MODE_MONTH);
-        DesktopItem tagBalance = new DesktopItem(new IntentRun(context, intent), i18n.string(R.string.dtitem_report_tag_cumulative_balance), R.drawable.dtitem_balance_month);
+        DesktopItem tagBalance = new DesktopItem(new IntentRun(context, intent), i18n.string(R.string.dtitem_report_tag_cumulative_balance), R.drawable.dtitem_tag_month);
         addItem(tagBalance);
 
         intent = new Intent(context, SearchActivity.class);
-        DesktopItem search = new DesktopItem(new IntentRun(context, intent), i18n.string(R.string.dtitem_report_search), R.drawable.dtitem_account, 99);
+        DesktopItem search = new DesktopItem(new IntentRun(context, intent), i18n.string(R.string.dtitem_report_search), R.drawable.dtitem_search, 99);
         addItem(search);
     }
 
