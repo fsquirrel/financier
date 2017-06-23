@@ -3,8 +3,10 @@ package com.fsquirrelsoft.financier.ui;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -116,8 +118,9 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             public void run() {
                 try {
                     Files.copyDatabases(ctxs.getBackupFolder(), ctxs.getDbFolder(), null);
-                    Files.copyPrefFile(ctxs.getBackupFolder(), ctxs.getPrefFolder(), null);
-                    Contexts.instance().reloadPreference();
+                    // FIXME Restored prefs.xml will active after restarting the app. It's too ambiguous and I can't find the way to handle this.
+                    // Files.copyPrefFile(ctxs.getBackupFolder(), ctxs.getPrefFolder(), null);
+                    // Contexts.instance().setPreferenceDirty();
                 } catch (IOException e) {
                     Logger.e(e.getMessage(), e);
                 }
@@ -128,13 +131,6 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             public boolean onFinish(Object data) {
                 if ((Integer) data == GUIs.OK_BUTTON) {
                     GUIs.doBusy(DataMaintenanceActivity.this, restoreJob);
-                } else {
-                    IDataProvider idp = getContexts().getDataProvider();
-                    if (idp.listAccount(null).size() == 0) {
-                        // cause of this function is not ready in previous version, so i check the size for old user
-                        new DataCreator(idp, i18n).createDefaultAccount();
-                    }
-                    GUIs.longToast(DataMaintenanceActivity.this, R.string.msg_firsttime_use_hint);
                 }
                 return true;
             }

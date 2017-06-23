@@ -381,7 +381,7 @@ public class Contexts {
         return 0;
     }
 
-    public void reloadPreference() {
+    private void reloadPreference() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
 
         try {

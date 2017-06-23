@@ -203,7 +203,7 @@
 
     <!-- from 2012802 by dennis -->
     <string name="msg_db_retored">資料已經回復成功, 請繼續使用</string>
-    <string name="qmsg_retore_db">你的SD卡裏有舊的Financier備份, 你想回用這些備份資料嗎(目前的資料將被取代)?</string>
+    <string name="qmsg_retore_db">偵測到舊的Financier備份, 你想回用這些備份資料嗎(目前的資料將被取代)?</string>
 
     <!-- from 20120924 by Lancelot Liu -->
     <string name="dtitem_tags">標籤</string>

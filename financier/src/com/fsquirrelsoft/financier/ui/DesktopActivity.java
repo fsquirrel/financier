@@ -136,16 +136,6 @@ public class DesktopActivity extends ContextsActivity {
 
     private void doTheFisrtTime() {
         Contexts.instance().requestWriteExternalStoragePermissions(this);
-//        if (hasSDBackup()) {
-//            restoreFromSD();
-//        } else {
-//            IDataProvider idp = getContexts().getDataProvider();
-//            if (idp.listAccount(null).size() == 0) {
-//                // cause of this function is not ready in previous version, so i check the size for old user
-//                new DataCreator(idp, i18n).createDefaultAccount();
-//            }
-//            GUIs.longToast(this, R.string.msg_firsttime_use_hint);
-//        }
     }
 
     @Override
