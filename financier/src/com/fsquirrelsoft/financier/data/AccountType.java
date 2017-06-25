@@ -14,12 +14,12 @@ import java.io.Serializable;
  */
 public enum AccountType implements Serializable {
 
-    UNKONW("Z", -1, R.color.unknow_fgl),
-    INCOME("A", -1, R.color.income_fgl),
-    EXPENSE("B", -1, R.color.expense_fgl),
-    ASSET("C", -1, R.color.asset_fgl),
-    LIABILITY("D", -1, R.color.liability_fgl),
-    OTHER("E", -1, R.color.other_fgl);
+    UNKONW("Z", -1, R.color.unknow_fgl, R.color.unknow_fgd),
+    INCOME("A", -1, R.color.income_fgl, R.color.income_fgd),
+    EXPENSE("B", -1, R.color.expense_fgl, R.color.expense_fgd),
+    ASSET("C", -1, R.color.asset_fgl, R.color.asset_fgd),
+    LIABILITY("D", -1, R.color.liability_fgl, R.color.liability_fgd),
+    OTHER("E", -1, R.color.other_fgl, R.color.other_fgd);
 
     static final AccountType[] supported = new AccountType[] { INCOME, EXPENSE, ASSET, LIABILITY, OTHER };
     static final AccountType[] from = new AccountType[] { ASSET, INCOME, LIABILITY, OTHER };
@@ -33,11 +33,13 @@ public enum AccountType implements Serializable {
     String type;
     int drawable;
     int color;
+    int darkColor;
 
-    AccountType(String type, int drawable, int color) {
+    AccountType(String type, int drawable, int color, int darkColor) {
         this.type = type;
         this.drawable = drawable;
         this.color = color;
+        this.darkColor = darkColor;
     }
 
     static public AccountType[] getSupportedType() {
@@ -113,6 +115,10 @@ public enum AccountType implements Serializable {
 
     public int getColor() {
         return this.color;
+    }
+
+    public int getDarkColor() {
+        return this.darkColor;
     }
 
 }

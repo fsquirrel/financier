@@ -171,7 +171,7 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
             AccountType at = (AccountType) item.getValue();
 
             TextView tv = (TextView) view;
-            tv.setTextColor(getResources().getColor(at.getColor()));
+            tv.setTextColor(getResources().getColor(at.getDarkColor()));
 
             String name = item.getName();
             if (name.equals(bindingFrom[1])) {
