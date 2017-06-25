@@ -3,6 +3,7 @@ package com.fsquirrelsoft.financier.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -33,6 +34,8 @@ public class TagMgntActivity extends ContextsActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tagmgnt);
         initialIntent();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        this.setSupportActionBar(toolbar);
         initialContent();
         GUIs.delayPost(new Runnable() {
             @Override
