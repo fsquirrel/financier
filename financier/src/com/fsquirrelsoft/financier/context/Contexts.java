@@ -750,4 +750,7 @@ public class Contexts {
         }
     }
 
+    public File getSdFolder() {
+        return sdFolder;
+    }
 }

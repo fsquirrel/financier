@@ -3,10 +3,13 @@ package com.fsquirrelsoft.financier.context;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 import com.fsquirrelsoft.commons.util.Files;
+import com.fsquirrelsoft.commons.util.Logger;
 import com.fsquirrelsoft.financier.ui.Constants;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 
@@ -18,13 +21,21 @@ public class ScheduleReceiver extends BroadcastReceiver {
         if (Constants.BACKUP_JOB.equals(intent.getAction())) {
             Contexts ctxs = Contexts.instance();
             try {
+                SharedPreferences prefs = context.getSharedPreferences(context.getPackageName() + "_preferences", Context.MODE_PRIVATE);
+                String prefBackupDir = prefs.getString(Constants.BACKUP_DIR, ctxs.getSdFolder().getAbsolutePath());
+                Logger.d("BackupFolder: " + prefBackupDir);
+                File backupFolder = new File(prefBackupDir);
+                File dbFolder = context.getDatabasePath("fsf.db").getParentFile();
+                File prefFolder = new File(context.getFilesDir().getParent(), "shared_prefs");
                 int count = 0;
-                count += Files.copyDatabases(ctxs.getDbFolder(), ctxs.getBackupFolder(), now.getTime());
-                count += Files.copyPrefFile(ctxs.getPrefFolder(), ctxs.getBackupFolder(), now.getTime());
+                Logger.d("DBFolder: " + dbFolder.getAbsolutePath());
+                Logger.d("PrefFolder: " + prefFolder.getAbsolutePath());
+                count += Files.copyDatabases(dbFolder, backupFolder, now.getTime());
+                count += Files.copyPrefFile(prefFolder, backupFolder, now.getTime());
                 if (count > 0) {
                     ctxs.setLastBackup(context, now.getTime());
                 }
-                Files.removeOldBackups(ctxs.getBackupFolder(), now);
+                Files.removeOldBackups(backupFolder, now);
             } catch (IOException e) {
                 throw new RuntimeException(e.getMessage(), e);
             }
