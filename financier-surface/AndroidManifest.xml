@@ -3,7 +3,7 @@
     package="com.fsquirrelsoft.financier"
     android:installLocation="auto"
     android:versionCode="2017070719"
-    android:versionName="0.0.4-2017007071921" >
+    android:versionName="0.0.4-201707071921" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
