@@ -255,4 +255,6 @@
     <string name="unknown">未知</string>
     <string name="label_restore_db">還原資料</string>
 
+    <!-- 20170707 -->
+    <string name="msg_periods_must_greater_than_zero">期數必須大於零</string>
 </resources>

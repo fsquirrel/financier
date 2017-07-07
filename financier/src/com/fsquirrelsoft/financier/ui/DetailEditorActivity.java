@@ -545,6 +545,10 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
             int periods = 1;
             if (!"".equals(periodsStr)) {
                 periods = Formats.string2Int(periodsStr);
+                if (periods <= 0) {
+                    GUIs.alert(this, i18n.string(R.string.msg_periods_must_greater_than_zero));
+                    return;
+                }
             }
             workingDetail.setPaymentType(paymentType);
             workingDetail.setPeriod(period);

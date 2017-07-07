@@ -256,4 +256,7 @@
     <string name="unknown">Unknown</string>
     <string name="label_restore_db">Restore data</string>
 
+    <!-- 20170707 -->
+    <string name="msg_periods_must_greater_than_zero">Periods must be greater than zero.</string>
+
 </resources>

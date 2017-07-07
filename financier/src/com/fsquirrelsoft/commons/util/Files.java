@@ -322,8 +322,10 @@ public class Files {
 
             });
 
-            for (File file : filesToRemove) {
-                file.delete();
+            if (filesToRemove != null) {
+                for (File file : filesToRemove) {
+                    file.delete();
+                }
             }
         }
     }
