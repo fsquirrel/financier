@@ -1,6 +1,7 @@
 package com.fsquirrelsoft.financier.data;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -96,6 +97,7 @@ public class SQLiteDataHelper extends SQLiteOpenHelper {
         if (Contexts.DEBUG) {
             Logger.d("update db from " + oldVersion + " to " + newVersion);
         }
+        renameDMTableIfNeed(db);
         if (oldVersion < 0) {
             Logger.i("reset schema");
             // drop and create.
@@ -134,6 +136,29 @@ public class SQLiteDataHelper extends SQLiteOpenHelper {
             db.execSQL(DETTAG_CREATE_SQL);
             oldVersion++;
         }
+    }
+
+    private void renameDMTableIfNeed(SQLiteDatabase db) {
+        if(tableExists(db, "dm_acc")) {
+            db.execSQL("ALTER TABLE dm_acc RENAME TO " + TB_ACC);
+        }
+        if(tableExists(db, "dm_det")) {
+            db.execSQL("ALTER TABLE dm_det RENAME TO " + TB_DET);
+        }
+    }
+
+    private boolean tableExists(SQLiteDatabase db, String tableName) {
+        if (tableName == null) {
+            return false;
+        }
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM sqlite_master WHERE type = ? AND name = ?", new String[]{"table", tableName});
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return false;
+        }
+        int count = cursor.getInt(0);
+        cursor.close();
+        return count > 0;
     }
 
 }

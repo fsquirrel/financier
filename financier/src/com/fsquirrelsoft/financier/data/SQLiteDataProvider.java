@@ -63,7 +63,6 @@ public class SQLiteDataProvider implements IDataProvider {
 
     @Override
     public void init() {
-
     }
 
     @Override

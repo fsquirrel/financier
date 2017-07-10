@@ -179,7 +179,7 @@ public class DesktopActivity extends ContextsActivity {
         final GUIs.IBusyRunnable restorejob = new GUIs.BusyAdapter() {
             @Override
             public void onBusyFinish() {
-                GUIs.longToast(DesktopActivity.this, i18n.string(R.string.msg_db_retored));
+                GUIs.longToast(DesktopActivity.this, i18n.string(R.string.msg_db_restored));
 
                 // push a dummy to trigger resume/reload
                 Intent intent = new Intent(DesktopActivity.this, DummyActivity.class);
@@ -197,7 +197,7 @@ public class DesktopActivity extends ContextsActivity {
                 }
             }
         };
-        GUIs.confirm(this, i18n.string(R.string.qmsg_retore_db), new GUIs.OnFinishListener() {
+        GUIs.confirm(this, i18n.string(R.string.qmsg_restore_db), new GUIs.OnFinishListener() {
             @Override
             public boolean onFinish(Object data) {
                 if ((Integer) data == GUIs.OK_BUTTON) {

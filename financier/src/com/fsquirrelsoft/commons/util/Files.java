@@ -265,6 +265,40 @@ public class Files {
         return count;
     }
 
+    public static int copyDatabases(File sourceFolder, File targetFolder, Date date, boolean fromDM) throws IOException {
+        final String prefix = fromDM ? "dm" : "fsf";
+        int count = 0;
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) && sourceFolder.exists() && targetFolder.exists()) {
+            String[] filenames = sourceFolder.list(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String filename) {
+                    // fsf db files only
+                    if (filename.startsWith(prefix) && filename.endsWith(".db")) {
+                        return true;
+                    }
+                    return false;
+                }
+            });
+            String bakDate = date == null ? null : backupDateFmt.format(date) + ".bak";
+            if (filenames != null && filenames.length != 0) {
+                List<String> dbs = Arrays.asList(filenames);
+                // only when there are master and default book db.
+                if (dbs.contains(prefix + "_master.db") && dbs.contains(prefix + ".db")) {
+                    for (String db : dbs) {
+                        String dest = db.replaceAll("dm", "fsf");
+                        Files.copyFileTo(new File(sourceFolder, db), new File(targetFolder, dest));
+                        count++;
+                        if (bakDate != null) {
+                            Files.copyFileTo(new File(sourceFolder, db), new File(targetFolder, db + "." + bakDate));
+                        }
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
     /**
      * Copy preference file.
      * 

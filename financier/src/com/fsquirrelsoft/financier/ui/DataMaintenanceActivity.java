@@ -78,6 +78,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         findViewById(R.id.datamain_clear_folder).setOnClickListener(this);
         findViewById(R.id.datamain_backup_db).setOnClickListener(this);
         findViewById(R.id.datamain_restore_db).setOnClickListener(this);
+        findViewById(R.id.datamain_restore_db_from_dm).setOnClickListener(this);
     }
 
     @Override
@@ -97,17 +98,19 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         } else if (v.getId() == R.id.datamain_backup_db) {
             doBackupDb();
         } else if (v.getId() == R.id.datamain_restore_db) {
-            doRestoreDb();
+            doRestoreDb(false);
+        } else if (v.getId() == R.id.datamain_restore_db_from_dm) {
+            doRestoreDb(true);
         }
     }
 
-    private void doRestoreDb() {
+    private void doRestoreDb(final boolean fromDM) {
         // restore db & pref
         final Contexts ctxs = Contexts.instance();
         final GUIs.IBusyRunnable restoreJob = new GUIs.BusyAdapter() {
             @Override
             public void onBusyFinish() {
-                GUIs.longToast(DataMaintenanceActivity.this, i18n.string(R.string.msg_db_retored));
+                GUIs.longToast(DataMaintenanceActivity.this, i18n.string(R.string.msg_db_restored));
 
                 // push a dummy to trigger resume/reload
                 Intent intent = new Intent(DataMaintenanceActivity.this, DummyActivity.class);
@@ -117,7 +120,15 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             @Override
             public void run() {
                 try {
-                    Files.copyDatabases(ctxs.getBackupFolder(), ctxs.getDbFolder(), null);
+                    if (fromDM) {
+                        File sd = Environment.getExternalStorageDirectory();
+                        File dmFolder = new File(sd, "bwDailyMoney");
+                        if(Files.copyDatabases(dmFolder, ctxs.getDbFolder(), null, true) == 0) {
+                            Files.copyDatabases(ctxs.getBackupFolder(), ctxs.getDbFolder(), null, true);
+                        }
+                    } else {
+                        Files.copyDatabases(ctxs.getBackupFolder(), ctxs.getDbFolder(), null);
+                    }
                     // FIXME Restored prefs.xml will active after restarting the app. It's too ambiguous and I can't find the way to handle this.
                     // Files.copyPrefFile(ctxs.getBackupFolder(), ctxs.getPrefFolder(), null);
                     // Contexts.instance().setPreferenceDirty();
@@ -126,7 +137,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 }
             }
         };
-        GUIs.confirm(this, i18n.string(R.string.qmsg_retore_db), new GUIs.OnFinishListener() {
+        GUIs.confirm(this, i18n.string(fromDM ? R.string.qmsg_restore_db_from_dm:R.string.qmsg_restore_db), new GUIs.OnFinishListener() {
             @Override
             public boolean onFinish(Object data) {
                 if ((Integer) data == GUIs.OK_BUTTON) {

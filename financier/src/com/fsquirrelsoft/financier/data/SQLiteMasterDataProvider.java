@@ -34,9 +34,28 @@ public class SQLiteMasterDataProvider implements IMasterDataProvider {
         this.calHelper = calHelper;
     }
 
+    private boolean tableExists(String tableName) {
+        if (tableName == null) {
+            return false;
+        }
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM sqlite_master WHERE type = ? AND name = ?", new String[]{"table", tableName});
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return false;
+        }
+        int count = cursor.getInt(0);
+        cursor.close();
+        return count > 0;
+    }
+
     @Override
     public void init() {
-
+        // rename dm to fsf
+        SQLiteDatabase db = helper.getWritableDatabase();
+        if(tableExists("dm_book")) {
+            db.execSQL("ALTER TABLE dm_book RENAME TO " + TB_BOOK);
+        }
     }
 
     @Override

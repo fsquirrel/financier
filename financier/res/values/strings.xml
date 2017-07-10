@@ -203,8 +203,8 @@
     <string name="label_prefs_lastbackup">Last Data Backup Time</string>
 
     <!-- from 2012802 by dennis -->
-    <string name="msg_db_retored">Data was restored, welcome back!</string>
-    <string name="qmsg_retore_db">It looks like you have Financier data backup, do you want to restore it (all current data will be replaced) ?</string>
+    <string name="msg_db_restored">Data was restored, welcome back!</string>
+    <string name="qmsg_restore_db">It looks like you have Financier data backup, do you want to restore it (all current data will be replaced) ?</string>
 
     <!-- from 20120924 by Lancelot Liu -->
     <string name="dtitem_tags">Tags</string>
@@ -259,4 +259,7 @@
     <!-- 20170707 -->
     <string name="msg_periods_must_greater_than_zero">Periods must be greater than zero.</string>
 
+    <!-- 20170710 -->
+    <string name="label_restore_db_from_dm">Restore data from DM</string>
+    <string name="qmsg_restore_db_from_dm">It looks like you have DM data backup, do you want to restore it (all current data will be replaced) ?</string>
 </resources>
