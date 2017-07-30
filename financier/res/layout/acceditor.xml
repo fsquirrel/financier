@@ -6,7 +6,7 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="6" >
 
         <LinearLayout
@@ -18,6 +18,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:text="@string/clabel_name" />
 
             <EditText
@@ -32,6 +33,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:text="@string/clabel_type" />
 
             <Spinner
@@ -45,6 +47,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:text="@string/label_initial_value" />
 
             <LinearLayout
@@ -52,7 +55,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_weight="1"
                 android:orientation="horizontal" >
 
                 <EditText
@@ -70,6 +72,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:scaleType="centerCrop"
+                    android:contentDescription="@string/label_calculator"
                     android:src="@drawable/btn_cal2" />
             </LinearLayout>
 
@@ -87,7 +90,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_weight="1"
         android:orientation="horizontal" >
 
         <Button
@@ -103,6 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableLeft="@drawable/btn_cancel"
+            android:drawableStart="@drawable/btn_cancel"
             android:text="@string/cact_cancel" />
 
         <Button
@@ -111,6 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableLeft="@drawable/btn_cancel"
+            android:drawableStart="@drawable/btn_cancel"
             android:text="@string/cact_close"
             android:visibility="gone" />
     </LinearLayout>

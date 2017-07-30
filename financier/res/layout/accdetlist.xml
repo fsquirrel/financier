@@ -11,7 +11,7 @@
         android:background="@color/accdetlist_info_bg"
         android:ellipsize="end"
         android:gravity="center"
-        android:singleLine="true"
+        android:maxLines="1"
         android:text=""
         android:textColor="@color/accdetlist_info_fg"
         android:textSize="16sp" />
