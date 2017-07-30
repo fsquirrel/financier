@@ -197,7 +197,7 @@
     <string name="label_periods">Number of periods</string>
 
     <!-- from 20120427 by Lancelot Liu -->
-    <string name="label_backup_db">Backup data</string>
+    <string name="label_backup_db">Backup Data (Local)</string>
     <string name="msg_db_backuped">%1$s files backup to %2$s</string>
     <string name="msg_no_db">There is no data to backup</string>
     <string name="label_prefs_lastbackup">Last Data Backup Time</string>
@@ -254,7 +254,7 @@
     <string name="dir_location">Backup Directory</string>
 
     <string name="unknown">Unknown</string>
-    <string name="label_restore_db">Restore data</string>
+    <string name="label_restore_db">Restore Data (Local)</string>
 
     <!-- 20170707 -->
     <string name="msg_periods_must_greater_than_zero">Periods must be greater than zero.</string>
@@ -262,4 +262,13 @@
     <!-- 20170710 -->
     <string name="label_restore_db_from_dm">Restore data from DM</string>
     <string name="qmsg_restore_db_from_dm">It looks like you have DM data backup, do you want to restore it (all current data will be replaced) ?</string>
+
+    <!-- 20170724 -->
+    <string name="label_calculator">Calculator</string>
+
+    <!-- -20170729 -->
+    <string name="label_backup_db_google">Backup Data (Google)</string>
+    <string name="label_restore_db_google">Restore Data (Google)</string>
+    <string name="label_prefs_lastbackup_google">Last Data Backup Time (Google)</string>
+    <string name="msg_db_restored_manually">Data was restored, welcome back! The preferences will active after restarting Financier.</string>
 </resources>

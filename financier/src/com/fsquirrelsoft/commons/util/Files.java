@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -233,8 +234,9 @@ public class Files {
      * @return Number of files copied.
      * @throws IOException
      */
-    public static int copyDatabases(File sourceFolder, File targetFolder, Date date) throws IOException {
+    public static List<File> copyDatabases(File sourceFolder, File targetFolder, Date date) throws IOException {
         int count = 0;
+        List<File> files = new ArrayList<File>();
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state) && sourceFolder.exists() && targetFolder.exists()) {
             String[] filenames = sourceFolder.list(new FilenameFilter() {
@@ -253,8 +255,10 @@ public class Files {
                 // only when there are master and default book db.
                 if (dbs.contains("fsf_master.db") && dbs.contains("fsf.db")) {
                     for (String db : dbs) {
-                        Files.copyFileTo(new File(sourceFolder, db), new File(targetFolder, db));
+                        File target = new File(targetFolder, db);
+                        Files.copyFileTo(new File(sourceFolder, db), target);
                         count++;
+                        files.add(target);
                         if (bakDate != null) {
                             Files.copyFileTo(new File(sourceFolder, db), new File(targetFolder, db + "." + bakDate));
                         }
@@ -262,7 +266,7 @@ public class Files {
                 }
             }
         }
-        return count;
+        return files;
     }
 
     public static int copyDatabases(File sourceFolder, File targetFolder, Date date, boolean fromDM) throws IOException {
@@ -311,8 +315,9 @@ public class Files {
      * @return Number of files copied.
      * @throws IOException
      */
-    public static int copyPrefFile(File sourceFolder, File targetFolder, Date date) throws IOException {
+    public static File copyPrefFile(File sourceFolder, File targetFolder, Date date) throws IOException {
         int count = 0;
+        File target = null;
         final String prefName = "com.fsquirrelsoft.financier_preferences.xml";
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state) && sourceFolder.exists() && targetFolder.exists()) {
@@ -320,13 +325,14 @@ public class Files {
             String bakDate = date == null ? null : backupDateFmt.format(date) + ".bak";
             if (pref.exists()) {
                 count++;
-                Files.copyFileTo(pref, new File(targetFolder, "com.fsquirrelsoft.financier_preferences.xml"));
+                target = new File(targetFolder, "com.fsquirrelsoft.financier_preferences.xml");
+                Files.copyFileTo(pref, target);
                 if (date != null) {
                     Files.copyFileTo(pref, new File(targetFolder, prefName + "." + bakDate));
                 }
             }
         }
-        return count;
+        return target;
     }
 
     public static void removeOldBackups(File backupFolder, final Calendar baseTime) {

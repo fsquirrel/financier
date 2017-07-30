@@ -3,10 +3,8 @@ package com.fsquirrelsoft.financier.ui;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -25,6 +23,7 @@ import com.fsquirrelsoft.financier.data.Detail;
 import com.fsquirrelsoft.financier.data.DetailTag;
 import com.fsquirrelsoft.financier.data.IDataProvider;
 import com.fsquirrelsoft.financier.data.Tag;
+import com.google.android.gms.drive.sample.CreateFileActivity;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -79,6 +78,8 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         findViewById(R.id.datamain_backup_db).setOnClickListener(this);
         findViewById(R.id.datamain_restore_db).setOnClickListener(this);
         findViewById(R.id.datamain_restore_db_from_dm).setOnClickListener(this);
+        findViewById(R.id.datamain_backup_db_google).setOnClickListener(this);
+        findViewById(R.id.datamain_restore_db_google).setOnClickListener(this);
     }
 
     @Override
@@ -101,7 +102,53 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             doRestoreDb(false);
         } else if (v.getId() == R.id.datamain_restore_db_from_dm) {
             doRestoreDb(true);
+        } else if (v.getId() == R.id.datamain_backup_db_google) {
+            doBackupDbGoogle();
+        } else if (v.getId() == R.id.datamain_restore_db_google) {
+            doRestoreDbGoogle();
         }
+    }
+
+    private void doBackupDbGoogle() {
+        final Calendar now = Calendar.getInstance();
+        final GUIs.IBusyRunnable job = new GUIs.BusyAdapter() {
+            int count = -1;
+
+            public void onBusyError(Throwable t) {
+                GUIs.error(DataMaintenanceActivity.this, t);
+            }
+
+            public void onBusyFinish() {
+                if (count > 0) {
+                    String msg = i18n.string(R.string.msg_db_backuped, Integer.toString(count), workingFolder);
+                    GUIs.alert(DataMaintenanceActivity.this, msg);
+                    getContexts().setLastBackupGoogle(now.getTime());
+                } else {
+                    GUIs.alert(DataMaintenanceActivity.this, R.string.msg_no_db);
+                }
+            }
+
+            @Override
+            public void run() {
+                try {
+                    Contexts ctxs = getContexts();
+                    List<File> dbs = Files.copyDatabases(ctxs.getDbFolder(), ctxs.getBackupFolder(), now.getTime());
+                    File pref = Files.copyPrefFile(ctxs.getPrefFolder(), ctxs.getBackupFolder(), now.getTime());
+                    count = dbs.size() + (pref == null ? 0 : 1);
+                    // TODO zip & upload to google drive
+                    Intent i = new Intent();
+                    i.setClass(DataMaintenanceActivity.this, CreateFileActivity.class);
+                    startActivity(i);
+                } catch (Exception e) {
+                    throw new RuntimeException(e.getMessage(), e);
+                }
+            }
+        };
+        GUIs.doBusy(DataMaintenanceActivity.this, job);
+    }
+
+    private void doRestoreDbGoogle() {
+        // TODO
     }
 
     private void doRestoreDb(final boolean fromDM) {
@@ -110,7 +157,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         final GUIs.IBusyRunnable restoreJob = new GUIs.BusyAdapter() {
             @Override
             public void onBusyFinish() {
-                GUIs.longToast(DataMaintenanceActivity.this, i18n.string(R.string.msg_db_restored));
+                GUIs.longToast(DataMaintenanceActivity.this, i18n.string(R.string.msg_db_restored_manually));
 
                 // push a dummy to trigger resume/reload
                 Intent intent = new Intent(DataMaintenanceActivity.this, DummyActivity.class);
@@ -123,21 +170,21 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                     if (fromDM) {
                         File sd = Environment.getExternalStorageDirectory();
                         File dmFolder = new File(sd, "bwDailyMoney");
-                        if(Files.copyDatabases(dmFolder, ctxs.getDbFolder(), null, true) == 0) {
+                        if (Files.copyDatabases(dmFolder, ctxs.getDbFolder(), null, true) == 0) {
                             Files.copyDatabases(ctxs.getBackupFolder(), ctxs.getDbFolder(), null, true);
                         }
                     } else {
                         Files.copyDatabases(ctxs.getBackupFolder(), ctxs.getDbFolder(), null);
                     }
                     // FIXME Restored prefs.xml will active after restarting the app. It's too ambiguous and I can't find the way to handle this.
-                    // Files.copyPrefFile(ctxs.getBackupFolder(), ctxs.getPrefFolder(), null);
-                    // Contexts.instance().setPreferenceDirty();
+                    Files.copyPrefFile(ctxs.getBackupFolder(), ctxs.getPrefFolder(), null);
+                    Contexts.instance().setPreferenceDirty();
                 } catch (IOException e) {
                     Logger.e(e.getMessage(), e);
                 }
             }
         };
-        GUIs.confirm(this, i18n.string(fromDM ? R.string.qmsg_restore_db_from_dm:R.string.qmsg_restore_db), new GUIs.OnFinishListener() {
+        GUIs.confirm(this, i18n.string(fromDM ? R.string.qmsg_restore_db_from_dm : R.string.qmsg_restore_db), new GUIs.OnFinishListener() {
             @Override
             public boolean onFinish(Object data) {
                 if ((Integer) data == GUIs.OK_BUTTON) {
@@ -171,8 +218,9 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             public void run() {
                 try {
                     Contexts ctxs = getContexts();
-                    count = Files.copyDatabases(ctxs.getDbFolder(), ctxs.getBackupFolder(), now.getTime());
-                    count += Files.copyPrefFile(ctxs.getPrefFolder(), ctxs.getBackupFolder(), now.getTime());
+                    List<File> dbs = Files.copyDatabases(ctxs.getDbFolder(), ctxs.getBackupFolder(), now.getTime());
+                    File pref = Files.copyPrefFile(ctxs.getPrefFolder(), ctxs.getBackupFolder(), now.getTime());
+                    count = dbs.size() + (pref == null ? 0 : 1);
                 } catch (Exception e) {
                     throw new RuntimeException(e.getMessage(), e);
                 }

@@ -32,4 +32,5 @@ public class Constants {
     public static final String PREFS_LAST_BACKUP = "last_backup";
     public static final String BACKUP_JOB = "backup_job";
     public static final String BACKUP_DIR = "store_path";
+    public static final String PREFS_LAST_BACKUP_GOOGLE = "last_backup_google";
 }

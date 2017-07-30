@@ -80,6 +80,7 @@ public class Contexts {
     boolean pref_hierarachicalReport = true;
     private boolean pref_hideZeroAccounts = true;
     String pref_lastbackup = "Unknown";
+    String pref_lastbackupGoogle = "Unknown";
     String pref_backupdir = "";
     SimpleDateFormat lastBakFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private CalendarHelper calendarHelper = new CalendarHelper();
@@ -466,6 +467,12 @@ public class Contexts {
         }
 
         try {
+            pref_lastbackupGoogle = prefs.getString(Constants.PREFS_LAST_BACKUP_GOOGLE, pref_lastbackupGoogle);
+        } catch (Exception x) {
+            Logger.e(x.getMessage());
+        }
+
+        try {
             pref_backupdir = prefs.getString(Constants.BACKUP_DIR, sdFolder.getAbsolutePath());
         } catch (Exception x) {
             Logger.e(x.getMessage());
@@ -481,6 +488,7 @@ public class Contexts {
             Logger.d("preference : backup csv " + pref_backupCSV);
             Logger.d("preference : csv encoding " + pref_csvEncoding);
             Logger.d("preference : last backup " + pref_lastbackup);
+            Logger.d("preference : last backup (google)" + pref_lastbackupGoogle);
             Logger.d("preference : backup dir " + pref_backupdir);
 
             Logger.d("working_folder " + workingFolder);
@@ -716,6 +724,10 @@ public class Contexts {
         setLastBackup(appContext, date);
     }
 
+    public void setLastBackupGoogle(Date date) {
+        setLastBackupGoogle(appContext, date);
+    }
+
     /**
      * set last backup date
      *
@@ -726,6 +738,14 @@ public class Contexts {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(Constants.PREFS_LAST_BACKUP, pref_lastbackup);
+        editor.commit();
+    }
+
+    public void setLastBackupGoogle(Context context, Date date) {
+        pref_lastbackupGoogle = lastBakFmt.format(date);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(Constants.PREFS_LAST_BACKUP_GOOGLE, pref_lastbackupGoogle);
         editor.commit();
     }
 

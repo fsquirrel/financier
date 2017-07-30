@@ -12,6 +12,7 @@ import com.fsquirrelsoft.financier.ui.Constants;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
 public class ScheduleReceiver extends BroadcastReceiver {
 
@@ -30,8 +31,9 @@ public class ScheduleReceiver extends BroadcastReceiver {
                 int count = 0;
                 Logger.d("DBFolder: " + dbFolder.getAbsolutePath());
                 Logger.d("PrefFolder: " + prefFolder.getAbsolutePath());
-                count += Files.copyDatabases(dbFolder, backupFolder, now.getTime());
-                count += Files.copyPrefFile(prefFolder, backupFolder, now.getTime());
+                List<File> dbs = Files.copyDatabases(dbFolder, backupFolder, now.getTime());
+                File pref = Files.copyPrefFile(prefFolder, backupFolder, now.getTime());
+                count = dbs.size() + (pref == null ? 0 : 1);
                 if (count > 0) {
                     ctxs.setLastBackup(context, now.getTime());
                 }
