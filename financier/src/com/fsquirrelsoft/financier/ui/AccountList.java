@@ -87,11 +87,11 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
 
         for (Account acc : listViewData) {
             Map<String, Object> row = new HashMap<>();
-            listViewMapList.add(row);
             AccountType accountType = AccountType.find(acc.getType());
             row.put(bindingFrom[0], new NamedItem(bindingFrom[0], accountType, acc.getName()));
             row.put(bindingFrom[1], new NamedItem(bindingFrom[1], accountType, Formats.bigDecimalToString(acc.getInitialValueBD())));
             row.put(bindingFrom[2], new NamedItem(bindingFrom[2], accountType, acc.getId()));
+            listViewMapList.add(row);
         }
 
         listViewAdapter.notifyDataSetChanged();

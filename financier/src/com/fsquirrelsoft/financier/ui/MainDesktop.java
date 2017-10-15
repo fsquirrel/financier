@@ -17,6 +17,7 @@ import java.util.Date;
 public class MainDesktop extends AbstractDesktop {
 
     public MainDesktop() {
+        super();
         label = i18n.string(R.string.dt_main);
         icon = -1;
     }

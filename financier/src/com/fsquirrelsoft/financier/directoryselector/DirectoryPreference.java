@@ -78,7 +78,7 @@ public class DirectoryPreference extends DialogPreference {
     protected void onDialogClosed(boolean positiveResult) {
         super.onDialogClosed(positiveResult);
         if (positiveResult) {
-            if (dirChooser.getSelectedDir().canWrite()) {
+            if (dirChooser != null && dirChooser.getSelectedDir() != null && dirChooser.getSelectedDir().canWrite()) {
                 String value = dirChooser.getSelectedDir().getPath();
                 persistString(value);
                 callChangeListener(value);
