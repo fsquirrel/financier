@@ -31,8 +31,8 @@ import java.util.Map;
 public class AccountList extends Fragment implements AdapterView.OnItemClickListener {
 
     public static final String TYPE_KEY = "type";
-    private static final String[] bindingFrom = new String[] { "name", "initvalue", "id" };
-    private static final int[] bindingTo = new int[] { R.id.accmgnt_item_name, R.id.accmgnt_item_initvalue, R.id.accmgnt_item_id };
+    private static final String[] bindingFrom = new String[]{"name", "initvalue", "id"};
+    private static final int[] bindingTo = new int[]{R.id.accmgnt_item_name, R.id.accmgnt_item_initvalue, R.id.accmgnt_item_id};
 
     private List<Account> listViewData = new ArrayList<Account>();
     private List<Map<String, Object>> listViewMapList = new ArrayList<>();
@@ -79,7 +79,6 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
 
     public void reloadData() {
         IDataProvider idp = Contexts.instance().getDataProvider();
-        listViewData = null;
 
         AccountType type = this.getAccountType();
         listViewData = idp.listAccount(type);
@@ -111,18 +110,22 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        if (item.getItemId() == R.id.accmgnt_menu_edit) {
-            doEditAccount(info.position);
-            return true;
-        } else if (item.getItemId() == R.id.accmgnt_menu_delete) {
-            doDeleteAccount(info.position);
-            return true;
-        } else if (item.getItemId() == R.id.accmgnt_menu_copy) {
-            doCopyAccount(info.position);
-            return true;
+        if (getUserVisibleHint()) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            if (item.getItemId() == R.id.accmgnt_menu_edit) {
+                doEditAccount(info.position);
+                return true;
+            } else if (item.getItemId() == R.id.accmgnt_menu_delete) {
+                doDeleteAccount(info.position);
+                return true;
+            } else if (item.getItemId() == R.id.accmgnt_menu_copy) {
+                doCopyAccount(info.position);
+                return true;
+            } else {
+                return super.onContextItemSelected(item);
+            }
         } else {
-            return super.onContextItemSelected(item);
+            return false;
         }
     }
 

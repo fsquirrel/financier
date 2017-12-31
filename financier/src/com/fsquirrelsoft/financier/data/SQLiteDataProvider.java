@@ -47,9 +47,7 @@ import static com.fsquirrelsoft.financier.data.DataMeta.TB_DETTAG;
 import static com.fsquirrelsoft.financier.data.DataMeta.TB_TAG;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class SQLiteDataProvider implements IDataProvider {
 
@@ -88,7 +86,7 @@ public class SQLiteDataProvider implements IDataProvider {
     @Override
     public Account findAccount(String id) {
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor c = db.query(TB_ACC, COL_ACC_ALL, COL_ACC_ID + " = ?", new String[] { id }, null, null, null, "1");
+        Cursor c = db.query(TB_ACC, COL_ACC_ALL, COL_ACC_ID + " = ?", new String[]{id}, null, null, null, "1");
         Account acc = null;
         if (c.moveToNext()) {
             acc = new Account();
@@ -115,7 +113,7 @@ public class SQLiteDataProvider implements IDataProvider {
             } else if (n.equals(COL_ACC_INITVAL)) {
                 acc.setInitialValue(c.getDouble(i));
             } else if (n.equals(COL_ACC_INITVAL_BD)) {
-                if (!"".equals(c.getString(i))) {
+                if (isAmount(c.getString(i))) {
                     acc.setInitialValueBD(new BigDecimal(c.getString(i)));
                     isBDEmpty = false;
                 }
@@ -160,7 +158,7 @@ public class SQLiteDataProvider implements IDataProvider {
         if (type == null) {
             c = db.query(TB_ACC, COL_ACC_ALL, null, null, null, null, COL_ACC_ID);
         } else {
-            c = db.query(TB_ACC, COL_ACC_ALL, COL_ACC_TYPE + " = ?", new String[] { type.getType() }, null, null, COL_ACC_ID);
+            c = db.query(TB_ACC, COL_ACC_ALL, COL_ACC_TYPE + " = ?", new String[]{type.getType()}, null, null, COL_ACC_ID);
         }
         List<Account> result = new ArrayList<Account>();
         Account acc;
@@ -219,19 +217,19 @@ public class SQLiteDataProvider implements IDataProvider {
         applyContextValue(account, cv);
 
         // use old id to update
-        int r = db.update(TB_ACC, cv, COL_ACC_ID + " = ?", new String[] { id });
+        int r = db.update(TB_ACC, cv, COL_ACC_ID + " = ?", new String[]{id});
 
         if (r > 0) {
             // update the refereted detail id
             cv = new ContentValues();
             cv.put(COL_DET_FROM, newid);
             cv.put(COL_DET_FROM_TYPE, account.getType());
-            db.update(TB_DET, cv, COL_DET_FROM + " = ?", new String[] { id });
+            db.update(TB_DET, cv, COL_DET_FROM + " = ?", new String[]{id});
 
             cv = new ContentValues();
             cv.put(COL_DET_TO, newid);
             cv.put(COL_DET_TO_TYPE, account.getType());
-            db.update(TB_DET, cv, COL_DET_TO + " = ?", new String[] { id });
+            db.update(TB_DET, cv, COL_DET_TO + " = ?", new String[]{id});
         }
 
         return r > 0;
@@ -240,7 +238,7 @@ public class SQLiteDataProvider implements IDataProvider {
     @Override
     public boolean deleteAccount(String id) {
         SQLiteDatabase db = helper.getWritableDatabase();
-        int r = db.delete(TB_ACC, COL_ACC_ID + " = ?", new String[] { id });
+        int r = db.delete(TB_ACC, COL_ACC_ID + " = ?", new String[]{id});
         return r > 0;
     }
 
@@ -264,7 +262,7 @@ public class SQLiteDataProvider implements IDataProvider {
             } else if (n.equals(COL_DET_MONEY)) {
                 det.setMoney(c.getDouble(i));
             } else if (n.equals(COL_DET_MONEY_BD)) {
-                if (!"".equals(c.getString(i))) {
+                if (isAmount(c.getString(i))) {
                     det.setMoneyBD(new BigDecimal(c.getString(i)));
                     isBDEmpty = false;
                 }
@@ -791,7 +789,7 @@ public class SQLiteDataProvider implements IDataProvider {
 
         BigDecimal r = BigDecimal.ZERO;
         while (c.moveToNext()) {
-            r = r.add(new BigDecimal(c.getString(0) == null ? "0" : c.getString(0)));
+            r = r.add(new BigDecimal(isAmount(c.getString(0)) ? c.getString(0) : "0"));
         }
 
         c.close();
@@ -827,7 +825,7 @@ public class SQLiteDataProvider implements IDataProvider {
 
         BigDecimal r = BigDecimal.ZERO;
         while (c.moveToNext()) {
-            r = r.add(new BigDecimal(c.getString(0) == null ? "0" : c.getString(0)));
+            r = r.add(new BigDecimal(isAmount(c.getString(0)) ? c.getString(0) : "0"));
         }
 
         c.close();
@@ -857,11 +855,21 @@ public class SQLiteDataProvider implements IDataProvider {
 
         BigDecimal r = BigDecimal.ZERO;
         while (c.moveToNext()) {
-            r = r.add(new BigDecimal(c.getString(0) == null ? "0" : c.getString(0)));
+            r = r.add(new BigDecimal(isAmount(c.getString(0)) ? c.getString(0) : "0"));
         }
 
         c.close();
         return r;
+    }
+
+    private boolean isAmount(String s) {
+        boolean result = false;
+        try {
+            Double.parseDouble(s);
+            result = true;
+        } catch (NumberFormatException e) {
+        }
+        return result;
     }
 
     @Override
@@ -892,7 +900,7 @@ public class SQLiteDataProvider implements IDataProvider {
 
         BigDecimal r = BigDecimal.ZERO;
         while (c.moveToNext()) {
-            r = r.add(new BigDecimal(c.getString(0) == null ? "0" : c.getString(0)));
+            r = r.add(new BigDecimal(isAmount(c.getString(0)) ? c.getString(0) : "0"));
         }
 
         c.close();
@@ -979,7 +987,7 @@ public class SQLiteDataProvider implements IDataProvider {
 
         BigDecimal r = BigDecimal.ZERO;
         while (c.moveToNext()) {
-            r = r.add(new BigDecimal(c.getString(0) == null ? "0" : c.getString(0)));
+            r = r.add(new BigDecimal(isAmount(c.getString(0)) ? c.getString(0) : "0"));
         }
 
         c.close();
@@ -1004,7 +1012,7 @@ public class SQLiteDataProvider implements IDataProvider {
     @Override
     public List<DetailTag> listSelectedDetailTags(int detailId) {
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor c = db.query(TB_DETTAG, COL_DETTAG_ALL, COL_DETTAG_DET_ID + " = ?", new String[] { String.valueOf(detailId) }, null, null, COL_TAG_ID);
+        Cursor c = db.query(TB_DETTAG, COL_DETTAG_ALL, COL_DETTAG_DET_ID + " = ?", new String[]{String.valueOf(detailId)}, null, null, COL_TAG_ID);
         List<DetailTag> result = new ArrayList<DetailTag>();
         DetailTag detailTag;
         while (c.moveToNext()) {
@@ -1101,7 +1109,7 @@ public class SQLiteDataProvider implements IDataProvider {
     @Override
     public Tag findTag(String name) {
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor c = db.query(TB_TAG, COL_TAG_ALL, COL_TAG_NAME + " = ?", new String[] { name }, null, null, null, "1");
+        Cursor c = db.query(TB_TAG, COL_TAG_ALL, COL_TAG_NAME + " = ?", new String[]{name}, null, null, null, "1");
         Tag tag = null;
         if (c.moveToNext()) {
             tag = new Tag();
