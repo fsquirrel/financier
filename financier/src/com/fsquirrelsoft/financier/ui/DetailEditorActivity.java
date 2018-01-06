@@ -235,7 +235,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
 
         periodUnitSpinner = (Spinner) findViewById(R.id.deteditor_periodUnit);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
-                new String[] { i18n.string(R.string.puitem_year), i18n.string(R.string.puitem_month), i18n.string(R.string.puitem_day) });
+                new String[] { i18n.string(R.string.puitem_month), i18n.string(R.string.puitem_year), i18n.string(R.string.puitem_day) });
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         periodUnitSpinner.setAdapter(adapter);
 
@@ -504,7 +504,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         }
 
         String moneystr = moneyEditor.getText().toString();
-        if ("".equals(moneystr)) {
+        if (!Formats.isAmount(moneystr)) {
             moneyEditor.requestFocus();
             GUIs.alert(this, i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_money)));
             return;

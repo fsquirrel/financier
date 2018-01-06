@@ -93,4 +93,14 @@ public class Formats {
         }
     }
 
+    public static boolean isAmount(String s) {
+        boolean result = false;
+        try {
+            Double.parseDouble(s);
+            result = true;
+        } catch (NumberFormatException e) {
+        }
+        return result;
+    }
+
 }

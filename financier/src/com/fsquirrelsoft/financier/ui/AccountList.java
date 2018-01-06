@@ -47,16 +47,22 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
         return accountList;
     }
 
+    private SimpleAdapter getListViewAdapter() {
+        if (listViewAdapter == null) {
+            listViewAdapter = new SimpleAdapter(this.getContext(), listViewMapList, R.layout.accmgnt_item, bindingFrom, bindingTo);
+        }
+        return listViewAdapter;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View fragment = inflater.inflate(R.layout.accmgnt_fragment, container, false);
 
-        this.listViewAdapter = new SimpleAdapter(this.getContext(), listViewMapList, R.layout.accmgnt_item, bindingFrom, bindingTo);
-        this.listViewAdapter.setViewBinder(new AccountListViewBinder());
+        getListViewAdapter().setViewBinder(new AccountListViewBinder());
 
         this.listView = (ListView) fragment.findViewById(R.id.accmgnt_list);
-        this.listView.setAdapter(this.listViewAdapter);
+        this.listView.setAdapter(getListViewAdapter());
         this.listView.setOnItemClickListener(this);
 
         this.registerForContextMenu(this.listView);
@@ -93,7 +99,7 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
             listViewMapList.add(row);
         }
 
-        listViewAdapter.notifyDataSetChanged();
+        getListViewAdapter().notifyDataSetChanged();
     }
 
     public AccountType getAccountType() {

@@ -647,7 +647,9 @@ public class Contexts {
 
     public IDataProvider getDataProvider() {
         if (dataProvider == null) {
-            throw new IllegalStateException("no available dataProvider, di you get data provider out of life cycle");
+            // 不知道為什麼會是 null，嘗試重新取得。
+            initDataProvider(appContext);
+            // throw new IllegalStateException("no available dataProvider, di you get data provider out of life cycle");
         }
         return dataProvider;
     }

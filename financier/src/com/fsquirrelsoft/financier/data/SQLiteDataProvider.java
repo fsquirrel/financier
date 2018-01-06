@@ -113,7 +113,7 @@ public class SQLiteDataProvider implements IDataProvider {
             } else if (n.equals(COL_ACC_INITVAL)) {
                 acc.setInitialValue(c.getDouble(i));
             } else if (n.equals(COL_ACC_INITVAL_BD)) {
-                if (isAmount(c.getString(i))) {
+                if (Formats.isAmount(c.getString(i))) {
                     acc.setInitialValueBD(new BigDecimal(c.getString(i)));
                     isBDEmpty = false;
                 }
@@ -262,7 +262,7 @@ public class SQLiteDataProvider implements IDataProvider {
             } else if (n.equals(COL_DET_MONEY)) {
                 det.setMoney(c.getDouble(i));
             } else if (n.equals(COL_DET_MONEY_BD)) {
-                if (isAmount(c.getString(i))) {
+                if (Formats.isAmount(c.getString(i))) {
                     det.setMoneyBD(new BigDecimal(c.getString(i)));
                     isBDEmpty = false;
                 }
@@ -789,7 +789,7 @@ public class SQLiteDataProvider implements IDataProvider {
 
         BigDecimal r = BigDecimal.ZERO;
         while (c.moveToNext()) {
-            r = r.add(new BigDecimal(isAmount(c.getString(0)) ? c.getString(0) : "0"));
+            r = r.add(new BigDecimal(Formats.isAmount(c.getString(0)) ? c.getString(0) : "0"));
         }
 
         c.close();
@@ -825,7 +825,7 @@ public class SQLiteDataProvider implements IDataProvider {
 
         BigDecimal r = BigDecimal.ZERO;
         while (c.moveToNext()) {
-            r = r.add(new BigDecimal(isAmount(c.getString(0)) ? c.getString(0) : "0"));
+            r = r.add(new BigDecimal(Formats.isAmount(c.getString(0)) ? c.getString(0) : "0"));
         }
 
         c.close();
@@ -855,21 +855,11 @@ public class SQLiteDataProvider implements IDataProvider {
 
         BigDecimal r = BigDecimal.ZERO;
         while (c.moveToNext()) {
-            r = r.add(new BigDecimal(isAmount(c.getString(0)) ? c.getString(0) : "0"));
+            r = r.add(new BigDecimal(Formats.isAmount(c.getString(0)) ? c.getString(0) : "0"));
         }
 
         c.close();
         return r;
-    }
-
-    private boolean isAmount(String s) {
-        boolean result = false;
-        try {
-            Double.parseDouble(s);
-            result = true;
-        } catch (NumberFormatException e) {
-        }
-        return result;
     }
 
     @Override
@@ -900,7 +890,7 @@ public class SQLiteDataProvider implements IDataProvider {
 
         BigDecimal r = BigDecimal.ZERO;
         while (c.moveToNext()) {
-            r = r.add(new BigDecimal(isAmount(c.getString(0)) ? c.getString(0) : "0"));
+            r = r.add(new BigDecimal(Formats.isAmount(c.getString(0)) ? c.getString(0) : "0"));
         }
 
         c.close();
@@ -987,7 +977,7 @@ public class SQLiteDataProvider implements IDataProvider {
 
         BigDecimal r = BigDecimal.ZERO;
         while (c.moveToNext()) {
-            r = r.add(new BigDecimal(isAmount(c.getString(0)) ? c.getString(0) : "0"));
+            r = r.add(new BigDecimal(Formats.isAmount(c.getString(0)) ? c.getString(0) : "0"));
         }
 
         c.close();

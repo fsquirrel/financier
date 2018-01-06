@@ -3,6 +3,7 @@ package com.fsquirrelsoft.financier.ui;
 import android.content.Context;
 import android.content.Intent;
 
+import com.fsquirrelsoft.financier.context.Contexts;
 import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Detail;
 
@@ -10,14 +11,15 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class MainDesktop extends AbstractDesktop {
 
     public MainDesktop() {
         super();
+        if (i18n == null) {
+            i18n = Contexts.instance().getI18n();
+        }
         label = i18n.string(R.string.dt_main);
         icon = -1;
     }
