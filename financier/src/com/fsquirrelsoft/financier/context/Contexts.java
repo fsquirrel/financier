@@ -10,6 +10,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
@@ -21,7 +22,6 @@ import android.text.Html;
 
 import com.fsquirrelsoft.commons.util.CalendarHelper;
 import com.fsquirrelsoft.commons.util.Formats;
-import com.fsquirrelsoft.commons.util.I18N;
 import com.fsquirrelsoft.commons.util.Logger;
 import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Book;
@@ -36,7 +36,6 @@ import com.fsquirrelsoft.financier.ui.Constants;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
 import java.io.File;
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,7 +61,6 @@ public class Contexts {
 
     private IDataProvider dataProvider;
     private IMasterDataProvider masterDataProvider;
-    private I18N i18n;
     private File sdFolder;
     private File dbFolder;
     private File prefFolder;
@@ -158,7 +156,6 @@ public class Contexts {
 
             this.appInitialObject = appInitialObject;
             appContext = context.getApplicationContext();
-            this.i18n = new I18N(appContext);
             initTracker(appContext);
             return true;
         } else {
@@ -185,7 +182,7 @@ public class Contexts {
                     try {
                         Logger.d("initial google tracker");
                         tracker = GoogleAnalyticsTracker.getInstance();
-                        tracker.setProductVersion(i18n.string(R.string.app_surface), getApplicationVersionName());
+                        tracker.setProductVersion(appContext.getResources().getString(R.string.app_surface), getApplicationVersionName());
                         tracker.start(ANALYTICS_CDOE, ANALYTICS_DISPATH_DELAY, context);
 
                     } catch (Throwable t) {
@@ -297,7 +294,7 @@ public class Contexts {
             intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, parcels);
         }
         try {
-            uiActivity.startActivity(Intent.createChooser(intent, i18n.string(R.string.clabel_share)));
+            uiActivity.startActivity(Intent.createChooser(intent, appContext.getResources().getString(R.string.clabel_share)));
         } catch (Exception x) {
             Logger.e(x.getMessage(), x);
             return false;
@@ -572,8 +569,8 @@ public class Contexts {
         return calendarHelper;
     }
 
-    public I18N getI18n() {
-        return i18n;
+    public Resources getResources() {
+        return appContext.getResources();
     }
 
     private void initDataProvider(Context context) {
@@ -621,8 +618,8 @@ public class Contexts {
         int sbid = getWorkingBookId();
         Book book = masterDataProvider.findBook(sbid);
         if (book == null) {
-            String name = i18n.string(R.string.title_book) + sbid;
-            book = new Book(name, i18n.string(R.string.label_default_book_symbol), SymbolPosition.FRONT, "");
+            String name = appContext.getResources().getString(R.string.title_book) + sbid;
+            book = new Book(name, appContext.getResources().getString(R.string.label_default_book_symbol), SymbolPosition.FRONT, "");
             masterDataProvider.newBookNoCheck(getWorkingBookId(), book);
         }
         currencySymbol = book.getSymbol();
@@ -685,7 +682,7 @@ public class Contexts {
         return appContext.getResources().getDrawable(id);
     }
 
-    public String toFormattedMoneyString(BigDecimal money) {
+    public String toFormattedMoneyString(double money) {
         IMasterDataProvider imdp = getMasterDataProvider();
         Book book = imdp.findBook(getWorkingBookId());
         return Formats.money2String(money, book.getSymbol(), book.getSymbolPosition());

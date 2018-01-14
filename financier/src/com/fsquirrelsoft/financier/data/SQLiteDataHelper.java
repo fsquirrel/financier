@@ -11,7 +11,7 @@ import com.fsquirrelsoft.financier.context.Contexts;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_CASHACCOUNT;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_ID;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_INITVAL;
-import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_INITVAL_BD;
+import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_INITVAL_BD_;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_NAME;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_TYPE;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_DETTAG_DET_ID;
@@ -23,7 +23,7 @@ import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_FROM;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_FROM_TYPE;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_ID;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_MONEY;
-import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_MONEY_BD;
+import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_MONEY_BD_;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_NOTE;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_TO;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_TO_TYPE;
@@ -35,24 +35,24 @@ import static com.fsquirrelsoft.financier.data.DataMeta.TB_DETTAG;
 import static com.fsquirrelsoft.financier.data.DataMeta.TB_TAG;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class SQLiteDataHelper extends SQLiteOpenHelper {
-    /** maintain this field carefully */
+    /**
+     * maintain this field carefully
+     */
     // private static final int VERSION = 4;//0.9.1-0.9.3
     // private static final int VERSION = 5;// 0.9.4-0.9.5
     // private static final int VERSION = 6;// change double to BigDecimal
     private static final int VERSION = 7;// for tag
 
     private static final String ACC_CREATE_SQL = "CREATE TABLE " + TB_ACC + " (" + COL_ACC_ID + " TEXT PRIMARY KEY, " + COL_ACC_NAME + " TEXT NOT NULL, " + COL_ACC_TYPE + " TEXT NOT NULL, "
-            + COL_ACC_CASHACCOUNT + " INTEGER NULL, " + COL_ACC_INITVAL + " REAL NOT NULL, " + COL_ACC_INITVAL_BD + " TEXT NOT NULL DEFAULT '' )";
+            + COL_ACC_CASHACCOUNT + " INTEGER NULL, " + COL_ACC_INITVAL + " REAL NOT NULL, " + COL_ACC_INITVAL_BD_ + " TEXT NOT NULL DEFAULT '' )";
     private static final String ACC_DROP_SQL = "DROP TABLE IF EXISTS " + TB_ACC;
 
     private static final String DET_CREATE_SQL = "CREATE TABLE " + TB_DET + " (" + COL_DET_ID + " INTEGER PRIMARY KEY, " + COL_DET_FROM + " TEXT NOT NULL, " + COL_DET_FROM_TYPE + " TEXT NOT NULL, "
             + COL_DET_TO + " TEXT NOT NULL, " + COL_DET_TO_TYPE + " TEXT NOT NULL, " + COL_DET_DATE + " INTEGER NOT NULL, " + COL_DET_MONEY + " REAL NOT NULL, " + COL_DET_ARCHIVED
-            + " INTEGER NOT NULL, " + COL_DET_NOTE + " TEXT, " + COL_DET_MONEY_BD + " TEXT NOT NULL DEFAULT '' )";
+            + " INTEGER NOT NULL, " + COL_DET_NOTE + " TEXT, " + COL_DET_MONEY_BD_ + " TEXT NOT NULL DEFAULT '' )";
 
     private static final String DET_DROP_SQL = "DROP TABLE IF EXISTS " + TB_DET;
 
@@ -123,10 +123,10 @@ public class SQLiteDataHelper extends SQLiteOpenHelper {
         if (oldVersion == 5) {// schema before ?
             // upgrade to ?
             Logger.i("upgrade schem from " + oldVersion + " to " + newVersion);
-            db.execSQL("ALTER TABLE " + TB_ACC + " ADD " + COL_ACC_INITVAL_BD + " TEXT NOT NULL DEFAULT '' ");
-            db.execSQL("ALTER TABLE " + TB_DET + " ADD " + COL_DET_MONEY_BD + " TEXT NOT NULL DEFAULT '' ");
-            db.execSQL("UPDATE " + TB_ACC + " SET " + COL_ACC_INITVAL_BD + " = " + COL_ACC_INITVAL);
-            db.execSQL("UPDATE " + TB_DET + " SET " + COL_DET_MONEY_BD + " = " + COL_DET_MONEY);
+            db.execSQL("ALTER TABLE " + TB_ACC + " ADD " + COL_ACC_INITVAL_BD_ + " TEXT NOT NULL DEFAULT '' ");
+            db.execSQL("ALTER TABLE " + TB_DET + " ADD " + COL_DET_MONEY_BD_ + " TEXT NOT NULL DEFAULT '' ");
+            db.execSQL("UPDATE " + TB_ACC + " SET " + COL_ACC_INITVAL_BD_ + " = " + COL_ACC_INITVAL);
+            db.execSQL("UPDATE " + TB_DET + " SET " + COL_DET_MONEY_BD_ + " = " + COL_DET_MONEY);
             oldVersion++;
         }
 
@@ -139,10 +139,10 @@ public class SQLiteDataHelper extends SQLiteOpenHelper {
     }
 
     private void renameDMTableIfNeed(SQLiteDatabase db) {
-        if(tableExists(db, "dm_acc")) {
+        if (tableExists(db, "dm_acc")) {
             db.execSQL("ALTER TABLE dm_acc RENAME TO " + TB_ACC);
         }
-        if(tableExists(db, "dm_det")) {
+        if (tableExists(db, "dm_det")) {
             db.execSQL("ALTER TABLE dm_det RENAME TO " + TB_DET);
         }
     }

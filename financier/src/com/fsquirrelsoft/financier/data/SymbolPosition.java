@@ -1,14 +1,14 @@
 /**
- * 
+ *
  */
 package com.fsquirrelsoft.financier.data;
 
-import com.fsquirrelsoft.commons.util.I18N;
+import android.content.res.Resources;
+
 import com.fsquirrelsoft.financier.core.R;
 
 /**
  * @author dennis
- * 
  */
 public enum SymbolPosition {
 
@@ -26,34 +26,34 @@ public enum SymbolPosition {
         return type;
     }
 
-    public String getDisplay(I18N i18n) {
-        return getDisplay(i18n, type);
+    public String getDisplay(Resources resource) {
+        return getDisplay(resource, type);
     }
 
     static public SymbolPosition find(int type) {
         switch (type) {
-        case 1:
-            return FRONT;
-        case 2:
-            return AFTER;
-        default:
-            return NONE;
+            case 1:
+                return FRONT;
+            case 2:
+                return AFTER;
+            default:
+                return NONE;
         }
     }
 
-    static public String getDisplay(I18N i18n, int type) {
+    static public String getDisplay(Resources resource, int type) {
         SymbolPosition pos = find(type);
         switch (pos) {
-        case FRONT:
-            return i18n.string(R.string.label_position_front);
-        case AFTER:
-            return i18n.string(R.string.label_position_after);
-        default:
-            return i18n.string(R.string.label_position_none);
+            case FRONT:
+                return resource.getString(R.string.label_position_front);
+            case AFTER:
+                return resource.getString(R.string.label_position_after);
+            default:
+                return resource.getString(R.string.label_position_none);
         }
     }
 
-    static private final SymbolPosition[] available = new SymbolPosition[] { NONE, FRONT, AFTER };
+    static private final SymbolPosition[] available = new SymbolPosition[]{NONE, FRONT, AFTER};
 
     public static SymbolPosition[] getAvailable() {
         return available;

@@ -2,6 +2,7 @@ package com.fsquirrelsoft.financier.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
@@ -16,7 +17,6 @@ import android.widget.TextView;
 
 import com.fsquirrelsoft.commons.util.Formats;
 import com.fsquirrelsoft.commons.util.GUIs;
-import com.fsquirrelsoft.commons.util.I18N;
 import com.fsquirrelsoft.financier.context.Contexts;
 import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Account;
@@ -78,9 +78,9 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
         }
     }
 
-    public CharSequence getLabel(I18N i18n) {
+    public CharSequence getLabel(Resources resources) {
         AccountType accountType = this.getAccountType();
-        return accountType.getDisplay(i18n);
+        return accountType.getDisplay(resources);
     }
 
     public void reloadData() {
@@ -94,7 +94,7 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
             Map<String, Object> row = new HashMap<>();
             AccountType accountType = AccountType.find(acc.getType());
             row.put(bindingFrom[0], new NamedItem(bindingFrom[0], accountType, acc.getName()));
-            row.put(bindingFrom[1], new NamedItem(bindingFrom[1], accountType, Formats.bigDecimalToString(acc.getInitialValueBD())));
+            row.put(bindingFrom[1], new NamedItem(bindingFrom[1], accountType, Formats.double2String(acc.getInitialValue())));
             row.put(bindingFrom[2], new NamedItem(bindingFrom[2], accountType, acc.getId()));
             listViewMapList.add(row);
         }
@@ -149,7 +149,7 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
 
         Contexts.instance().getDataProvider().deleteAccount(acc.getId());
         this.reloadData();
-        GUIs.shortToast(this.getContext(), Contexts.instance().getI18n().string(R.string.msg_account_deleted, name));
+        GUIs.shortToast(this.getContext(), Contexts.instance().getResources().getString(R.string.msg_account_deleted, name));
     }
 
     private void doCopyAccount(int pos) {
@@ -184,7 +184,7 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
 
             String name = item.getName();
             if (name.equals(bindingFrom[1])) {
-                text = Contexts.instance().getI18n().string(R.string.label_initial_value) + " : " + text;
+                text = Contexts.instance().getResources().getString(R.string.label_initial_value) + " : " + text;
             }
 
             tv.setText(text);

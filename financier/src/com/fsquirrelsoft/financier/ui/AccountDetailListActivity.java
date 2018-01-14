@@ -27,9 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class AccountDetailListActivity extends ContextsActivity {
 
@@ -73,7 +71,7 @@ public class AccountDetailListActivity extends ContextsActivity {
         String fromStr = startDate == null ? "" : format.format(startDate);
         String toStr = endDate == null ? "" : format.format(endDate);
 
-        info = info + i18n.string(R.string.label_accdetlist_dateinfo, fromStr, toStr);
+        info = info + getResources().getString(R.string.label_accdetlist_dateinfo, fromStr, toStr);
 
         if (target instanceof AccountType) {
         } else if (target instanceof Account) {
@@ -87,10 +85,10 @@ public class AccountDetailListActivity extends ContextsActivity {
 
     private void initialContent() {
 
-        detailListHelper = new DetailListHelper(this, i18n, calHelper, true, new DetailListHelper.OnDetailListener() {
+        detailListHelper = new DetailListHelper(this, getResources(), calHelper, true, new DetailListHelper.OnDetailListener() {
             @Override
             public void onDetailDeleted(Detail detail) {
-                GUIs.shortToast(AccountDetailListActivity.this, i18n.string(R.string.msg_detail_deleted));
+                GUIs.shortToast(AccountDetailListActivity.this, getResources().getString(R.string.msg_detail_deleted));
                 reloadData();
                 setResult(RESULT_OK);
             }
@@ -147,7 +145,7 @@ public class AccountDetailListActivity extends ContextsActivity {
             @Override
             public void onBusyFinish() {
                 detailListHelper.reloadData(data);
-                infoView.setText(info + i18n.string(R.string.label_count, count));
+                infoView.setText(info + getResources().getString(R.string.label_count, count));
             }
         });
     }

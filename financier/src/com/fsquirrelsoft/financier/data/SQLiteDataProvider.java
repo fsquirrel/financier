@@ -5,11 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.fsquirrelsoft.commons.util.CalendarHelper;
-import com.fsquirrelsoft.commons.util.Formats;
 import com.fsquirrelsoft.commons.util.Logger;
 import com.fsquirrelsoft.financier.context.Contexts;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,7 +18,6 @@ import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_ALL;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_CASHACCOUNT;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_ID;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_INITVAL;
-import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_INITVAL_BD;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_NAME;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_ACC_TYPE;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_DETTAG_ALL;
@@ -34,7 +31,6 @@ import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_FROM;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_FROM_TYPE;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_ID;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_MONEY;
-import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_MONEY_BD;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_NOTE;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_TO;
 import static com.fsquirrelsoft.financier.data.DataMeta.COL_DET_TO_TYPE;
@@ -97,8 +93,6 @@ public class SQLiteDataProvider implements IDataProvider {
     }
 
     private void applyCursor(Account acc, Cursor c) {
-        // to determine if the column for BigDecimal is empty
-        boolean isBDEmpty = true;
         int i = 0;
         for (String n : c.getColumnNames()) {
             if (n.equals(COL_ACC_ID)) {
@@ -112,16 +106,8 @@ public class SQLiteDataProvider implements IDataProvider {
                 acc.setCashAccount(c.getInt(i) == 1);
             } else if (n.equals(COL_ACC_INITVAL)) {
                 acc.setInitialValue(c.getDouble(i));
-            } else if (n.equals(COL_ACC_INITVAL_BD)) {
-                if (Formats.isAmount(c.getString(i))) {
-                    acc.setInitialValueBD(new BigDecimal(c.getString(i)));
-                    isBDEmpty = false;
-                }
             }
             i++;
-        }
-        if (isBDEmpty) {
-            acc.setInitialValueBD(BigDecimal.valueOf(acc.getInitialValue()));
         }
     }
 
@@ -131,7 +117,6 @@ public class SQLiteDataProvider implements IDataProvider {
         values.put(COL_ACC_TYPE, acc.getType());
         values.put(COL_ACC_CASHACCOUNT, acc.isCashAccount() ? 1 : 0);
         values.put(COL_ACC_INITVAL, acc.getInitialValue());
-        values.put(COL_ACC_INITVAL_BD, Formats.bigDecimalToString(acc.getInitialValueBD()));
     }
 
     private void applyContextValue(Tag tag, ContentValues values) {
@@ -247,8 +232,6 @@ public class SQLiteDataProvider implements IDataProvider {
      */
 
     private void applyCursor(Detail det, Cursor c) {
-        // to determine if the column for BigDecimal is empty
-        boolean isBDEmpty = true;
         int i = 0;
         for (String n : c.getColumnNames()) {
             if (n.equals(COL_DET_ID)) {
@@ -261,20 +244,12 @@ public class SQLiteDataProvider implements IDataProvider {
                 det.setDate(new Date(c.getLong(i)));
             } else if (n.equals(COL_DET_MONEY)) {
                 det.setMoney(c.getDouble(i));
-            } else if (n.equals(COL_DET_MONEY_BD)) {
-                if (Formats.isAmount(c.getString(i))) {
-                    det.setMoneyBD(new BigDecimal(c.getString(i)));
-                    isBDEmpty = false;
-                }
             } else if (n.equals(COL_DET_ARCHIVED)) {
                 det.setArchived((c.getInt(i) == 1));
             } else if (n.equals(COL_DET_NOTE)) {
                 det.setNote(c.getString(i));
             }
             i++;
-        }
-        if (isBDEmpty) {
-            det.setMoneyBD(BigDecimal.valueOf(det.getMoney()));
         }
     }
 
@@ -286,7 +261,6 @@ public class SQLiteDataProvider implements IDataProvider {
         values.put(COL_DET_TO_TYPE, det.getToType());
         values.put(COL_DET_DATE, calHelper.toDayMiddle(det.getDate()).getTime());
         values.put(COL_DET_MONEY, det.getMoney());
-        values.put(COL_DET_MONEY_BD, Formats.bigDecimalToString(det.getMoneyBD()));
         values.put(COL_DET_ARCHIVED, det.isArchived() ? 1 : 0);
         values.put(COL_DET_NOTE, det.getNote());
     }
@@ -767,7 +741,7 @@ public class SQLiteDataProvider implements IDataProvider {
     }
 
     @Override
-    public BigDecimal sumFrom(AccountType type, Date start, Date end) {
+    public double sumFrom(AccountType type, Date start, Date end) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         StringBuilder query = new StringBuilder();
@@ -783,13 +757,13 @@ public class SQLiteDataProvider implements IDataProvider {
             where.append(COL_DET_DATE + "<=" + end.getTime());
         }
 
-        query.append("SELECT ").append(COL_DET_MONEY_BD).append(" FROM ").append(TB_DET).append(where);
+        query.append("SELECT SUM(").append(COL_DET_MONEY).append(") FROM ").append(TB_DET).append(where);
 
         Cursor c = db.rawQuery(query.toString(), null);
 
-        BigDecimal r = BigDecimal.ZERO;
-        while (c.moveToNext()) {
-            r = r.add(new BigDecimal(Formats.isAmount(c.getString(0)) ? c.getString(0) : "0"));
+        double r = 0D;
+        if (c.moveToNext()) {
+            r = c.getDouble(0);
         }
 
         c.close();
@@ -797,7 +771,7 @@ public class SQLiteDataProvider implements IDataProvider {
     }
 
     @Override
-    public BigDecimal sumFrom(Account acc, Date start, Date end) {
+    public double sumFrom(Account acc, Date start, Date end) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         StringBuilder query = new StringBuilder();
@@ -814,7 +788,7 @@ public class SQLiteDataProvider implements IDataProvider {
             where.append(COL_DET_DATE + "<=" + end.getTime());
         }
 
-        query.append("SELECT ").append(COL_DET_MONEY_BD).append(" FROM ").append(TB_DET).append(where);
+        query.append("SELECT SUM(").append(COL_DET_MONEY).append(") FROM ").append(TB_DET).append(where);
 
         String[] wherearg = null;
         if (args.size() > 0) {
@@ -823,9 +797,9 @@ public class SQLiteDataProvider implements IDataProvider {
 
         Cursor c = db.rawQuery(query.toString(), wherearg);
 
-        BigDecimal r = BigDecimal.ZERO;
-        while (c.moveToNext()) {
-            r = r.add(new BigDecimal(Formats.isAmount(c.getString(0)) ? c.getString(0) : "0"));
+        double r = 0D;
+        if (c.moveToNext()) {
+            r = c.getDouble(0);
         }
 
         c.close();
@@ -833,7 +807,7 @@ public class SQLiteDataProvider implements IDataProvider {
     }
 
     @Override
-    public BigDecimal sumTo(AccountType type, Date start, Date end) {
+    public double sumTo(AccountType type, Date start, Date end) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         StringBuilder query = new StringBuilder();
@@ -849,13 +823,13 @@ public class SQLiteDataProvider implements IDataProvider {
             where.append(COL_DET_DATE + "<=" + end.getTime());
         }
 
-        query.append("SELECT ").append(COL_DET_MONEY_BD).append(" FROM ").append(TB_DET).append(where);
+        query.append("SELECT SUM(").append(COL_DET_MONEY).append(") FROM ").append(TB_DET).append(where);
 
         Cursor c = db.rawQuery(query.toString(), null);
 
-        BigDecimal r = BigDecimal.ZERO;
-        while (c.moveToNext()) {
-            r = r.add(new BigDecimal(Formats.isAmount(c.getString(0)) ? c.getString(0) : "0"));
+        double r = 0D;
+        if (c.moveToNext()) {
+            r = c.getDouble(0);
         }
 
         c.close();
@@ -863,7 +837,7 @@ public class SQLiteDataProvider implements IDataProvider {
     }
 
     @Override
-    public BigDecimal sumTo(Account acc, Date start, Date end) {
+    public double sumTo(Account acc, Date start, Date end) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         StringBuilder query = new StringBuilder();
@@ -880,7 +854,7 @@ public class SQLiteDataProvider implements IDataProvider {
             where.append(COL_DET_DATE + "<=" + end.getTime());
         }
 
-        query.append("SELECT ").append(COL_DET_MONEY_BD).append(" FROM ").append(TB_DET).append(where);
+        query.append("SELECT SUM(").append(COL_DET_MONEY).append(") FROM ").append(TB_DET).append(where);
         String[] wherearg = null;
         if (args.size() > 0) {
             wherearg = args.toArray(wherearg = new String[args.size()]);
@@ -888,9 +862,9 @@ public class SQLiteDataProvider implements IDataProvider {
 
         Cursor c = db.rawQuery(query.toString(), wherearg);
 
-        BigDecimal r = BigDecimal.ZERO;
-        while (c.moveToNext()) {
-            r = r.add(new BigDecimal(Formats.isAmount(c.getString(0)) ? c.getString(0) : "0"));
+        double r = 0D;
+        if (c.moveToNext()) {
+            r = c.getDouble(0);
         }
 
         c.close();
@@ -963,7 +937,7 @@ public class SQLiteDataProvider implements IDataProvider {
     }
 
     @Override
-    public BigDecimal sumInitialValue(AccountType type) {
+    public double sumInitialValue(AccountType type) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         StringBuilder query = new StringBuilder();
@@ -971,13 +945,13 @@ public class SQLiteDataProvider implements IDataProvider {
         StringBuilder where = new StringBuilder();
         where.append(" WHERE ").append(COL_ACC_TYPE).append(" = '").append(type.type).append("'");
 
-        query.append("SELECT ").append(COL_ACC_INITVAL_BD).append(" FROM ").append(TB_ACC).append(where);
+        query.append("SELECT SUM(").append(COL_ACC_INITVAL).append(") FROM ").append(TB_ACC).append(where);
 
         Cursor c = db.rawQuery(query.toString(), null);
 
-        BigDecimal r = BigDecimal.ZERO;
-        while (c.moveToNext()) {
-            r = r.add(new BigDecimal(Formats.isAmount(c.getString(0)) ? c.getString(0) : "0"));
+        double r = 0D;
+        if (c.moveToNext()) {
+            r = c.getDouble(0);
         }
 
         c.close();
@@ -1205,14 +1179,14 @@ public class SQLiteDataProvider implements IDataProvider {
         }
         Cursor c = null;
         c = db.rawQuery(
-                "select t.nm_, d.mnb_, d.tot_, dt.tagid_ from fsf_dettag dt inner join fsf_det d on d.id_ = dt.detid_ inner join fsf_tag t on t.id_ = dt.tagid_" + where.toString() + " order by t.nm_",
+                "select t.nm_, d.mn_, d.tot_, dt.tagid_ from fsf_dettag dt inner join fsf_det d on d.id_ = dt.detid_ inner join fsf_tag t on t.id_ = dt.tagid_" + where.toString() + " order by t.nm_",
                 null);
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         Map<String, Object> rowData;
         while (c.moveToNext()) {
             rowData = new HashMap<String, Object>();
             rowData.put("name", c.getString(0));
-            rowData.put("money", c.getString(1));
+            rowData.put("money", c.getDouble(1));
             rowData.put("type", c.getString(2));
             rowData.put("tagId", c.getString(3));
             result.add(rowData);

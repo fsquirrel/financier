@@ -24,16 +24,13 @@ import com.fsquirrelsoft.financier.data.AccountType;
 import com.fsquirrelsoft.financier.data.Detail;
 import com.fsquirrelsoft.financier.data.IDataProvider;
 
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class DetailListActivity extends ContextsActivity implements OnClickListener {
 
@@ -111,10 +108,10 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
         monthDateFormat = new SimpleDateFormat("yyyy/MM - MMM");
         yearDateFormat = new SimpleDateFormat("yyyy");
 
-        detailListHelper = new DetailListHelper(this, i18n, calHelper, true, new DetailListHelper.OnDetailListener() {
+        detailListHelper = new DetailListHelper(this, getResources(), calHelper, true, new DetailListHelper.OnDetailListener() {
             @Override
             public void onDetailDeleted(Detail detail) {
-                GUIs.shortToast(DetailListActivity.this, i18n.string(R.string.msg_detail_deleted));
+                GUIs.shortToast(DetailListActivity.this, getResources().getString(R.string.msg_detail_deleted));
                 reloadData();
             }
         });
@@ -157,37 +154,37 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
 
     private void reloadToolbar() {
         switch (mode) {
-        case MODE_ALL:
-            toolbarView.setVisibility(TextView.GONE);
-            break;
-        case MODE_MONTH:
-            toolbarView.setVisibility(TextView.VISIBLE);
-            modeBtn.setVisibility(ImageButton.VISIBLE);
-            if (allowYearSwitch) {
-                modeBtn.setImageResource(R.drawable.btn_year);
-            } else {
-                modeBtn.setImageResource(R.drawable.btn_day);
-            }
-            break;
-        case MODE_DAY:
-            toolbarView.setVisibility(TextView.VISIBLE);
-            modeBtn.setVisibility(ImageButton.VISIBLE);
-            modeBtn.setImageResource(R.drawable.btn_week);
-            break;
-        case MODE_YEAR:
-            toolbarView.setVisibility(TextView.VISIBLE);
-            if (allowYearSwitch) {
+            case MODE_ALL:
+                toolbarView.setVisibility(TextView.GONE);
+                break;
+            case MODE_MONTH:
+                toolbarView.setVisibility(TextView.VISIBLE);
+                modeBtn.setVisibility(ImageButton.VISIBLE);
+                if (allowYearSwitch) {
+                    modeBtn.setImageResource(R.drawable.btn_year);
+                } else {
+                    modeBtn.setImageResource(R.drawable.btn_day);
+                }
+                break;
+            case MODE_DAY:
+                toolbarView.setVisibility(TextView.VISIBLE);
                 modeBtn.setVisibility(ImageButton.VISIBLE);
                 modeBtn.setImageResource(R.drawable.btn_week);
-            } else {
-                modeBtn.setVisibility(ImageButton.GONE);
-            }
-            break;
-        default:
-            toolbarView.setVisibility(TextView.VISIBLE);
-            modeBtn.setVisibility(ImageButton.VISIBLE);
-            modeBtn.setImageResource(R.drawable.btn_month);
-            break;
+                break;
+            case MODE_YEAR:
+                toolbarView.setVisibility(TextView.VISIBLE);
+                if (allowYearSwitch) {
+                    modeBtn.setVisibility(ImageButton.VISIBLE);
+                    modeBtn.setImageResource(R.drawable.btn_week);
+                } else {
+                    modeBtn.setVisibility(ImageButton.GONE);
+                }
+                break;
+            default:
+                toolbarView.setVisibility(TextView.VISIBLE);
+                modeBtn.setVisibility(ImageButton.VISIBLE);
+                modeBtn.setImageResource(R.drawable.btn_month);
+                break;
         }
     }
 
@@ -206,57 +203,57 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
         sumUnknowView.setVisibility(TextView.VISIBLE);
 
         switch (mode) {
-        case MODE_ALL:
-            start = end = null;
-            // toolbarView.setVisibility(TextView.GONE);
-            break;
-        case MODE_MONTH:
-            start = cal.monthStartDate(currentDate);
-            end = cal.monthEndDate(currentDate);
-            // toolbarView.setVisibility(TextView.VISIBLE);
-            //
-            // modeBtn.setVisibility(ImageButton.VISIBLE);
-            // if(allowYearSwitch){
-            // modeBtn.setImageResource(R.drawable.btn_year);
-            // }else{
-            // modeBtn.setImageResource(R.drawable.btn_week);
-            // }
-            break;
-        case MODE_DAY:
-            start = cal.toDayStart(currentDate);
-            end = cal.toDayEnd(currentDate);
-            break;
-        case MODE_YEAR:
-            start = cal.yearStartDate(currentDate);
-            end = cal.yearEndDate(currentDate);
-            // toolbarView.setVisibility(TextView.VISIBLE);
-            //
-            // if(allowYearSwitch){
-            // modeBtn.setVisibility(ImageButton.VISIBLE);
-            // modeBtn.setImageResource(R.drawable.btn_week);
-            // }else{
-            // modeBtn.setVisibility(ImageButton.GONE);
-            // }
+            case MODE_ALL:
+                start = end = null;
+                // toolbarView.setVisibility(TextView.GONE);
+                break;
+            case MODE_MONTH:
+                start = cal.monthStartDate(currentDate);
+                end = cal.monthEndDate(currentDate);
+                // toolbarView.setVisibility(TextView.VISIBLE);
+                //
+                // modeBtn.setVisibility(ImageButton.VISIBLE);
+                // if(allowYearSwitch){
+                // modeBtn.setImageResource(R.drawable.btn_year);
+                // }else{
+                // modeBtn.setImageResource(R.drawable.btn_week);
+                // }
+                break;
+            case MODE_DAY:
+                start = cal.toDayStart(currentDate);
+                end = cal.toDayEnd(currentDate);
+                break;
+            case MODE_YEAR:
+                start = cal.yearStartDate(currentDate);
+                end = cal.yearEndDate(currentDate);
+                // toolbarView.setVisibility(TextView.VISIBLE);
+                //
+                // if(allowYearSwitch){
+                // modeBtn.setVisibility(ImageButton.VISIBLE);
+                // modeBtn.setImageResource(R.drawable.btn_week);
+                // }else{
+                // modeBtn.setVisibility(ImageButton.GONE);
+                // }
 
-            break;
-        default:
-            start = cal.weekStartDate(currentDate);
-            end = cal.weekEndDate(currentDate);
-            // toolbarView.setVisibility(TextView.VISIBLE);
-            // modeBtn.setVisibility(ImageButton.VISIBLE);
-            // modeBtn.setImageResource(R.drawable.btn_month);
-            break;
+                break;
+            default:
+                start = cal.weekStartDate(currentDate);
+                end = cal.weekEndDate(currentDate);
+                // toolbarView.setVisibility(TextView.VISIBLE);
+                // modeBtn.setVisibility(ImageButton.VISIBLE);
+                // modeBtn.setImageResource(R.drawable.btn_month);
+                break;
         }
         final IDataProvider idp = getContexts().getDataProvider();
         // detailListHelper.reloadData(idp.listAllDetail());
         GUIs.doBusy(this, new GUIs.BusyAdapter() {
             List<Detail> data = null;
 
-            BigDecimal expense;
-            BigDecimal income;
-            BigDecimal asset;
-            BigDecimal liability;
-            BigDecimal other;
+            double expense;
+            double income;
+            double asset;
+            double liability;
+            double other;
             int count;
 
             @Override
@@ -265,10 +262,10 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
                 count = idp.countDetail(start, end);
                 income = idp.sumFrom(AccountType.INCOME, start, end);
                 expense = idp.sumTo(AccountType.EXPENSE, start, end);// nagivate
-                asset = idp.sumTo(AccountType.ASSET, start, end).subtract(idp.sumFrom(AccountType.ASSET, start, end));
-                liability = idp.sumTo(AccountType.LIABILITY, start, end).subtract(idp.sumFrom(AccountType.LIABILITY, start, end));
-                liability = BigDecimal.ZERO.subtract(liability);
-                other = idp.sumTo(AccountType.OTHER, start, end).subtract(idp.sumFrom(AccountType.OTHER, start, end));
+                asset = idp.sumTo(AccountType.ASSET, start, end) - idp.sumFrom(AccountType.ASSET, start, end);
+                liability = idp.sumTo(AccountType.LIABILITY, start, end) - idp.sumFrom(AccountType.LIABILITY, start, end);
+                liability = -liability;
+                other = idp.sumTo(AccountType.OTHER, start, end) - idp.sumFrom(AccountType.OTHER, start, end);
             }
 
             @Override
@@ -278,28 +275,28 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
                 // update data
                 detailListHelper.reloadData(data);
                 int showcount = 0;
-                if (income.compareTo(BigDecimal.ZERO) != 0) {
-                    sumIncomeView.setText(i18n.string(R.string.label_detlist_sum_income, getContexts().toFormattedMoneyString((income))));
+                if (income != 0) {
+                    sumIncomeView.setText(getResources().getString(R.string.label_detlist_sum_income, getContexts().toFormattedMoneyString((income))));
                     sumIncomeView.setVisibility(TextView.VISIBLE);
                     showcount++;
                 }
-                if (expense.compareTo(BigDecimal.ZERO) != 0) {
-                    sumExpenseView.setText(i18n.string(R.string.label_detlist_sum_expense, getContexts().toFormattedMoneyString((expense))));
+                if (expense != 0) {
+                    sumExpenseView.setText(getResources().getString(R.string.label_detlist_sum_expense, getContexts().toFormattedMoneyString((expense))));
                     sumExpenseView.setVisibility(TextView.VISIBLE);
                     showcount++;
                 }
-                if (asset.compareTo(BigDecimal.ZERO) != 0) {
-                    sumAssetView.setText(i18n.string(R.string.label_detlist_sum_asset, getContexts().toFormattedMoneyString((asset))));
+                if (asset != 0) {
+                    sumAssetView.setText(getResources().getString(R.string.label_detlist_sum_asset, getContexts().toFormattedMoneyString((asset))));
                     sumAssetView.setVisibility(TextView.VISIBLE);
                     showcount++;
                 }
-                if (liability.compareTo(BigDecimal.ZERO) != 0) {
-                    sumLiabilityView.setText(i18n.string(R.string.label_detlist_sum_liability, getContexts().toFormattedMoneyString((liability))));
+                if (liability != 0) {
+                    sumLiabilityView.setText(getResources().getString(R.string.label_detlist_sum_liability, getContexts().toFormattedMoneyString((liability))));
                     sumLiabilityView.setVisibility(TextView.VISIBLE);
                     showcount++;
                 }
-                if (other.compareTo(BigDecimal.ZERO) != 0) {
-                    sumOtherView.setText(i18n.string(R.string.label_detlist_sum_other, getContexts().toFormattedMoneyString((other))));
+                if (other != 0) {
+                    sumOtherView.setText(getResources().getString(R.string.label_detlist_sum_other, getContexts().toFormattedMoneyString((other))));
                     sumOtherView.setVisibility(TextView.VISIBLE);
                     showcount++;
                 }
@@ -312,22 +309,22 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
 
                 // update info
                 switch (mode) {
-                case MODE_ALL:
-                    infoView.setText(i18n.string(R.string.label_all_details, Integer.toString(count)));
-                    break;
-                case MODE_MONTH:
-                    infoView.setText(i18n.string(R.string.label_month_details, monthDateFormat.format(cal.monthStartDate(currentDate)), Integer.toString(count)));
-                    break;
-                case MODE_DAY:
-                    infoView.setText(i18n.string(R.string.label_day_details, dayDateFormat.format(currentDate), Integer.toString(count)));
-                    break;
-                case MODE_YEAR:
-                    infoView.setText(i18n.string(R.string.label_year_details, yearDateFormat.format(currentDate), Integer.toString(count)));
-                    break;
-                default:
-                    infoView.setText(i18n.string(R.string.label_week_details, weekDateFormat.format(start), weekDateFormat.format(end), cal.weekOfMonth(currentDate), cal.weekOfYear(currentDate),
-                            yearDateFormat.format(start), Integer.toString(count)));
-                    break;
+                    case MODE_ALL:
+                        infoView.setText(getResources().getString(R.string.label_all_details, Integer.toString(count)));
+                        break;
+                    case MODE_MONTH:
+                        infoView.setText(getResources().getString(R.string.label_month_details, monthDateFormat.format(cal.monthStartDate(currentDate)), Integer.toString(count)));
+                        break;
+                    case MODE_DAY:
+                        infoView.setText(getResources().getString(R.string.label_day_details, dayDateFormat.format(currentDate), Integer.toString(count)));
+                        break;
+                    case MODE_YEAR:
+                        infoView.setText(getResources().getString(R.string.label_year_details, yearDateFormat.format(currentDate), Integer.toString(count)));
+                        break;
+                    default:
+                        infoView.setText(getResources().getString(R.string.label_week_details, weekDateFormat.format(start), weekDateFormat.format(end), cal.weekOfMonth(currentDate), cal.weekOfYear(currentDate),
+                                yearDateFormat.format(start), Integer.toString(count)));
+                        break;
                 }
 
             }
@@ -399,22 +396,22 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
 
     private void onMode() {
         switch (mode) {
-        case MODE_WEEK:
-            mode = MODE_MONTH;
-            reloadData();
-            break;
-        case MODE_DAY:
-            mode = MODE_WEEK;
-            reloadData();
-            break;
-        case MODE_MONTH:
-            mode = allowYearSwitch ? MODE_YEAR : MODE_DAY;
-            reloadData();
-            break;
-        case MODE_YEAR:
-            mode = allowYearSwitch ? MODE_DAY : MODE_YEAR;
-            reloadData();
-            break;
+            case MODE_WEEK:
+                mode = MODE_MONTH;
+                reloadData();
+                break;
+            case MODE_DAY:
+                mode = MODE_WEEK;
+                reloadData();
+                break;
+            case MODE_MONTH:
+                mode = allowYearSwitch ? MODE_YEAR : MODE_DAY;
+                reloadData();
+                break;
+            case MODE_YEAR:
+                mode = allowYearSwitch ? MODE_DAY : MODE_YEAR;
+                reloadData();
+                break;
         }
 
     }
@@ -422,56 +419,56 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     private void onNext() {
         CalendarHelper cal = getContexts().getCalendarHelper();
         switch (mode) {
-        case MODE_DAY:
-            currentDate = cal.dateAfter(currentDate, 1);
-            reloadData();
-            break;
-        case MODE_WEEK:
-            currentDate = cal.dateAfter(currentDate, 7);
-            reloadData();
-            break;
-        case MODE_MONTH:
-            currentDate = cal.monthAfter(currentDate, 1);
-            reloadData();
-            break;
-        case MODE_YEAR:
-            currentDate = cal.yearAfter(currentDate, 1);
-            reloadData();
-            break;
+            case MODE_DAY:
+                currentDate = cal.dateAfter(currentDate, 1);
+                reloadData();
+                break;
+            case MODE_WEEK:
+                currentDate = cal.dateAfter(currentDate, 7);
+                reloadData();
+                break;
+            case MODE_MONTH:
+                currentDate = cal.monthAfter(currentDate, 1);
+                reloadData();
+                break;
+            case MODE_YEAR:
+                currentDate = cal.yearAfter(currentDate, 1);
+                reloadData();
+                break;
         }
     }
 
     private void onPrev() {
         CalendarHelper cal = getContexts().getCalendarHelper();
         switch (mode) {
-        case MODE_DAY:
-            currentDate = cal.dateBefore(currentDate, 1);
-            reloadData();
-            break;
-        case MODE_WEEK:
-            currentDate = cal.dateBefore(currentDate, 7);
-            reloadData();
-            break;
-        case MODE_MONTH:
-            currentDate = cal.monthBefore(currentDate, 1);
-            reloadData();
-            break;
-        case MODE_YEAR:
-            currentDate = cal.yearBefore(currentDate, 1);
-            reloadData();
-            break;
+            case MODE_DAY:
+                currentDate = cal.dateBefore(currentDate, 1);
+                reloadData();
+                break;
+            case MODE_WEEK:
+                currentDate = cal.dateBefore(currentDate, 7);
+                reloadData();
+                break;
+            case MODE_MONTH:
+                currentDate = cal.monthBefore(currentDate, 1);
+                reloadData();
+                break;
+            case MODE_YEAR:
+                currentDate = cal.yearBefore(currentDate, 1);
+                reloadData();
+                break;
         }
     }
 
     private void onToday() {
         switch (mode) {
-        case MODE_WEEK:
-        case MODE_MONTH:
-        case MODE_DAY:
-        case MODE_YEAR:
-            currentDate = targetDate;
-            reloadData();
-            break;
+            case MODE_WEEK:
+            case MODE_MONTH:
+            case MODE_DAY:
+            case MODE_YEAR:
+                currentDate = targetDate;
+                reloadData();
+                break;
         }
     }
 

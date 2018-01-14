@@ -10,8 +10,6 @@ import org.achartengine.ChartFactory;
 import org.achartengine.model.CategorySeries;
 import org.achartengine.renderer.DefaultRenderer;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -24,19 +22,19 @@ public class BalancePieChart extends AbstractChart {
     }
 
     public Intent createIntent(AccountType at, List<Balance> balances) {
-        BigDecimal total = BigDecimal.ZERO;
+        double total = 0D;
         for (Balance b : balances) {
-            total = total.add(b.getMoney().compareTo(BigDecimal.ZERO) <= 0 ? BigDecimal.ZERO : b.getMoney());
+            total += b.getMoney() <= 0 ? 0 : b.getMoney();
         }
-        CategorySeries series = new CategorySeries(at.getDisplay(i18n));
+        CategorySeries series = new CategorySeries(at.getDisplay(resources));
         for (Balance b : balances) {
-            if (b.getMoney().compareTo(BigDecimal.ZERO) > 0) {
+            if (b.getMoney() > 0) {
                 StringBuilder sb = new StringBuilder();
                 sb.append(b.getName());
-                BigDecimal p = b.getMoney().multiply(new BigDecimal("100")).divide(total, 2, RoundingMode.HALF_UP);
-                if (p.compareTo(BigDecimal.ONE) >= 0) {
+                double p = (b.getMoney() * 100) / total;
+                if (p >= 1) {
                     sb.append("(").append(percentageFormat.format(p)).append("%)");
-                    series.add(sb.toString(), b.getMoney().doubleValue());
+                    series.add(sb.toString(), b.getMoney());
                 }
             }
         }

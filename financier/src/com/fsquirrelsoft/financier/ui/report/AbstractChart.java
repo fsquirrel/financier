@@ -1,8 +1,7 @@
 package com.fsquirrelsoft.financier.ui.report;
 
 import android.content.Context;
-
-import com.fsquirrelsoft.commons.util.I18N;
+import android.content.res.Resources;
 
 import org.achartengine.chart.PointStyle;
 import org.achartengine.renderer.DefaultRenderer;
@@ -11,9 +10,7 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
 /**
- * 
  * @author dennis
- * 
  */
 public abstract class AbstractChart {
 
@@ -21,7 +18,7 @@ public abstract class AbstractChart {
 
     final protected float dpRatio;
 
-    final protected I18N i18n;
+    final protected Resources resources;
 
     final protected int orientation;
 
@@ -41,14 +38,14 @@ public abstract class AbstractChart {
     public static final int MAGENTA1 = 0xA0FF77FF;
     public static final int ORANGE1 = 0xD0FF8C66;
 
-    public static final int[] colorPool = new int[] { GREEN, ORANGE, BLUE, RED, YELLOW, CYAN, MAGENTA, GREEN1, ORANGE1, BLUE1, RED1, YELLOW1, CYAN1, MAGENTA1 };
+    public static final int[] colorPool = new int[]{GREEN, ORANGE, BLUE, RED, YELLOW, CYAN, MAGENTA, GREEN1, ORANGE1, BLUE1, RED1, YELLOW1, CYAN1, MAGENTA1};
 
-    public static final PointStyle[] pointPool = new PointStyle[] { PointStyle.CIRCLE, PointStyle.DIAMOND, PointStyle.TRIANGLE, PointStyle.SQUARE, PointStyle.X };
+    public static final PointStyle[] pointPool = new PointStyle[]{PointStyle.CIRCLE, PointStyle.DIAMOND, PointStyle.TRIANGLE, PointStyle.SQUARE, PointStyle.X};
 
     public AbstractChart(Context context, int orientation, float dpRatio) {
         this.context = context;
         this.dpRatio = dpRatio;
-        i18n = new I18N(context);
+        this.resources = context.getResources();
         this.orientation = orientation;
     }
 

@@ -2,6 +2,7 @@ package com.fsquirrelsoft.financier.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -10,7 +11,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.fsquirrelsoft.commons.util.GUIs;
-import com.fsquirrelsoft.commons.util.I18N;
 import com.fsquirrelsoft.financier.context.Contexts;
 import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Book;
@@ -22,15 +22,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class BookListHelper implements OnItemClickListener {
 
-    private static String[] bindingFrom = new String[] { "working_book", "id", "name", "symbol", "note" };
+    private static String[] bindingFrom = new String[]{"working_book", "id", "name", "symbol", "note"};
 
-    private static int[] bindingTo = new int[] { R.id.bookmgnt_item_working_book, R.id.bookmgnt_item_id, R.id.bookmgnt_item_name, R.id.bookmgnt_item_symbol, R.id.bookmgnt_item_note };
+    private static int[] bindingTo = new int[]{R.id.bookmgnt_item_working_book, R.id.bookmgnt_item_id, R.id.bookmgnt_item_name, R.id.bookmgnt_item_symbol, R.id.bookmgnt_item_note};
 
     private List<Book> listViewData = new ArrayList<Book>();
 
@@ -45,11 +43,11 @@ public class BookListHelper implements OnItemClickListener {
     private OnBookListener listener;
 
     private Activity activity;
-    private I18N i18n;
+    private Resources resources;
 
-    public BookListHelper(Activity activity, I18N i18n, boolean clickeditable, OnBookListener listener) {
+    public BookListHelper(Activity activity, Resources resources, boolean clickeditable, OnBookListener listener) {
         this.activity = activity;
-        this.i18n = i18n;
+        this.resources = resources;
         this.clickeditable = clickeditable;
         this.listener = listener;
     }
@@ -132,7 +130,7 @@ public class BookListHelper implements OnItemClickListener {
             GUIs.shortToast(activity, R.string.msg_cannot_delete_working_book);
             return;
         }
-        GUIs.confirm(activity, i18n.string(R.string.qmsg_delete_book, book.getName()), new GUIs.OnFinishListener() {
+        GUIs.confirm(activity, resources.getString(R.string.qmsg_delete_book, book.getName()), new GUIs.OnFinishListener() {
             public boolean onFinish(Object data) {
                 if (((Integer) data).intValue() == GUIs.OK_BUTTON) {
                     boolean r = Contexts.instance().getMasterDataProvider().deleteBook(book.getId());

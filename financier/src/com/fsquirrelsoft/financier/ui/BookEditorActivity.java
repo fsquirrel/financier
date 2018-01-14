@@ -24,9 +24,8 @@ import java.util.Map;
 
 /**
  * Edit or create a book
- * 
+ *
  * @author dennis
- * 
  */
 public class BookEditorActivity extends ContextsActivity implements android.view.View.OnClickListener {
 
@@ -39,7 +38,9 @@ public class BookEditorActivity extends ContextsActivity implements android.view
 
     Activity activity;
 
-    /** clone book without id **/
+    /**
+     * clone book without id
+     **/
     private Book clone(Book book) {
         Book b = new Book(book.getName(), book.getSymbol(), book.getSymbolPosition(), book.getNote());
         return b;
@@ -69,8 +70,8 @@ public class BookEditorActivity extends ContextsActivity implements android.view
     /**
      * need to mapping twice to do different mapping in spitem and spdropdown item
      */
-    private static String[] spfrom = new String[] { Constants.DISPLAY, Constants.DISPLAY };
-    private static int[] spto = new int[] { R.id.simple_spitem_display, R.id.simple_spdditem_display };
+    private static String[] spfrom = new String[]{Constants.DISPLAY, Constants.DISPLAY};
+    private static int[] spto = new int[]{R.id.simple_spitem_display, R.id.simple_spdditem_display};
 
     EditText nameEditor;
     EditText symbolEditor;
@@ -97,7 +98,7 @@ public class BookEditorActivity extends ContextsActivity implements android.view
             i++;
             Map<String, Object> row = new HashMap<String, Object>();
             data.add(row);
-            row.put(spfrom[0], new NamedItem(spfrom[0], sp, sp.getDisplay(i18n)));
+            row.put(spfrom[0], new NamedItem(spfrom[0], sp, sp.getDisplay(getResources())));
 
             if (sp.equals(symbolPos)) {
                 selpos = i;
@@ -147,14 +148,14 @@ public class BookEditorActivity extends ContextsActivity implements android.view
         // verify
         // verify
         if (Spinner.INVALID_POSITION == positionEditor.getSelectedItemPosition()) {
-            GUIs.shortToast(this, i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_symbol_position)));
+            GUIs.shortToast(this, getResources().getString(R.string.cmsg_field_empty, getResources().getString(R.string.label_symbol_position)));
             return;
         }
 
         String name = nameEditor.getText().toString().trim();
         if ("".equals(name)) {
             nameEditor.requestFocus();
-            GUIs.alert(this, i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.clabel_name)));
+            GUIs.alert(this, getResources().getString(R.string.cmsg_field_empty, getResources().getString(R.string.clabel_name)));
             return;
         }
 
@@ -170,10 +171,10 @@ public class BookEditorActivity extends ContextsActivity implements android.view
 
         if (modeCreate) {
             idp.newBook(workingBook);
-            GUIs.shortToast(this, i18n.string(R.string.msg_book_created, name));
+            GUIs.shortToast(this, getResources().getString(R.string.msg_book_created, name));
         } else {
             idp.updateBook(book.getId(), workingBook);
-            GUIs.shortToast(this, i18n.string(R.string.msg_book_updated, name));
+            GUIs.shortToast(this, getResources().getString(R.string.msg_book_updated, name));
             setResult(RESULT_OK);
             finish();
         }

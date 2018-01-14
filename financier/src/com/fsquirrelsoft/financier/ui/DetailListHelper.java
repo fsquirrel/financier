@@ -2,6 +2,7 @@ package com.fsquirrelsoft.financier.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -14,7 +15,6 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.fsquirrelsoft.commons.util.CalendarHelper;
-import com.fsquirrelsoft.commons.util.I18N;
 import com.fsquirrelsoft.financier.context.Contexts;
 import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Account;
@@ -22,7 +22,6 @@ import com.fsquirrelsoft.financier.data.AccountType;
 import com.fsquirrelsoft.financier.data.Detail;
 import com.fsquirrelsoft.financier.data.IDataProvider;
 
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,16 +31,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class DetailListHelper implements OnItemClickListener {
 
-    private static String[] bindingFrom = new String[] { "layout", "layout_inner", "from", "to", "money", "note", "date" };
+    private static String[] bindingFrom = new String[]{"layout", "layout_inner", "from", "to", "money", "note", "date"};
 
-    private static int[] bindingTo = new int[] { R.id.detlist_item_layout, R.id.detlist_item_layout_inner, R.id.detlist_item_from, R.id.detlist_item_to, R.id.detlist_item_money,
-            R.id.detlist_item_note, R.id.detlist_item_date };
+    private static int[] bindingTo = new int[]{R.id.detlist_item_layout, R.id.detlist_item_layout_inner, R.id.detlist_item_from, R.id.detlist_item_to, R.id.detlist_item_money,
+            R.id.detlist_item_note, R.id.detlist_item_date};
 
     private List<Detail> listViewData = new ArrayList<Detail>();
 
@@ -58,12 +55,12 @@ public class DetailListHelper implements OnItemClickListener {
     private OnDetailListener listener;
 
     private Activity activity;
-    private I18N i18n;
+    private Resources resources;
     private CalendarHelper calHelper;
 
-    public DetailListHelper(Activity activity, I18N i18n, CalendarHelper calHelper, boolean clickeditable, OnDetailListener listener) {
+    public DetailListHelper(Activity activity, Resources resources, CalendarHelper calHelper, boolean clickeditable, OnDetailListener listener) {
         this.activity = activity;
-        this.i18n = i18n;
+        this.resources = resources;
         this.clickeditable = clickeditable;
         this.listener = listener;
         this.calHelper = calHelper;
@@ -73,17 +70,17 @@ public class DetailListHelper implements OnItemClickListener {
 
         int layout = 0;
         switch (Contexts.instance().getPrefDetailListLayout()) {
-        case 2:
-            layout = R.layout.detlist_item2;
-            break;
-        case 3:
-            layout = R.layout.detlist_item3;
-            break;
-        case 4:
-            layout = R.layout.detlist_item4;
-            break;
-        default:
-            layout = R.layout.detlist_item1;
+            case 2:
+                layout = R.layout.detlist_item2;
+                break;
+            case 3:
+                layout = R.layout.detlist_item3;
+                break;
+            case 4:
+                layout = R.layout.detlist_item4;
+                break;
+            default:
+                layout = R.layout.detlist_item1;
         }
 
         listViewAdapter = new SimpleAdapter(activity, listViewMapList, layout, bindingFrom, bindingTo);
@@ -128,9 +125,9 @@ public class DetailListHelper implements OnItemClickListener {
         Account fromAcc = accountCache.get(det.getFrom());
         Account toAcc = accountCache.get(det.getTo());
 
-        String from = fromAcc == null ? det.getFrom() : (i18n.string(R.string.label_detlist_from, fromAcc.getName(), AccountType.getDisplay(i18n, fromAcc.getType())));
-        String to = toAcc == null ? det.getTo() : (i18n.string(R.string.label_detlist_to, toAcc.getName(), AccountType.getDisplay(i18n, toAcc.getType())));
-        String money = Contexts.instance().toFormattedMoneyString(det.getMoneyBD());
+        String from = fromAcc == null ? det.getFrom() : (resources.getString(R.string.label_detlist_from, fromAcc.getName(), AccountType.getDisplay(resources, fromAcc.getType())));
+        String to = toAcc == null ? det.getTo() : (resources.getString(R.string.label_detlist_to, toAcc.getName(), AccountType.getDisplay(resources, toAcc.getType())));
+        String money = Contexts.instance().toFormattedMoneyString(det.getMoney());
         row.put(bindingFrom[0], new NamedItem(bindingFrom[0], det, bindingFrom[0]));
         row.put(bindingFrom[1], new NamedItem(bindingFrom[1], det, bindingFrom[1]));
         row.put(bindingFrom[2], new NamedItem(bindingFrom[2], det, from));
@@ -147,7 +144,7 @@ public class DetailListHelper implements OnItemClickListener {
     }
 
     public void doNewDetail(Date date) {
-        Detail d = new Detail("", "", date == null ? new Date() : date, BigDecimal.ZERO, "");
+        Detail d = new Detail("", "", date == null ? new Date() : date, 0D, "");
         Intent intent = null;
         intent = new Intent(activity, DetailEditorActivity.class);
         intent.putExtra(DetailEditorActivity.INTENT_MODE_CREATE, true);

@@ -35,9 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class TagActivity extends ContextsActivity implements OnClickListener, OnItemClickListener {
 
@@ -67,9 +65,9 @@ public class TagActivity extends ContextsActivity implements OnClickListener, On
 
     ImageButton modeBtn;
 
-    private static String[] bindingFrom = new String[] { "layout", "name", "money" };
+    private static String[] bindingFrom = new String[]{"layout", "name", "money"};
 
-    private static int[] bindingTo = new int[] { R.id.report_tag_layout, R.id.report_tag_item_name, R.id.report_tag_item_money };
+    private static int[] bindingTo = new int[]{R.id.report_tag_layout, R.id.report_tag_item_name, R.id.report_tag_item_money};
 
     private List<Balance> listViewData = new ArrayList<Balance>();
 
@@ -176,18 +174,18 @@ public class TagActivity extends ContextsActivity implements OnClickListener, On
 
     private void reloadToolbar() {
         switch (mode) {
-        case MODE_MONTH:
-            modeBtn.setImageResource(R.drawable.btn_year);
-            break;
-        case MODE_YEAR:
-            modeBtn.setImageResource(R.drawable.btn_day);
-            break;
-        case MODE_DAY:
-            modeBtn.setImageResource(R.drawable.btn_week);
-            break;
-        case MODE_WEEK:
-            modeBtn.setImageResource(R.drawable.btn_month);
-            break;
+            case MODE_MONTH:
+                modeBtn.setImageResource(R.drawable.btn_year);
+                break;
+            case MODE_YEAR:
+                modeBtn.setImageResource(R.drawable.btn_day);
+                break;
+            case MODE_DAY:
+                modeBtn.setImageResource(R.drawable.btn_week);
+                break;
+            case MODE_WEEK:
+                modeBtn.setImageResource(R.drawable.btn_month);
+                break;
         }
     }
 
@@ -198,22 +196,22 @@ public class TagActivity extends ContextsActivity implements OnClickListener, On
         infoView.setText("");
         reloadToolbar();
         switch (mode) {
-        case MODE_YEAR:
-            currentEndDate = cal.yearEndDate(currentDate);
-            currentStartDate = cal.yearStartDate(currentDate);
-            break;
-        case MODE_MONTH:
-            currentEndDate = cal.monthEndDate(currentDate);
-            currentStartDate = cal.monthStartDate(currentDate);
-            break;
-        case MODE_WEEK:
-            currentEndDate = cal.weekEndDate(currentDate);
-            currentStartDate = cal.weekStartDate(currentDate);
-            break;
-        case MODE_DAY:
-            currentEndDate = cal.toDayEnd(currentDate);
-            currentStartDate = cal.toDayStart(currentDate);
-            break;
+            case MODE_YEAR:
+                currentEndDate = cal.yearEndDate(currentDate);
+                currentStartDate = cal.yearStartDate(currentDate);
+                break;
+            case MODE_MONTH:
+                currentEndDate = cal.monthEndDate(currentDate);
+                currentStartDate = cal.monthStartDate(currentDate);
+                break;
+            case MODE_WEEK:
+                currentEndDate = cal.weekEndDate(currentDate);
+                currentStartDate = cal.weekStartDate(currentDate);
+                break;
+            case MODE_DAY:
+                currentEndDate = cal.toDayEnd(currentDate);
+                currentStartDate = cal.toDayStart(currentDate);
+                break;
         }
         GUIs.doBusy(this, new GUIs.BusyAdapter() {
             List<Balance> all = new ArrayList<Balance>();
@@ -253,20 +251,20 @@ public class TagActivity extends ContextsActivity implements OnClickListener, On
 
                 // update info
                 switch (mode) {
-                case MODE_YEAR:
-                    infoView.setText(i18n.string(R.string.label_balance_mode_year, yearDateFormat.format(currentDate)));
-                    break;
-                case MODE_MONTH:
-                    infoView.setText(i18n.string(R.string.label_balance_mode_month, monthDateFormat.format(cal.monthStartDate(currentDate)), monthDayDateFormat.format(cal.monthStartDate(currentDate)),
-                            monthDayDateFormat.format(cal.monthEndDate(currentDate))));
-                    break;
-                case MODE_WEEK:
-                    infoView.setText(i18n.string(R.string.label_balance_mode_week, yearDateFormat.format(currentDate), cal.weekOfYear(currentDate),
-                            monthDayDateFormat.format(cal.weekEndDate(currentDate)), monthDayDateFormat.format(cal.weekStartDate(currentDate))));
-                    break;
-                case MODE_DAY:
-                    infoView.setText(i18n.string(R.string.label_balance_mode_day, dateFormat.format(currentDate)));
-                    break;
+                    case MODE_YEAR:
+                        infoView.setText(getResources().getString(R.string.label_balance_mode_year, yearDateFormat.format(currentDate)));
+                        break;
+                    case MODE_MONTH:
+                        infoView.setText(getResources().getString(R.string.label_balance_mode_month, monthDateFormat.format(cal.monthStartDate(currentDate)), monthDayDateFormat.format(cal.monthStartDate(currentDate)),
+                                monthDayDateFormat.format(cal.monthEndDate(currentDate))));
+                        break;
+                    case MODE_WEEK:
+                        infoView.setText(getResources().getString(R.string.label_balance_mode_week, yearDateFormat.format(currentDate), cal.weekOfYear(currentDate),
+                                monthDayDateFormat.format(cal.weekEndDate(currentDate)), monthDayDateFormat.format(cal.weekStartDate(currentDate))));
+                        break;
+                    case MODE_DAY:
+                        infoView.setText(getResources().getString(R.string.label_balance_mode_day, dateFormat.format(currentDate)));
+                        break;
                 }
             }
         });
@@ -288,18 +286,18 @@ public class TagActivity extends ContextsActivity implements OnClickListener, On
 
     private void onMode() {
         switch (mode) {
-        case MODE_MONTH:
-            mode = MODE_YEAR;
-            break;
-        case MODE_YEAR:
-            mode = MODE_DAY;
-            break;
-        case MODE_DAY:
-            mode = MODE_WEEK;
-            break;
-        case MODE_WEEK:
-            mode = MODE_MONTH;
-            break;
+            case MODE_MONTH:
+                mode = MODE_YEAR;
+                break;
+            case MODE_YEAR:
+                mode = MODE_DAY;
+                break;
+            case MODE_DAY:
+                mode = MODE_WEEK;
+                break;
+            case MODE_WEEK:
+                mode = MODE_MONTH;
+                break;
         }
         reloadData();
     }
@@ -307,18 +305,18 @@ public class TagActivity extends ContextsActivity implements OnClickListener, On
     private void onNext() {
         CalendarHelper cal = getContexts().getCalendarHelper();
         switch (mode) {
-        case MODE_DAY:
-            currentDate = cal.dateAfter(currentDate, 1);
-            break;
-        case MODE_WEEK:
-            currentDate = cal.dateAfter(currentDate, 7);
-            break;
-        case MODE_MONTH:
-            currentDate = cal.monthAfter(currentDate, 1);
-            break;
-        case MODE_YEAR:
-            currentDate = cal.yearAfter(currentDate, 1);
-            break;
+            case MODE_DAY:
+                currentDate = cal.dateAfter(currentDate, 1);
+                break;
+            case MODE_WEEK:
+                currentDate = cal.dateAfter(currentDate, 7);
+                break;
+            case MODE_MONTH:
+                currentDate = cal.monthAfter(currentDate, 1);
+                break;
+            case MODE_YEAR:
+                currentDate = cal.yearAfter(currentDate, 1);
+                break;
         }
         reloadData();
     }
@@ -326,18 +324,18 @@ public class TagActivity extends ContextsActivity implements OnClickListener, On
     private void onPrev() {
         CalendarHelper cal = getContexts().getCalendarHelper();
         switch (mode) {
-        case MODE_DAY:
-            currentDate = cal.dateBefore(currentDate, 1);
-            break;
-        case MODE_WEEK:
-            currentDate = cal.dateBefore(currentDate, 7);
-            break;
-        case MODE_MONTH:
-            currentDate = cal.monthBefore(currentDate, 1);
-            break;
-        case MODE_YEAR:
-            currentDate = cal.yearBefore(currentDate, 1);
-            break;
+            case MODE_DAY:
+                currentDate = cal.dateBefore(currentDate, 1);
+                break;
+            case MODE_WEEK:
+                currentDate = cal.dateBefore(currentDate, 7);
+                break;
+            case MODE_MONTH:
+                currentDate = cal.monthBefore(currentDate, 1);
+                break;
+            case MODE_YEAR:
+                currentDate = cal.yearBefore(currentDate, 1);
+                break;
         }
         reloadData();
     }
@@ -409,149 +407,5 @@ public class TagActivity extends ContextsActivity implements OnClickListener, On
             });
         }
     }
-
-    // @Override
-    // public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-    // super.onCreateContextMenu(menu, v, menuInfo);
-    // if (v.getId() == R.id.report_tag_list) {
-    // // AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-    // getMenuInflater().inflate(R.menu.tag_ctxmenu, menu);
-    // }
-    //
-    // }
-
-    // @Override
-    // public boolean onContextItemSelected(MenuItem item) {
-    // AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-    // if (item.getItemId() == R.id.balance_menu_piechart) {
-    // doPieChart(info.position);
-    // return true;
-    // } else if (item.getItemId() == R.id.balance_menu_yearly_timechart) {
-    // doYearlyTimeChart(info.position);
-    // return true;
-    // } else if (item.getItemId() == R.id.balance_menu_yearly_cumulative_timechart) {
-    // doYearlyCumulativeTimeChart(info.position);
-    // return true;
-    // } else if (item.getItemId() == R.id.balance_menu_detlist) {
-    // doDetailList(info.position);
-    // return true;
-    // }
-    // return super.onContextItemSelected(item);
-    // }
-
-    // private void doPieChart(final int pos) {
-    //
-    // GUIs.doBusy(this, new GUIs.BusyAdapter() {
-    // @Override
-    // public void run() {
-    // Balance b = listViewData.get(pos);
-    // AccountType at;
-    // List<Balance> group = b.getGroup();
-    // if (b.getTarget() instanceof Account) {
-    // group = new ArrayList<Balance>(group);
-    // group.remove(b);
-    // group.add(0, b);
-    // at = AccountType.find(((Account) b.getTarget()).getType());
-    // } else {
-    // at = AccountType.find(b.getType());
-    // }
-    // List<Balance> list = new ArrayList<Balance>();
-    // for (Balance g : group) {
-    // if (!(g.getTarget() instanceof Account)) {
-    // continue;
-    // }
-    // Account acc = (Account) g.getTarget();
-    // Balance tag = BalanceHelper.calculateBalance(acc, currentStartDate, currentEndDate);
-    // list.add(tag);
-    // }
-    // Intent intent = new BalancePieChart(TagActivity.this, GUIs.getOrientation(TagActivity.this), GUIs.getDPRatio(TagActivity.this)).createIntent(at, list);
-    // startActivity(intent);
-    // }
-    // });
-    // }
-
-    // private void doYearlyTimeChart(final int pos) {
-    // GUIs.doBusy(this, new GUIs.BusyAdapter() {
-    // @Override
-    // public void run() {
-    // Balance b = listViewData.get(pos);
-    // AccountType at;
-    // List<Balance> group = b.getGroup();
-    // if (b.getTarget() instanceof Account) {
-    // group = new ArrayList<Balance>(group);
-    // group.remove(b);
-    // group.add(0, b);
-    // at = AccountType.find(((Account) b.getTarget()).getType());
-    // } else {
-    // at = AccountType.find(b.getType());
-    // }
-    //
-    // List<List<Balance>> tags = new ArrayList<List<Balance>>();
-    //
-    // for (Balance g : group) {
-    // if (!(g.getTarget() instanceof Account)) {
-    // continue;
-    // }
-    // Account acc = (Account) g.getTarget();
-    // List<Balance> blist = new ArrayList<Balance>();
-    // tags.add(blist);
-    // Date d = calHelper.yearStartDate(g.getDate());
-    // for (int i = 0; i < 12; i++) {
-    // Balance tag = BalanceHelper.calculateBalance(acc, calHelper.monthStartDate(d), calHelper.monthEndDate(d));
-    // blist.add(tag);
-    // d = calHelper.monthAfter(d, 1);
-    // }
-    // }
-    //
-    // Intent intent = new BalanceTimeChart(TagActivity.this, GUIs.getOrientation(TagActivity.this), GUIs.getDPRatio(TagActivity.this)).createIntent(
-    // i18n.string(R.string.label_balance_yearly_timechart, at.getDisplay(i18n), yearDateFormat.format(currentDate)), tags);
-    // startActivity(intent);
-    // }
-    // });
-    // }
-
-    // private void doYearlyCumulativeTimeChart(final int pos) {
-    // GUIs.doBusy(this, new GUIs.BusyAdapter() {
-    // @Override
-    // public void run() {
-    //
-    // Balance b = listViewData.get(pos);
-    // AccountType at;
-    // List<Balance> group = b.getGroup();
-    // if (b.getTarget() instanceof Account) {
-    // group = new ArrayList<Balance>(group);
-    // group.remove(b);
-    // group.add(0, b);
-    // at = AccountType.find(((Account) b.getTarget()).getType());
-    // } else {
-    // at = AccountType.find(b.getType());
-    // }
-    //
-    // List<List<Balance>> tags = new ArrayList<List<Balance>>();
-    //
-    // for (Balance g : group) {
-    // if (!(g.getTarget() instanceof Account)) {
-    // continue;
-    // }
-    // Account acc = (Account) g.getTarget();
-    // List<Balance> blist = new ArrayList<Balance>();
-    // tags.add(blist);
-    // Date d = calHelper.yearStartDate(g.getDate());
-    // BigDecimal total = BigDecimal.ZERO;
-    // for (int i = 0; i < 12; i++) {
-    // Balance tag = BalanceHelper.calculateBalance(acc, i == 0 ? null : calHelper.monthStartDate(d), calHelper.monthEndDate(d));
-    // total = total.add(tag.getMoney());
-    // tag.setMoney(total);
-    // blist.add(tag);
-    // d = calHelper.monthAfter(d, 1);
-    // }
-    // }
-    //
-    // Intent intent = new BalanceTimeChart(TagActivity.this, GUIs.getOrientation(TagActivity.this), GUIs.getDPRatio(TagActivity.this)).createIntent(
-    // i18n.string(R.string.label_balance_yearly_cumulative_timechart, at.getDisplay(i18n), yearDateFormat.format(currentDate)), tags);
-    // startActivity(intent);
-    // }
-    // });
-    // }
 
 }

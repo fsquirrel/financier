@@ -2,6 +2,7 @@ package com.fsquirrelsoft.financier.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -9,7 +10,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.fsquirrelsoft.commons.util.GUIs;
-import com.fsquirrelsoft.commons.util.I18N;
 import com.fsquirrelsoft.financier.context.Contexts;
 import com.fsquirrelsoft.financier.core.R;
 import com.fsquirrelsoft.financier.data.Tag;
@@ -20,15 +20,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
  * @author Lancelot
- * 
  */
 public class TagListHelper implements OnItemClickListener {
 
-    private static String[] bindingFrom = new String[] { "id", "name" };
+    private static String[] bindingFrom = new String[]{"id", "name"};
 
-    private static int[] bindingTo = new int[] { R.id.tagmgnt_item_id, R.id.tagmgnt_item_name };
+    private static int[] bindingTo = new int[]{R.id.tagmgnt_item_id, R.id.tagmgnt_item_name};
 
     private List<Tag> listViewData = new ArrayList<Tag>();
 
@@ -41,11 +39,11 @@ public class TagListHelper implements OnItemClickListener {
     private boolean clickeditable;
 
     private Activity activity;
-    private I18N i18n;
+    private Resources resources;
 
-    public TagListHelper(Activity activity, I18N i18n, boolean clickeditable) {
+    public TagListHelper(Activity activity, Resources resources, boolean clickeditable) {
         this.activity = activity;
-        this.i18n = i18n;
+        this.resources = resources;
         this.clickeditable = clickeditable;
     }
 
@@ -119,7 +117,7 @@ public class TagListHelper implements OnItemClickListener {
 
     public void doDeleteTag(final int pos) {
         final Tag tag = (Tag) listViewData.get(pos);
-        GUIs.confirm(activity, i18n.string(R.string.qmsg_delete_tag, tag.getName()), new GUIs.OnFinishListener() {
+        GUIs.confirm(activity, resources.getString(R.string.qmsg_delete_tag, tag.getName()), new GUIs.OnFinishListener() {
             public boolean onFinish(Object data) {
                 if (((Integer) data).intValue() == GUIs.OK_BUTTON) {
                     Contexts.instance().getDataProvider().deleteTag(tag.getId());

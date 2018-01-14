@@ -1,18 +1,16 @@
 /**
- * 
+ *
  */
 package com.fsquirrelsoft.financier.data;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 /**
  * to provide all the data and operation also
- * 
+ *
  * @author dennis
- * 
  */
 public interface IDataProvider {
 
@@ -57,7 +55,9 @@ public interface IDataProvider {
      */
     List<Account> listAccount(AccountType type);
 
-    /** detail apis **/
+    /**
+     * detail apis
+     **/
 
     Detail findDetail(int id);
 
@@ -101,17 +101,17 @@ public interface IDataProvider {
 
     List<Detail> listDetail(Tag tag, int mode, Date start, Date end, int max);
 
-    BigDecimal sumFrom(AccountType type, Date start, Date end);
+    double sumFrom(AccountType type, Date start, Date end);
 
-    BigDecimal sumFrom(Account account, Date start, Date end);
+    double sumFrom(Account account, Date start, Date end);
 
-    BigDecimal sumTo(AccountType type, Date start, Date end);
+    double sumTo(AccountType type, Date start, Date end);
 
-    BigDecimal sumTo(Account account, Date start, Date end);
+    double sumTo(Account account, Date start, Date end);
 
     Detail getFirstDetail();
 
-    BigDecimal sumInitialValue(AccountType type);
+    double sumInitialValue(AccountType type);
 
     List<Tag> listAllTags();
 

@@ -2,6 +2,7 @@ package com.fsquirrelsoft.financier.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 
 import com.fsquirrelsoft.commons.util.CalendarHelper;
 import com.fsquirrelsoft.commons.util.GUIs;
@@ -15,14 +16,14 @@ import com.fsquirrelsoft.financier.data.SymbolPosition;
 import java.util.Date;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class TestsDesktop extends AbstractDesktop {
+    private Resources resources;
 
     public TestsDesktop() {
-        label = i18n.string(R.string.dt_tests);
+        resources = Contexts.instance().getResources();
+        label = resources.getString(R.string.dt_tests);
         icon = -1;
     }
 
@@ -220,7 +221,7 @@ public class TestsDesktop extends AbstractDesktop {
             @Override
             public void run() {
                 IDataProvider idp = Contexts.instance().getDataProvider();
-                new DataCreator(idp, i18n).createTestData(loop);
+                new DataCreator(idp, resources).createTestData(loop);
             }
         });
 

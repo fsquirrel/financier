@@ -1,13 +1,10 @@
 package com.fsquirrelsoft.financier.data;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class Detail implements Serializable {
 
@@ -21,7 +18,6 @@ public class Detail implements Serializable {
 
     private Date date;
     private double money;
-    private BigDecimal moneyBD;
     private String note;
     private int period;
     private int periodUnit;
@@ -36,16 +32,6 @@ public class Detail implements Serializable {
     public Detail(String from, String to, Date date, double money, String note) {
         this.date = date;
         this.money = money;
-        this.moneyBD = BigDecimal.valueOf(money);
-        this.note = note;
-        setFrom(from);
-        setTo(to);
-    }
-
-    public Detail(String from, String to, Date date, BigDecimal moneyBD, String note) {
-        this.date = date;
-        this.money = moneyBD.doubleValue();
-        this.moneyBD = moneyBD;
         this.note = note;
         setFrom(from);
         setTo(to);
@@ -173,14 +159,6 @@ public class Detail implements Serializable {
 
     public int getPeriodUnit() {
         return periodUnit;
-    }
-
-    public void setMoneyBD(BigDecimal moneyBD) {
-        this.moneyBD = moneyBD;
-    }
-
-    public BigDecimal getMoneyBD() {
-        return moneyBD;
     }
 
 }

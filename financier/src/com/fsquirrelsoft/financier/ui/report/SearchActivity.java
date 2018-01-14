@@ -26,9 +26,8 @@ import java.util.List;
 
 /**
  * Edit or create a detail
- * 
+ *
  * @author Lancelot
- * 
  */
 public class SearchActivity extends ContextsActivity implements android.view.View.OnClickListener {
 
@@ -51,10 +50,10 @@ public class SearchActivity extends ContextsActivity implements android.view.Vie
     }
 
     private void initialContent() {
-        detailListHelper = new DetailListHelper(this, i18n, calHelper, false, new DetailListHelper.OnDetailListener() {
+        detailListHelper = new DetailListHelper(this, getResources(), calHelper, false, new DetailListHelper.OnDetailListener() {
             @Override
             public void onDetailDeleted(Detail detail) {
-                GUIs.shortToast(SearchActivity.this, i18n.string(R.string.msg_detail_deleted));
+                GUIs.shortToast(SearchActivity.this, getResources().getString(R.string.msg_detail_deleted));
                 doOk();
             }
         });
@@ -177,7 +176,7 @@ public class SearchActivity extends ContextsActivity implements android.view.Vie
         String dateFromStr = dateFromEditor.getText().toString().trim();
         if ("".equals(dateFromStr)) {
             dateFromEditor.requestFocus();
-            GUIs.alert(this, i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_date)));
+            GUIs.alert(this, getResources().getString(R.string.cmsg_field_empty, getResources().getString(R.string.label_date)));
             return;
         }
 
@@ -193,7 +192,7 @@ public class SearchActivity extends ContextsActivity implements android.view.Vie
         String dateToStr = dateToEditor.getText().toString().trim();
         if ("".equals(dateToStr)) {
             dateToEditor.requestFocus();
-            GUIs.alert(this, i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_date)));
+            GUIs.alert(this, getResources().getString(R.string.cmsg_field_empty, getResources().getString(R.string.label_date)));
             return;
         }
 

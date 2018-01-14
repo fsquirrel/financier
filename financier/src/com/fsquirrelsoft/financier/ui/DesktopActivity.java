@@ -37,7 +37,6 @@ import com.fsquirrelsoft.financier.data.IMasterDataProvider;
 import com.fsquirrelsoft.financier.data.ScheduleJob;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -155,7 +154,7 @@ public class DesktopActivity extends ContextsActivity {
                             IDataProvider idp = getContexts().getDataProvider();
                             if (idp.listAccount(null).size() == 0) {
                                 // cause of this function is not ready in previous version, so i check the size for old user
-                                new DataCreator(idp, i18n).createDefaultAccount();
+                                new DataCreator(idp, getResources()).createDefaultAccount();
                             }
                             GUIs.longToast(this, R.string.msg_firsttime_use_hint);
                         }
@@ -179,7 +178,7 @@ public class DesktopActivity extends ContextsActivity {
         final GUIs.IBusyRunnable restorejob = new GUIs.BusyAdapter() {
             @Override
             public void onBusyFinish() {
-                GUIs.longToast(DesktopActivity.this, i18n.string(R.string.msg_db_restored));
+                GUIs.longToast(DesktopActivity.this, getResources().getString(R.string.msg_db_restored));
 
                 // push a dummy to trigger resume/reload
                 Intent intent = new Intent(DesktopActivity.this, DummyActivity.class);
@@ -197,7 +196,7 @@ public class DesktopActivity extends ContextsActivity {
                 }
             }
         };
-        GUIs.confirm(this, i18n.string(R.string.qmsg_restore_db), new GUIs.OnFinishListener() {
+        GUIs.confirm(this, getResources().getString(R.string.qmsg_restore_db), new GUIs.OnFinishListener() {
             @Override
             public boolean onFinish(Object data) {
                 if ((Integer) data == GUIs.OK_BUTTON) {
@@ -206,7 +205,7 @@ public class DesktopActivity extends ContextsActivity {
                     IDataProvider idp = getContexts().getDataProvider();
                     if (idp.listAccount(null).size() == 0) {
                         // cause of this function is not ready in previous version, so i check the size for old user
-                        new DataCreator(idp, i18n).createDefaultAccount();
+                        new DataCreator(idp, getResources()).createDefaultAccount();
                     }
                     GUIs.longToast(DesktopActivity.this, R.string.msg_firsttime_use_hint);
                 }
@@ -287,26 +286,26 @@ public class DesktopActivity extends ContextsActivity {
         Date start = calHelper.weekStartDate(now);
         Date end = calHelper.weekEndDate(now);
         AccountType type = AccountType.EXPENSE;
-        BigDecimal b = BalanceHelper.calculateBalance(type, start, end).getMoney();
-        infoWeeklyExpense.setText(i18n.string(R.string.label_weekly_expense, getContexts().toFormattedMoneyString(b)));
+        double b = BalanceHelper.calculateBalance(type, start, end).getMoney();
+        infoWeeklyExpense.setText(getResources().getString(R.string.label_weekly_expense, getContexts().toFormattedMoneyString(b)));
 
         start = calHelper.monthStartDate(now);
         end = calHelper.monthEndDate(now);
         b = BalanceHelper.calculateBalance(type, start, end).getMoney();
-        infoMonthlyExpense.setText(i18n.string(R.string.label_monthly_expense, getContexts().toFormattedMoneyString(b)));
+        infoMonthlyExpense.setText(getResources().getString(R.string.label_monthly_expense, getContexts().toFormattedMoneyString(b)));
 
         IDataProvider idp = Contexts.instance().getDataProvider();
         // upgrade
         // idp.upgrade();
 
         List<Account> acl = idp.listAccount(AccountType.ASSET);
-        b = BigDecimal.ZERO;
+        b = 0D;
         for (Account ac : acl) {
             if (ac.isCashAccount()) {
-                b = b.add(BalanceHelper.calculateBalance(ac, null, calHelper.toDayEnd(now)).getMoney());
+                b += BalanceHelper.calculateBalance(ac, null, calHelper.toDayEnd(now)).getMoney();
             }
         }
-        infoCumulativeCash.setText(i18n.string(R.string.label_cumulative_cash, getContexts().toFormattedMoneyString(b)));
+        infoCumulativeCash.setText(getResources().getString(R.string.label_cumulative_cash, getContexts().toFormattedMoneyString(b)));
     }
 
     @Override

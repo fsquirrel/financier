@@ -21,9 +21,7 @@ import com.fsquirrelsoft.financier.data.IMasterDataProvider;
 import java.util.List;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class BookMgntActivity extends ContextsActivity {
 
@@ -51,10 +49,10 @@ public class BookMgntActivity extends ContextsActivity {
 
     private void initialContent() {
 
-        bookListHelper = new BookListHelper(this, i18n, true, new BookListHelper.OnBookListener() {
+        bookListHelper = new BookListHelper(this, getResources(), true, new BookListHelper.OnBookListener() {
             @Override
             public void onBookDeleted(Book book) {
-                GUIs.shortToast(BookMgntActivity.this, i18n.string(R.string.msg_book_deleted, book.getName()));
+                GUIs.shortToast(BookMgntActivity.this, getResources().getString(R.string.msg_book_deleted, book.getName()));
                 reloadData();
             }
         });

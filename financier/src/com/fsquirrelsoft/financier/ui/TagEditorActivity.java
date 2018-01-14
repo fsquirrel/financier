@@ -16,9 +16,8 @@ import com.fsquirrelsoft.financier.data.Tag;
 
 /**
  * Edit or create a tag
- * 
+ *
  * @author Lancelot
- * 
  */
 public class TagEditorActivity extends ContextsActivity implements android.view.View.OnClickListener {
 
@@ -32,7 +31,9 @@ public class TagEditorActivity extends ContextsActivity implements android.view.
 
     Activity activity;
 
-    /** clone book without id **/
+    /**
+     * clone book without id
+     **/
     private Tag clone(Tag tag) {
         Tag t = new Tag(tag.getName());
         return t;
@@ -107,7 +108,7 @@ public class TagEditorActivity extends ContextsActivity implements android.view.
         String name = nameEditor.getText().toString().trim();
         if ("".equals(name)) {
             nameEditor.requestFocus();
-            GUIs.alert(this, i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.clabel_name)));
+            GUIs.alert(this, getResources().getString(R.string.cmsg_field_empty, getResources().getString(R.string.clabel_name)));
             return;
         }
 
@@ -119,14 +120,14 @@ public class TagEditorActivity extends ContextsActivity implements android.view.
         Tag namedTag = idp.findTag(name);
         if (modeCreate) {
             if (namedTag != null) {
-                GUIs.alert(this, i18n.string(R.string.msg_tag_existed, name));
+                GUIs.alert(this, getResources().getString(R.string.msg_tag_existed, name));
                 return;
             } else {
                 try {
                     idp.newTag(workingTag);
-                    GUIs.shortToast(this, i18n.string(R.string.msg_tag_created, name));
+                    GUIs.shortToast(this, getResources().getString(R.string.msg_tag_created, name));
                 } catch (DuplicateKeyException e) {
-                    GUIs.alert(this, i18n.string(R.string.cmsg_error, e.getMessage()));
+                    GUIs.alert(this, getResources().getString(R.string.cmsg_error, e.getMessage()));
                     return;
                 }
             }
@@ -136,17 +137,17 @@ public class TagEditorActivity extends ContextsActivity implements android.view.
             nameEditor.setText("");
             nameEditor.requestFocus();
             counterCreate++;
-            okBtn.setText(i18n.string(R.string.cact_create) + "(" + counterCreate + ")");
+            okBtn.setText(getResources().getString(R.string.cact_create) + "(" + counterCreate + ")");
             cancelBtn.setVisibility(Button.GONE);
             closeBtn.setVisibility(Button.VISIBLE);
 
         } else {
             if (namedTag != null && namedTag.getId() != tag.getId()) {
-                GUIs.alert(this, i18n.string(R.string.msg_tag_existed, name));
+                GUIs.alert(this, getResources().getString(R.string.msg_tag_existed, name));
                 return;
             } else {
                 idp.updateTag(tag.getId(), workingTag);
-                GUIs.shortToast(this, i18n.string(R.string.msg_tag_updated, name));
+                GUIs.shortToast(this, getResources().getString(R.string.msg_tag_updated, name));
             }
             setResult(RESULT_OK);
             finish();
@@ -161,7 +162,7 @@ public class TagEditorActivity extends ContextsActivity implements android.view.
 
     private void doClose() {
         setResult(RESULT_OK);
-        GUIs.shortToast(this, i18n.string(R.string.msg_created_tag, counterCreate));
+        GUIs.shortToast(this, getResources().getString(R.string.msg_created_tag, counterCreate));
         finish();
     }
 

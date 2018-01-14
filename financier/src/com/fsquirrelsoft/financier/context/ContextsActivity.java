@@ -5,19 +5,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.fsquirrelsoft.commons.util.CalendarHelper;
-import com.fsquirrelsoft.commons.util.I18N;
 import com.fsquirrelsoft.commons.util.Logger;
 
 /**
  * provide life cycle and easy access to contexts
- * 
+ *
  * @author dennis
- * 
  */
 public class ContextsActivity extends AppCompatActivity {
 
     private static Activity firstActivity;
-    protected I18N i18n;
     protected CalendarHelper calHelper;
     Bundle fakeExtra;
 
@@ -37,7 +34,6 @@ public class ContextsActivity extends AppCompatActivity {
     }
 
     private void refreshUtil(Contexts ins) {
-        i18n = ins.getI18n();
         calHelper = ins.getCalendarHelper();
     }
 

@@ -1,16 +1,16 @@
 /**
- * 
+ *
  */
 package com.fsquirrelsoft.financier.data;
 
-import com.fsquirrelsoft.commons.util.I18N;
+import android.content.res.Resources;
+
 import com.fsquirrelsoft.financier.core.R;
 
 import java.io.Serializable;
 
 /**
  * @author dennis
- * 
  */
 public enum AccountType implements Serializable {
 
@@ -21,14 +21,14 @@ public enum AccountType implements Serializable {
     LIABILITY("D", -1, R.color.liability_fgl, R.color.liability_fgd),
     OTHER("E", -1, R.color.other_fgl, R.color.other_fgd);
 
-    static final AccountType[] supported = new AccountType[] { INCOME, EXPENSE, ASSET, LIABILITY, OTHER };
-    static final AccountType[] from = new AccountType[] { ASSET, INCOME, LIABILITY, OTHER };
-    static final AccountType[] fromIncome = new AccountType[] { ASSET, EXPENSE, LIABILITY, OTHER };
-    static final AccountType[] fromAsset = new AccountType[] { EXPENSE, ASSET, LIABILITY, OTHER };
-    static final AccountType[] fromUnknow = new AccountType[] {};
-    static final AccountType[] fromExpense = new AccountType[] {};
-    static final AccountType[] fromLiability = new AccountType[] { EXPENSE, ASSET, LIABILITY, OTHER };
-    static final AccountType[] fromOther = new AccountType[] { EXPENSE, ASSET, LIABILITY, OTHER };
+    static final AccountType[] supported = new AccountType[]{INCOME, EXPENSE, ASSET, LIABILITY, OTHER};
+    static final AccountType[] from = new AccountType[]{ASSET, INCOME, LIABILITY, OTHER};
+    static final AccountType[] fromIncome = new AccountType[]{ASSET, EXPENSE, LIABILITY, OTHER};
+    static final AccountType[] fromAsset = new AccountType[]{EXPENSE, ASSET, LIABILITY, OTHER};
+    static final AccountType[] fromUnknow = new AccountType[]{};
+    static final AccountType[] fromExpense = new AccountType[]{};
+    static final AccountType[] fromLiability = new AccountType[]{EXPENSE, ASSET, LIABILITY, OTHER};
+    static final AccountType[] fromOther = new AccountType[]{EXPENSE, ASSET, LIABILITY, OTHER};
 
     String type;
     int drawable;
@@ -61,21 +61,21 @@ public enum AccountType implements Serializable {
         return UNKONW;
     }
 
-    static public String getDisplay(I18N i18n, String type) {
+    static public String getDisplay(Resources resources, String type) {
         AccountType at = find(type);
         switch (at) {
-        case INCOME:
-            return i18n.string(R.string.label_income);
-        case EXPENSE:
-            return i18n.string(R.string.label_expense);
-        case ASSET:
-            return i18n.string(R.string.label_asset);
-        case LIABILITY:
-            return i18n.string(R.string.label_liability);
-        case OTHER:
-            return i18n.string(R.string.label_other);
-        default:
-            return i18n.string(R.string.clabel_unknow);
+            case INCOME:
+                return resources.getString(R.string.label_income);
+            case EXPENSE:
+                return resources.getString(R.string.label_expense);
+            case ASSET:
+                return resources.getString(R.string.label_asset);
+            case LIABILITY:
+                return resources.getString(R.string.label_liability);
+            case OTHER:
+                return resources.getString(R.string.label_other);
+            default:
+                return resources.getString(R.string.clabel_unknow);
         }
     }
 
@@ -86,18 +86,18 @@ public enum AccountType implements Serializable {
     public static AccountType[] getToType(String fromType) {
         AccountType at = find(fromType);
         switch (at) {
-        case INCOME:
-            return fromIncome;
-        case EXPENSE:
-            return fromExpense;
-        case ASSET:
-            return fromAsset;
-        case LIABILITY:
-            return fromLiability;
-        case OTHER:
-            return fromOther;
-        default:
-            return fromUnknow;
+            case INCOME:
+                return fromIncome;
+            case EXPENSE:
+                return fromExpense;
+            case ASSET:
+                return fromAsset;
+            case LIABILITY:
+                return fromLiability;
+            case OTHER:
+                return fromOther;
+            default:
+                return fromUnknow;
         }
     }
 
@@ -105,8 +105,8 @@ public enum AccountType implements Serializable {
         return type;
     }
 
-    public String getDisplay(I18N i18n) {
-        return getDisplay(i18n, type);
+    public String getDisplay(Resources resources) {
+        return getDisplay(resources, type);
     }
 
     public int getDrawable() {

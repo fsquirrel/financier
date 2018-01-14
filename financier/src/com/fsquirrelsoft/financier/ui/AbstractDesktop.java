@@ -14,25 +14,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fsquirrelsoft.commons.util.GUIs;
-import com.fsquirrelsoft.commons.util.I18N;
-import com.fsquirrelsoft.financier.context.Contexts;
 import com.fsquirrelsoft.financier.core.R;
 
 import java.util.HashMap;
 
 /**
- * 
  * @author dennis
- * 
  */
 public abstract class AbstractDesktop extends Desktop implements AdapterView.OnItemClickListener {
-    protected I18N i18n;
     private GridView gridView;
     private DesktopItem lastClickedItem;
     private HashMap<Object, DesktopItem> dtHashMap = new HashMap<Object, DesktopItem>();
 
     public AbstractDesktop() {
-        this.i18n = Contexts.instance().getI18n();
     }
 
     @Override

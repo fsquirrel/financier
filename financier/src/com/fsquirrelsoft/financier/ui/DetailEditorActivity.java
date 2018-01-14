@@ -46,9 +46,8 @@ import java.util.Map;
 
 /**
  * Edit or create a detail
- * 
+ *
  * @author dennis
- * 
  */
 public class DetailEditorActivity extends ContextsActivity implements android.view.View.OnClickListener {
 
@@ -84,9 +83,11 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         initialEditor();
     }
 
-    /** clone a detail without id **/
+    /**
+     * clone a detail without id
+     **/
     private Detail clone(Detail detail) {
-        Detail d = new Detail(detail.getFrom(), detail.getTo(), detail.getDate(), detail.getMoneyBD(), detail.getNote());
+        Detail d = new Detail(detail.getFrom(), detail.getTo(), detail.getDate(), detail.getMoney(), detail.getNote());
         d.setArchived(detail.isArchived());
         return d;
     }
@@ -98,7 +99,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
 
         // issue 51, for direct call from outside action,
         if (detail == null) {
-            detail = new Detail("", "", new Date(), BigDecimal.ZERO, "");
+            detail = new Detail("", "", new Date(), 0D, "");
         }
 
         workingDetail = clone(detail);
@@ -110,8 +111,8 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         }
     }
 
-    private static String[] spfrom = new String[] { Constants.DISPLAY, Constants.DISPLAY };
-    private static int[] spto = new int[] { R.id.simple_spitem_display, R.id.simple_spdditem_display };
+    private static String[] spfrom = new String[]{Constants.DISPLAY, Constants.DISPLAY};
+    private static int[] spto = new int[]{R.id.simple_spitem_display, R.id.simple_spdditem_display};
 
     Spinner fromEditor;
     Spinner toEditor;
@@ -147,7 +148,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         dateEditor.setEnabled(!archived);
 
         moneyEditor = (EditText) findViewById(R.id.deteditor_money);
-        moneyEditor.setText(workingDetail.getMoneyBD().compareTo(BigDecimal.ZERO) <= 0 ? "" : Formats.bigDecimalToString(workingDetail.getMoneyBD()));
+        moneyEditor.setText(workingDetail.getMoney() <= 0 ? "" : Formats.double2String(workingDetail.getMoney()));
         moneyEditor.setEnabled(!archived);
 
         rgType = (RadioGroup) findViewById(R.id.rgType);
@@ -235,13 +236,13 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
 
         periodUnitSpinner = (Spinner) findViewById(R.id.deteditor_periodUnit);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
-                new String[] { i18n.string(R.string.puitem_month), i18n.string(R.string.puitem_year), i18n.string(R.string.puitem_day) });
+                new String[]{getResources().getString(R.string.puitem_month), getResources().getString(R.string.puitem_year), getResources().getString(R.string.puitem_day)});
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         periodUnitSpinner.setAdapter(adapter);
 
         tagEditor = (MultiSpinner) findViewById(R.id.deteditor_tag);
         final List<Object> items = Arrays.asList(getTagData());
-        tagEditor.setItems(items, i18n.string(R.string.label_select_tag), new MultiSpinnerListener() {
+        tagEditor.setItems(items, getResources().getString(R.string.label_select_tag), new MultiSpinnerListener() {
             @Override
             public void onItemsSelected(boolean[] selected) {
                 StringBuffer tagSelectedText = new StringBuffer();
@@ -255,9 +256,9 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
                 ArrayAdapter<String> adapter;
                 if (tags.size() > 0) {
                     tagSelectedText.delete(tagSelectedText.length() - 2, tagSelectedText.length());
-                    adapter = new ArrayAdapter<String>(tagEditor.getContext(), android.R.layout.simple_spinner_item, new String[] { tagSelectedText.toString() });
+                    adapter = new ArrayAdapter<String>(tagEditor.getContext(), android.R.layout.simple_spinner_item, new String[]{tagSelectedText.toString()});
                 } else {
-                    adapter = new ArrayAdapter<String>(tagEditor.getContext(), android.R.layout.simple_spinner_item, new String[] { i18n.string(R.string.label_select_tag) });
+                    adapter = new ArrayAdapter<String>(tagEditor.getContext(), android.R.layout.simple_spinner_item, new String[]{getResources().getString(R.string.label_select_tag)});
                 }
                 tagEditor.setAdapter(adapter);
                 tagSelected.setText(tagSelectedText.toString());
@@ -464,9 +465,9 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         if (requestCode == Constants.REQUEST_CALCULATOR_CODE && resultCode == Activity.RESULT_OK) {
             String result = data.getExtras().getString(Calculator.INTENT_RESULT_VALUE);
             try {
-                BigDecimal d = new BigDecimal(result);
-                if (d.compareTo(BigDecimal.ZERO) > 0) {
-                    moneyEditor.setText(Formats.bigDecimalToString(d));
+                double d = Double.parseDouble(result);
+                if (d > 0) {
+                    moneyEditor.setText(Formats.double2String(d));
                 } else {
                     moneyEditor.setText("0");
                 }
@@ -479,18 +480,18 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         // verify
         int fromPos = fromEditor.getSelectedItemPosition();
         if (Spinner.INVALID_POSITION == fromPos || fromAccountList.get(fromPos).getAccount() == null) {
-            GUIs.alert(this, i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_from_account)));
+            GUIs.alert(this, getResources().getString(R.string.cmsg_field_empty, getResources().getString(R.string.label_from_account)));
             return;
         }
         int toPos = toEditor.getSelectedItemPosition();
         if (Spinner.INVALID_POSITION == toPos || toAccountList.get(toPos).getAccount() == null) {
-            GUIs.alert(this, i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_to_account)));
+            GUIs.alert(this, getResources().getString(R.string.cmsg_field_empty, getResources().getString(R.string.label_to_account)));
             return;
         }
         String datestr = dateEditor.getText().toString().trim();
         if ("".equals(datestr)) {
             dateEditor.requestFocus();
-            GUIs.alert(this, i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_date)));
+            GUIs.alert(this, getResources().getString(R.string.cmsg_field_empty, getResources().getString(R.string.label_date)));
             return;
         }
 
@@ -504,14 +505,14 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         }
 
         String moneystr = moneyEditor.getText().toString();
-        if (!Formats.isAmount(moneystr)) {
+        if ("".equals(moneystr)) {
             moneyEditor.requestFocus();
-            GUIs.alert(this, i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_money)));
+            GUIs.alert(this, getResources().getString(R.string.cmsg_field_empty, getResources().getString(R.string.label_money)));
             return;
         }
-        BigDecimal money = new BigDecimal(moneystr);
-        if (money.compareTo(BigDecimal.ZERO) == 0) {
-            GUIs.alert(this, i18n.string(R.string.cmsg_field_zero, i18n.string(R.string.label_money)));
+        double money = Formats.string2Double(moneystr);
+        if (money == 0) {
+            GUIs.alert(this, getResources().getString(R.string.cmsg_field_zero, getResources().getString(R.string.label_money)));
             return;
         }
 
@@ -521,7 +522,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         Account toAcc = toAccountList.get(toPos).getAccount();
 
         if (fromAcc.getId().equals(toAcc.getId())) {
-            GUIs.alert(this, i18n.string(R.string.msg_same_from_to));
+            GUIs.alert(this, getResources().getString(R.string.msg_same_from_to));
             return;
         }
 
@@ -529,8 +530,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         workingDetail.setTo(toAcc.getId());
 
         workingDetail.setDate(date);
-        workingDetail.setMoney(money.doubleValue());
-        workingDetail.setMoneyBD(money);
+        workingDetail.setMoney(money);
         workingDetail.setNote(note.trim());
         IDataProvider idp = getContexts().getDataProvider();
         if (modeCreate) {
@@ -546,7 +546,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
             if (!"".equals(periodsStr)) {
                 periods = Formats.string2Int(periodsStr);
                 if (periods <= 0) {
-                    GUIs.alert(this, i18n.string(R.string.msg_periods_must_greater_than_zero));
+                    GUIs.alert(this, getResources().getString(R.string.msg_periods_must_greater_than_zero));
                     return;
                 }
             }
@@ -555,13 +555,13 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
             workingDetail.setPeriods(periods);
             workingDetail.setPeriodUnit(periodUnit);
             CalendarHelper cal = getContexts().getCalendarHelper();
-            BigDecimal tmpMoney = workingDetail.getMoneyBD();
-            BigDecimal leftMoneyEach = BigDecimal.ZERO;
-            BigDecimal firstMoney = BigDecimal.ZERO;
+            double tmpMoney = workingDetail.getMoney();
+            double leftMoneyEach = 0D;
+            double firstMoney = 0D;
             // get installments payable account
-            Account accInstallments = idp.findAccount("D", i18n.string(R.string.defacc_installments_payable));
+            Account accInstallments = idp.findAccount("D", getResources().getString(R.string.defacc_installments_payable));
             if (accInstallments == null) {
-                accInstallments = new Account("D", i18n.string(R.string.defacc_installments_payable), BigDecimal.ZERO);
+                accInstallments = new Account("D", getResources().getString(R.string.defacc_installments_payable), 0D);
                 accInstallments.setCashAccount(false);
                 try {
                     idp.newAccount(accInstallments);
@@ -578,25 +578,24 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
                 workingDetail.setFrom(fromAcc.getId());
                 workingDetail.setTo(accInstallments.getId());
                 // calculate installments amount
-                leftMoneyEach = tmpMoney.divide(BigDecimal.valueOf(periods), 0, RoundingMode.FLOOR);
-                firstMoney = tmpMoney.subtract(leftMoneyEach.multiply(BigDecimal.valueOf((periods - 1))));
+                leftMoneyEach = BigDecimal.valueOf(tmpMoney).divide(BigDecimal.valueOf(periods), 0, RoundingMode.FLOOR).doubleValue();
+                firstMoney = BigDecimal.valueOf(tmpMoney).subtract(BigDecimal.valueOf(leftMoneyEach).multiply(BigDecimal.valueOf((periods - 1)))).doubleValue();
             } else {
                 leftMoneyEach = firstMoney = tmpMoney;
             }
             for (int i = 0; i < periods; i++) {
                 switch (periodUnit) {
-                case 0:
-                    workingDetail.setDate(cal.yearAfter(date, i * period));
-                    break;
-                case 1:
-                    workingDetail.setDate(cal.monthAfter(date, i * period));
-                    break;
-                case 2:
-                    workingDetail.setDate(cal.dateAfter(date, i * period));
-                    break;
+                    case 0:
+                        workingDetail.setDate(cal.yearAfter(date, i * period));
+                        break;
+                    case 1:
+                        workingDetail.setDate(cal.monthAfter(date, i * period));
+                        break;
+                    case 2:
+                        workingDetail.setDate(cal.dateAfter(date, i * period));
+                        break;
                 }
-                workingDetail.setMoney(i == 0 ? firstMoney.doubleValue() : leftMoneyEach.doubleValue());
-                workingDetail.setMoneyBD(i == 0 ? firstMoney : leftMoneyEach);
+                workingDetail.setMoney(i == 0 ? firstMoney : leftMoneyEach);
                 workingDetail.setNote(periods == 1 ? note.trim() : new StringBuffer(note.trim()).append(" ").append(i + 1).append("/").append(periods).toString().trim());
                 idp.newDetail(workingDetail);
                 for (Object obj : tags) {
@@ -610,7 +609,6 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
 
             workingDetail = clone(workingDetail);
             workingDetail.setMoney(0D);
-            workingDetail.setMoneyBD(BigDecimal.ZERO);
             workingDetail.setNote("");
             workingDetail.setPeriods(1);
             workingDetail.setPeriod(1);
@@ -622,7 +620,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
             rgType.clearCheck();
             periodUnitSpinner.refreshDrawableState();
             counterCreate++;
-            okBtn.setText(i18n.string(R.string.cact_create) + "(" + counterCreate + ")");
+            okBtn.setText(getResources().getString(R.string.cact_create) + "(" + counterCreate + ")");
             cancelBtn.setVisibility(Button.GONE);
             closeBtn.setVisibility(Button.VISIBLE);
         } else {
@@ -634,7 +632,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
                 DetailTag detailTag = new DetailTag(workingDetail.getId(), tag.getId());
                 idp.newDetailTag(detailTag);
             }
-            GUIs.shortToast(this, i18n.string(R.string.msg_detail_updated));
+            GUIs.shortToast(this, getResources().getString(R.string.msg_detail_updated));
             setResult(RESULT_OK);
             finish();
         }
@@ -647,7 +645,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
 
     private void doClose() {
         setResult(RESULT_OK);
-        GUIs.shortToast(this, i18n.string(R.string.msg_created_detail, counterCreate));
+        GUIs.shortToast(this, getResources().getString(R.string.msg_created_detail, counterCreate));
         finish();
     }
 
@@ -719,7 +717,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
                     }
 
                     if (tn.getIndent() == 0) {
-                        display.append(tn.getType().getDisplay(i18n));
+                        display.append(tn.getType().getDisplay(getResources()));
                         display.append(" - ");
                     }
                     display.append(tn.getName());
@@ -727,7 +725,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
                     if (tn.getAccount() == null) {
                         display.append("");
                     } else {
-                        display.append(tn.getType().getDisplay(i18n));
+                        display.append(tn.getType().getDisplay(getResources()));
                         display.append("-");
                         display.append(tn.getAccount().getName());
                     }

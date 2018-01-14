@@ -23,7 +23,6 @@ import com.fsquirrelsoft.financier.data.AccountType;
 import com.fsquirrelsoft.financier.data.DuplicateKeyException;
 import com.fsquirrelsoft.financier.data.IDataProvider;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,9 +30,8 @@ import java.util.Map;
 
 /**
  * Edit or create a account
- * 
+ *
  * @author dennis
- * 
  */
 public class AccountEditorActivity extends ContextsActivity implements android.view.View.OnClickListener {
 
@@ -49,7 +47,9 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
 
     ImageButton cal2Btn;
 
-    /** clone account without id **/
+    /**
+     * clone account without id
+     **/
     private Account clone(Account account) {
         Account acc = new Account(account.getType(), account.getName(), account.getInitialValue());
         acc.setCashAccount(account.isCashAccount());
@@ -80,8 +80,8 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
     /**
      * need to mapping twice to do different mapping in spitem and spdropdown item
      */
-    private static String[] spfrom = new String[] { Constants.DISPLAY, Constants.DISPLAY };
-    private static int[] spto = new int[] { R.id.simple_spitem_display, R.id.simple_spdditem_display };
+    private static String[] spfrom = new String[]{Constants.DISPLAY, Constants.DISPLAY};
+    private static int[] spto = new int[]{R.id.simple_spitem_display, R.id.simple_spdditem_display};
 
     EditText nameEditor;
     EditText initvalEditor;
@@ -97,7 +97,7 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
         nameEditor.setText(workingAccount.getName());
 
         initvalEditor = (EditText) findViewById(R.id.acceditor_initval);
-        initvalEditor.setText(Formats.bigDecimalToString(workingAccount.getInitialValueBD()));
+        initvalEditor.setText(Formats.double2String(workingAccount.getInitialValue()));
 
         // initial spinner
         typeEditor = (Spinner) findViewById(R.id.acceditor_type);
@@ -109,7 +109,7 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
             i++;
             Map<String, Object> row = new HashMap<String, Object>();
             data.add(row);
-            row.put(spfrom[0], new NamedItem(spfrom[0], at, at.getDisplay(i18n)));
+            row.put(spfrom[0], new NamedItem(spfrom[0], at, at.getDisplay(getResources())));
 
             if (at.getType().equals(type)) {
                 selpos = i;
@@ -185,8 +185,8 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
         if (requestCode == Constants.REQUEST_CALCULATOR_CODE && resultCode == Activity.RESULT_OK) {
             String result = data.getExtras().getString(Calculator.INTENT_RESULT_VALUE);
             try {
-                BigDecimal d = new BigDecimal(result);
-                initvalEditor.setText(Formats.bigDecimalToString(d));
+                double d = Double.parseDouble(result);
+                initvalEditor.setText(Formats.double2String(d));
             } catch (Exception x) {
             }
         }
@@ -195,19 +195,19 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
     private void doOk() {
         // verify
         if (Spinner.INVALID_POSITION == typeEditor.getSelectedItemPosition()) {
-            GUIs.shortToast(this, i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.clabel_type)));
+            GUIs.shortToast(this, getResources().getString(R.string.cmsg_field_empty, getResources().getString(R.string.clabel_type)));
             return;
         }
         String name = nameEditor.getText().toString().trim();
         if ("".equals(name)) {
             nameEditor.requestFocus();
-            GUIs.alert(this, i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.clabel_name)));
+            GUIs.alert(this, getResources().getString(R.string.cmsg_field_empty, getResources().getString(R.string.clabel_name)));
             return;
         }
         String initval = initvalEditor.getText().toString();
         if ("".equals(initval)) {
             initvalEditor.requestFocus();
-            GUIs.alert(this, i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_initial_value)));
+            GUIs.alert(this, getResources().getString(R.string.cmsg_field_empty, getResources().getString(R.string.label_initial_value)));
             return;
         }
         String type = AccountType.getSupportedType()[typeEditor.getSelectedItemPosition()].getType();
@@ -215,7 +215,6 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
         workingAccount.setType(type);
         workingAccount.setName(name);
         workingAccount.setInitialValue(Formats.string2Double(initval));
-        workingAccount.setInitialValueBD(new BigDecimal(initval));
         workingAccount.setCashAccount(cashAccountEditor.isChecked());
 
         IDataProvider idp = getContexts().getDataProvider();
@@ -223,14 +222,14 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
         Account namedAcc = idp.findAccount(type, name);
         if (modeCreate) {
             if (namedAcc != null) {
-                GUIs.alert(this, i18n.string(R.string.msg_account_existed, name, AccountType.getDisplay(i18n, namedAcc.getType())));
+                GUIs.alert(this, getResources().getString(R.string.msg_account_existed, name, AccountType.getDisplay(getResources(), namedAcc.getType())));
                 return;
             } else {
                 try {
                     idp.newAccount(workingAccount);
-                    GUIs.shortToast(this, i18n.string(R.string.msg_account_created, name, AccountType.getDisplay(i18n, workingAccount.getType())));
+                    GUIs.shortToast(this, getResources().getString(R.string.msg_account_created, name, AccountType.getDisplay(getResources(), workingAccount.getType())));
                 } catch (DuplicateKeyException e) {
-                    GUIs.alert(this, i18n.string(R.string.cmsg_error, e.getMessage()));
+                    GUIs.alert(this, getResources().getString(R.string.cmsg_error, e.getMessage()));
                     return;
                 }
             }
@@ -240,17 +239,17 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
             nameEditor.setText("");
             nameEditor.requestFocus();
             counterCreate++;
-            okBtn.setText(i18n.string(R.string.cact_create) + "(" + counterCreate + ")");
+            okBtn.setText(getResources().getString(R.string.cact_create) + "(" + counterCreate + ")");
             cancelBtn.setVisibility(Button.GONE);
             closeBtn.setVisibility(Button.VISIBLE);
 
         } else {
             if (namedAcc != null && !namedAcc.getId().equals(account.getId())) {
-                GUIs.alert(this, i18n.string(R.string.msg_account_existed, name, AccountType.getDisplay(i18n, namedAcc.getType())));
+                GUIs.alert(this, getResources().getString(R.string.msg_account_existed, name, AccountType.getDisplay(getResources(), namedAcc.getType())));
                 return;
             } else {
                 idp.updateAccount(account.getId(), workingAccount);
-                GUIs.shortToast(this, i18n.string(R.string.msg_account_updated, name, AccountType.getDisplay(i18n, workingAccount.getType())));
+                GUIs.shortToast(this, getResources().getString(R.string.msg_account_updated, name, AccountType.getDisplay(getResources(), workingAccount.getType())));
             }
 
             setResult(RESULT_OK);
@@ -266,7 +265,7 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
 
     private void doClose() {
         setResult(RESULT_OK);
-        GUIs.shortToast(this, i18n.string(R.string.msg_created_account, counterCreate));
+        GUIs.shortToast(this, getResources().getString(R.string.msg_created_account, counterCreate));
         finish();
     }
 

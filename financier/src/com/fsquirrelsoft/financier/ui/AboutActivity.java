@@ -9,9 +9,7 @@ import com.fsquirrelsoft.financier.context.ContextsActivity;
 import com.fsquirrelsoft.financier.core.R;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class AboutActivity extends ContextsActivity {
 
@@ -36,8 +34,8 @@ public class AboutActivity extends ContextsActivity {
         aboutapp.addJavascriptInterface(new JSCallHandler(), "fsfctrl");
         aboutapp.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 
-        whatsnew.loadUrl(Constants.LOCAL_URL_PREFIX + i18n.string(R.string.path_what_is_new));
-        aboutapp.loadUrl(Constants.LOCAL_URL_PREFIX + i18n.string(R.string.path_about_app));
+        whatsnew.loadUrl(Constants.LOCAL_URL_PREFIX + getResources().getString(R.string.path_what_is_new));
+        aboutapp.loadUrl(Constants.LOCAL_URL_PREFIX + getResources().getString(R.string.path_about_app));
     }
 
     private void onLinkClicked(final String path) {

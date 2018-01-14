@@ -19,9 +19,7 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import java.util.List;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class BalanceTimeChart extends AbstractChart {
 
@@ -42,9 +40,9 @@ public class BalanceTimeChart extends AbstractChart {
             seriesLength = blist.size();
             for (int k = 0; k < seriesLength; k++) {
                 Balance b = blist.get(k);
-                series.add(b.getDate().getTime(), b.getMoney().doubleValue());
-                max = Math.max(max, b.getMoney().doubleValue());
-                min = Math.min(min, b.getMoney().doubleValue());
+                series.add(b.getDate().getTime(), b.getMoney());
+                max = Math.max(max, b.getMoney());
+                min = Math.min(min, b.getMoney());
             }
             dataset.addSeries(series);
         }
@@ -66,7 +64,7 @@ public class BalanceTimeChart extends AbstractChart {
         int bottom = (int) (renderer.getAxisTitleTextSize() + 45 * dpRatio);
         int right = 1;
 
-        renderer.setMargins(new int[] { top, left, bottom, right });
+        renderer.setMargins(new int[]{top, left, bottom, right});
         int s = renderer.getSeriesRendererCount();
         for (int i = 0; i < s; i++) {
             ((XYSeriesRenderer) renderer.getSeriesRendererAt(i)).setFillPoints(true);
@@ -79,7 +77,7 @@ public class BalanceTimeChart extends AbstractChart {
         renderer.setShowGrid(true);
         renderer.setXLabelsAngle(60);
 
-        setChartSettings(renderer, title, "", i18n.string(R.string.label_money), balances.get(0).get(0).getDate().getTime(), balances.get(0).get(seriesLength - 1).getDate().getTime(),
+        setChartSettings(renderer, title, "", resources.getString(R.string.label_money), balances.get(0).get(0).getDate().getTime(), balances.get(0).get(seriesLength - 1).getDate().getTime(),
                 min - (min / 20), max + (max / 20), Color.GRAY, Color.LTGRAY);
         renderer.setYLabels(10);
         return ChartFactory.getTimeChartIntent(context, dataset, renderer, "yyyy MMM");

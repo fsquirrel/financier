@@ -8,9 +8,7 @@ import com.fsquirrelsoft.financier.context.ContextsActivity;
 import com.fsquirrelsoft.financier.core.R;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class LocalWebViewActivity extends ContextsActivity {
 
@@ -42,7 +40,7 @@ public class LocalWebViewActivity extends ContextsActivity {
         String uri = null;
         int rid = bundle.getInt(INTENT_URI_ID, -1);
         if (rid != -1) {
-            uri = i18n.string(rid);
+            uri = getResources().getString(rid);
         } else {
             uri = bundle.getString(INTENT_URI);
         }

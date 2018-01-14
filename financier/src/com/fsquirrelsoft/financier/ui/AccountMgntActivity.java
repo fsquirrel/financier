@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * this activity manages the account (of detail) with tab widgets of android, there are 4 type of account, income, expense, asset and liability.
- * 
+ *
  * @author dennis
  * @see {@link AccountType}
  */
@@ -48,8 +48,6 @@ public class AccountMgntActivity extends ContextsActivity {
         AccountType[] ata = AccountType.getSupportedType();
         for (AccountType at : ata) {
             this.pagerAdapter.addAccountList(at);
-            // Resources r = getResources();
-            // tab.setIndicator(AccountType.getDisplay(i18n, tab.getTag()),r.getDrawable(at.getDrawable()));
         }
 
         viewPager.setAdapter(this.pagerAdapter);
@@ -112,7 +110,7 @@ public class AccountMgntActivity extends ContextsActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return this.accounts.get(position).getLabel(AccountMgntActivity.this.i18n);
+            return this.accounts.get(position).getLabel(getResources());
         }
 
         @Override

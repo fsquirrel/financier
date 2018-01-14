@@ -21,9 +21,7 @@ import com.fsquirrelsoft.financier.data.Tag;
 import java.util.List;
 
 /**
- * 
  * @author Lancelot
- * 
  */
 public class TagMgntActivity extends ContextsActivity {
 
@@ -51,7 +49,7 @@ public class TagMgntActivity extends ContextsActivity {
 
     private void initialContent() {
 
-        tagListHelper = new TagListHelper(this, i18n, true);
+        tagListHelper = new TagListHelper(this, getResources(), true);
         ListView listView = (ListView) findViewById(R.id.tagmgnt_list);
         tagListHelper.setup(listView);
 

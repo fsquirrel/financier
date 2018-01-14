@@ -1,27 +1,24 @@
 package com.fsquirrelsoft.financier.data;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 /**
- * 
  * @author dennis
- * 
  */
 public class Balance {
 
     String name;
     String type;
-    BigDecimal money;
+    double money;
     int indent;
     Serializable target;
     Date date;
 
     List<Balance> group;
 
-    public Balance(String name, String type, BigDecimal money, Serializable target) {
+    public Balance(String name, String type, double money, Serializable target) {
         this.name = name;
         this.type = type;
         this.money = money;
@@ -36,11 +33,11 @@ public class Balance {
         this.name = name;
     }
 
-    public BigDecimal getMoney() {
-        return money == null ? BigDecimal.ZERO : money;
+    public double getMoney() {
+        return money;
     }
 
-    public void setMoney(BigDecimal money) {
+    public void setMoney(double money) {
         this.money = money;
     }
 
