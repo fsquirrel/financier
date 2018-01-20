@@ -586,10 +586,10 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
             for (int i = 0; i < periods; i++) {
                 switch (periodUnit) {
                     case 0:
-                        workingDetail.setDate(cal.yearAfter(date, i * period));
+                        workingDetail.setDate(cal.monthAfter(date, i * period));
                         break;
                     case 1:
-                        workingDetail.setDate(cal.monthAfter(date, i * period));
+                        workingDetail.setDate(cal.yearAfter(date, i * period));
                         break;
                     case 2:
                         workingDetail.setDate(cal.dateAfter(date, i * period));

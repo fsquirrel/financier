@@ -38,12 +38,12 @@
     <color name="asset_fg">#FF000000</color>
     <color name="liability_bg_s">#FF7A95FF</color>
     <color name="liability_bg_e">#CC7A95FF</color>
-    <color name="liability_fgl">#FF1A359F</color>
+    <color name="liability_fgl">#CC7ACCFF</color>
     <color name="liability_fgd">#FF1A359F</color>
     <color name="liability_fg">#FF000000</color>
     <color name="other_bg_s">#FF61D0FF</color>
     <color name="other_bg_e">#CC61D0FF</color>
-    <color name="other_fgl">#FF01709F</color>
+    <color name="other_fgl">#CC61FFFF</color>
     <color name="other_fgd">#FF01709F</color>
     <color name="other_fg">#FF000000</color>
     <color name="unknow_bg_s">#FF555555</color>
