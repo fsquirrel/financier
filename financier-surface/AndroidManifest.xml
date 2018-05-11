@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fsquirrelsoft.financier"
     android:installLocation="auto"
-    android:versionCode="2018012101"
-    android:versionName="0.1.0-201801210117" >
+    android:versionCode="2018051200"
+    android:versionName="0.1.1-201805120048" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />

@@ -570,6 +570,9 @@ public class Contexts {
     }
 
     public Resources getResources() {
+        if (appContext == null) {
+            initActivity((Activity) appInitialObject);
+        }
         return appContext.getResources();
     }
 

@@ -1,32 +1,25 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.android.tools.build:gradle:3.1.2'
     }
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'android-apt'
 
 repositories {
+    google()
     jcenter()
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.0.0'
-    compile 'com.android.support:support-v4:23.0.0'
-    compile 'com.android.support:design:23.0.0'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-}
-
-apt {
-    arguments {
-        androidManifestFile variant.outputs[0].processResources.manifestFile
-        resourcePackageName 'com.fsquirrelsoft.financier.core'
-    }
+    implementation 'com.android.support:appcompat-v7:23.0.0'
+    implementation 'com.android.support:support-v4:23.0.0'
+    implementation 'com.android.support:design:23.0.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 android {
@@ -43,7 +36,7 @@ android {
     }
 
     compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '27.0.3'
 
     compileOptions {
         encoding "UTF-8"
@@ -54,6 +47,11 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ['resourcePackageName': 'com.fsquirrelsoft.financier.core']
+            }
+        }
     }
 
     lintOptions {
