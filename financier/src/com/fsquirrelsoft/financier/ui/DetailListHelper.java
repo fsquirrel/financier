@@ -218,7 +218,7 @@ public class DetailListHelper implements OnItemClickListener {
                     }
                     lastTo = AccountType.find(toAcc.getType());
                 } else {
-                    lastTo = AccountType.UNKONW;
+                    lastTo = AccountType.UNKNOWN;
                 }
                 if (fromAcc != null) {
                     if (AccountType.INCOME.getType().equals(fromAcc.getType())) {
@@ -226,7 +226,7 @@ public class DetailListHelper implements OnItemClickListener {
                     }
                     lastFrom = AccountType.find(fromAcc.getType());
                 } else {
-                    lastFrom = AccountType.UNKONW;
+                    lastFrom = AccountType.UNKNOWN;
                 }
                 int drawid;
                 if ((flag & 1) == 1) {// expense

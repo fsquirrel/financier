@@ -25,17 +25,23 @@ public class ScheduleReceiver extends BroadcastReceiver {
                 String prefBackupDir = prefs.getString(Constants.BACKUP_DIR, ctxs.getSdFolder().getAbsolutePath());
                 Logger.d("BackupFolder: " + prefBackupDir);
                 File backupFolder = new File(prefBackupDir);
-                File dbFolder = context.getDatabasePath("fsf.db").getParentFile();
-                File prefFolder = new File(context.getFilesDir().getParent(), "shared_prefs");
-                int count = 0;
-                Logger.d("DBFolder: " + dbFolder.getAbsolutePath());
-                Logger.d("PrefFolder: " + prefFolder.getAbsolutePath());
-                count += Files.copyDatabases(dbFolder, backupFolder, now.getTime());
-                count += Files.copyPrefFile(prefFolder, backupFolder, now.getTime());
-                if (count > 0) {
-                    ctxs.setLastBackup(context, now.getTime());
+                boolean result = true;
+                if (!backupFolder.exists()) {
+                    result = backupFolder.mkdirs();
                 }
-                Files.removeOldBackups(backupFolder, now);
+                if (result) {
+                    File dbFolder = context.getDatabasePath("fsf.db").getParentFile();
+                    File prefFolder = new File(context.getFilesDir().getParent(), "shared_prefs");
+                    int count = 0;
+                    Logger.d("DBFolder: " + dbFolder.getAbsolutePath());
+                    Logger.d("PrefFolder: " + prefFolder.getAbsolutePath());
+                    count += Files.copyDatabases(dbFolder, backupFolder, now.getTime());
+                    count += Files.copyPrefFile(prefFolder, backupFolder, now.getTime());
+                    if (count > 0) {
+                        ctxs.setLastBackup(context, now.getTime());
+                    }
+                    Files.removeOldBackups(backupFolder, now);
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e.getMessage(), e);
             }

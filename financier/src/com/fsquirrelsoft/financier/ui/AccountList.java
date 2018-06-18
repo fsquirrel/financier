@@ -48,7 +48,7 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
     }
 
     private SimpleAdapter getListViewAdapter() {
-        if (listViewAdapter == null) {
+        if (listViewAdapter == null && this.getContext() != null) {
             listViewAdapter = new SimpleAdapter(this.getContext(), listViewMapList, R.layout.accmgnt_item, bindingFrom, bindingTo);
         }
         return listViewAdapter;

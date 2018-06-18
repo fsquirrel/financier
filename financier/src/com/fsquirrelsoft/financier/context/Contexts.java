@@ -155,8 +155,10 @@ public class Contexts {
             Logger.d(">>initialial application context with:" + appInitialObject);
 
             this.appInitialObject = appInitialObject;
-            appContext = context.getApplicationContext();
-            initTracker(appContext);
+            if (context != null) {
+                appContext = context.getApplicationContext();
+                initTracker(appContext);
+            }
             return true;
         } else {
             Logger.w("application context was initialized :" + appInitialObject);

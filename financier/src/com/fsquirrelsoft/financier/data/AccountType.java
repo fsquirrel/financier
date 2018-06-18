@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 public enum AccountType implements Serializable {
 
-    UNKONW("Z", -1, R.color.unknow_fgl, R.color.unknow_fgd),
+    UNKNOWN("Z", -1, R.color.unknow_fgl, R.color.unknow_fgd),
     INCOME("A", -1, R.color.income_fgl, R.color.income_fgd),
     EXPENSE("B", -1, R.color.expense_fgl, R.color.expense_fgd),
     ASSET("C", -1, R.color.asset_fgl, R.color.asset_fgd),
@@ -22,11 +22,11 @@ public enum AccountType implements Serializable {
     OTHER("E", -1, R.color.other_fgl, R.color.other_fgd);
 
     static final AccountType[] supported = new AccountType[]{INCOME, EXPENSE, ASSET, LIABILITY, OTHER};
-    static final AccountType[] from = new AccountType[]{ASSET, INCOME, LIABILITY, OTHER};
+    static final AccountType[] from = new AccountType[]{ASSET, INCOME, LIABILITY, OTHER, EXPENSE};
     static final AccountType[] fromIncome = new AccountType[]{ASSET, EXPENSE, LIABILITY, OTHER};
     static final AccountType[] fromAsset = new AccountType[]{EXPENSE, ASSET, LIABILITY, OTHER};
     static final AccountType[] fromUnknow = new AccountType[]{};
-    static final AccountType[] fromExpense = new AccountType[]{};
+    static final AccountType[] fromExpense = new AccountType[]{ASSET, LIABILITY, INCOME, OTHER};
     static final AccountType[] fromLiability = new AccountType[]{EXPENSE, ASSET, LIABILITY, OTHER};
     static final AccountType[] fromOther = new AccountType[]{EXPENSE, ASSET, LIABILITY, OTHER};
 
@@ -58,7 +58,7 @@ public enum AccountType implements Serializable {
         } else if (OTHER.type.equals(type)) {
             return OTHER;
         }
-        return UNKONW;
+        return UNKNOWN;
     }
 
     static public String getDisplay(Resources resources, String type) {
